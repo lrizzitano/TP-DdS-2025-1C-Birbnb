@@ -1,3 +1,10 @@
+const EstadoReserva = {
+  PENDIENTE: '0',
+  CONFIRMADA: '1',
+  CANCELADA: '2'
+}
+
+
 export class Reserva {
     constructor(rangoDeFechas, 
       cantHuespedes, 

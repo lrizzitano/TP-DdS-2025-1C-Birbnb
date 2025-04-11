@@ -1,11 +1,20 @@
 import { Reserva, RangoFechas } from "./reserva.js";
 import { Usuario } from "./usuario.js";
 
-// export const Monedas = Object.freeze({
-//   DOLAR_USA: 0,
-//   PESO_ARG: 1,
-//   REALES: 2
-// });
+
+const Monedas = {
+    DOLAR_USA: 0,
+  PESO_ARG: 1,
+  REALES: 2
+};
+
+
+const Caracteristicas = {
+    WIFI: 0,
+    PILETA: 1,
+    MASCOTAS_PERMITIDAS: 2,
+    ESTACIONAMIENTO: 3,
+};
 
 export class Alojamiento {
     constructor({
