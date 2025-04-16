@@ -1,5 +1,5 @@
 import { Usuario } from "./clases/usuario.js";
-import { Alojamiento, Ciudad, Pais, Direccion, Moneda, Foto } from "./clases/alojamiento.js";
+import { Alojamiento, Ciudad, Pais, Direccion, Caracteristicas, Moneda, Foto } from "./clases/alojamiento.js";
 import { Reserva, RangoFechas } from "./clases/reserva.js";
 
 // Crear un usuario anfitrión
@@ -23,7 +23,7 @@ const alojamiento = new Alojamiento({
   horarioCheckOut: "11:00",
   direccion: direccionSimpson,
   cantHuespedesMax: 4,
-  caracteristicas: ["Chimenea", "WiFi"],
+  caracteristicas: [Caracteristicas.PILETA, Caracteristicas.WIFI],
   reservas: [],
   fotos: []
 });
