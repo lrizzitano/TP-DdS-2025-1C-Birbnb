@@ -20,9 +20,9 @@ export class Reserva {
       this.precioPorNoche = precioPorNoche; // precio por noche del alojamiento
     }
 
-      actualizarEstado(nuevoEstado) {
-        this.estado = nuevoEstado;
-      }
+    actualizarEstado(nuevoEstado) {
+      this.estado = nuevoEstado;
+    }
   }
 
 export class RangoFechas {
@@ -45,6 +45,8 @@ export class CambioEstadoReserva {
     this.reserva = reserva; // instancia de Reserva
     this.motivo = motivo; // motivo del cambio de estado
     this.usuario = usuario; // instancia de Usuario que realiza el cambio
+
+    reserva.actualizarEstado(estadoReserva); // Actualiza el estado de la reserva
   }
   
 
