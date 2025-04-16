@@ -1,7 +1,6 @@
 import { Reserva, RangoFechas } from "./reserva.js";
 import { Usuario } from "./usuario.js";
 
-// Prueba push boludo
 const Monedas = {
     DOLAR_USA: 0,
   PESO_ARG: 1,
