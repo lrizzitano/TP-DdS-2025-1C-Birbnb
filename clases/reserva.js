@@ -4,7 +4,6 @@ const EstadoReserva = {
   CANCELADA: '2'
 }
 
-
 export class Reserva {
     constructor(rangoDeFechas, 
       cantHuespedes, 
@@ -13,7 +12,7 @@ export class Reserva {
       estado, 
       precioPorNoche) {
       this.fechaAlta = new Date(); // fecha en la que se crea la reserva
-      this.huéspedReservador = usuario; // instancia de Usuario
+      this.huespedReservador = usuario; // instancia de Usuario
       this.cantHuespedes = cantHuespedes; // por defecto
       this.alojamiento = alojamiento; // instancia de Alojamiento
       this.rangoDeFechas = rangoDeFechas;
@@ -22,19 +21,9 @@ export class Reserva {
     }
 
       actualizarEstado(nuevoEstado) {
-        // this.estado = nuevoEstado;
+        this.estado = nuevoEstado;
       }
   }
-
-
-
-
-
-
-
-
-
-
 
 export class RangoFechas {
     constructor(fechaInicio, fechaFin) {
@@ -49,15 +38,6 @@ export class RangoFechas {
 
   }
     
-
-
-
-
-
-
-
-
-
 export class CambioEstadoReserva {
   constructor(fecha, estadoReserva, reserva, motivo, usuario) {
     this.fecha = new Date(fecha); // fecha en la que se realiza el cambio de estado

@@ -44,8 +44,13 @@ export class Alojamiento {
       this.fotos = fotos;
     }
   
-    estasDisponibleEn() {
-// ver de hacer 
+    estaDisponibleEn(rangoFechas) {
+       return this.reservas.every((reserva) => {
+        return (
+          reserva.rangoDeFechas.fechaFin < rangoFechas.fechaInicio ||
+          reserva.rangoDeFechas.fechaInicio > rangoFechas.fechaFin
+        );
+      })
     }
   
     tuPrecioEstaDentroDe(valorMinimo, valorMaximo) {
