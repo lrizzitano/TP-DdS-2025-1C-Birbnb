@@ -8,7 +8,7 @@ const Monedas = {
 };
 
 
-const Caracteristicas = {
+export const Caracteristicas = {
     WIFI: 0,
     PILETA: 1,
     MASCOTAS_PERMITIDAS: 2,
@@ -63,10 +63,6 @@ export class Alojamiento {
 
   }
 
-
-
-
-
 export class Pais {
     constructor(nombre) {
       this.nombre = nombre;
@@ -81,7 +77,6 @@ export class Ciudad {
     }
   }  
 
-
 export class Direccion {
     constructor(calle, altura, ciudad, pais, lat, long) {
       this.calle = calle;
@@ -93,28 +88,9 @@ export class Direccion {
     }
   }
 
-
-
-
-
-
-
-
-
-// export class Moneda {
-//   constructor(nombre, simbolo, cotizacionRespectoDolar) {
-//     this.nombre = nombre;
-//     this.simbolo = simbolo;
-//     this.cotizacionRespectoDolar = cotizacionRespectoDolar;
-//   }
-// }
-
-
-  
-
-// export class Foto {
-//     constructor(descripcion, path) {
-//       this.descripcion = descripcion;
-//       this.path = path;
-//     }
-//   }
+export class Foto {
+    constructor(descripcion, path) {
+      this.descripcion = descripcion;
+      this.path = path;
+    }
+  }
