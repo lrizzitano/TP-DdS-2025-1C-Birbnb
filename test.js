@@ -1,6 +1,6 @@
-import { Usuario } from "./clases/usuario.js";
-import { Alojamiento, Ciudad, Pais, Direccion, Caracteristicas, Moneda, Foto } from "./clases/alojamiento.js";
-import { Reserva, RangoFechas } from "./clases/reserva.js";
+import { Usuario } from "./backend/clases/usuario.js";
+import { Alojamiento, Ciudad, Pais, Direccion, Caracteristicas, Moneda, Foto } from "./backend/clases/alojamiento.js";
+import { Reserva, RangoFechas } from "./backend/clases/reserva.js";
 
 // Crear un usuario anfitrión
 const anfitrion = new Usuario("Juan", "juan@mail.com", "anfitrión");
