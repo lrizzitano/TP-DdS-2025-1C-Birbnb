@@ -96,25 +96,15 @@ export class Direccion {
 
 
 
+  export class Foto {
+    constructor(descripcion, path) {
+      this.descripcion = descripcion;
+      this.path = path;
+    }
+  }
 
 
-
-
-
-// export class Moneda {
-//   constructor(nombre, simbolo, cotizacionRespectoDolar) {
-//     this.nombre = nombre;
-//     this.simbolo = simbolo;
-//     this.cotizacionRespectoDolar = cotizacionRespectoDolar;
-//   }
-// }
 
 
   
 
-// export class Foto {
-//     constructor(descripcion, path) {
-//       this.descripcion = descripcion;
-//       this.path = path;
-//     }
-//   }
