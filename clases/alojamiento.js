@@ -88,9 +88,26 @@ export class Direccion {
     }
   }
 
+<<<<<<< HEAD
 export class Foto {
+=======
+
+
+
+  export class Foto {
+>>>>>>> refs/remotes/origin/main
     constructor(descripcion, path) {
       this.descripcion = descripcion;
       this.path = path;
     }
+<<<<<<< HEAD
   }
+=======
+  }
+
+
+
+
+  
+
+>>>>>>> refs/remotes/origin/main
