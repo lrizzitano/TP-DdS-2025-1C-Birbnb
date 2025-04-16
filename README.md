@@ -1,4 +1,4 @@
-# Trabajo Práctico de Desarrollo de Software 2025 1c
+# Trabajo Práctico de Desarrollo de Software 2025 1C
 
 ## Integrantes
 - Rizzitano Lautaro
