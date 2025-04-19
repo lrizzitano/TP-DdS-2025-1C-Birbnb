@@ -1,6 +1,13 @@
-import { Usuario } from "./backend/clases/usuario.js";
-import { Alojamiento, Ciudad, Pais, Direccion, Caracteristicas, Moneda, Foto } from "./backend/clases/alojamiento.js";
-import { Reserva, RangoFechas } from "./backend/clases/reserva.js";
+import { Usuario } from "./backend/modelo/Usuario.js";
+import { Alojamiento } from "./backend/modelo/alojamiento/Alojamiento.js";
+import { Ciudad } from "./backend/modelo/alojamiento/Ciudad.js";
+import { Pais } from "./backend/modelo/alojamiento/Pais.js";
+import { Caracteristica } from "./backend/modelo/enums/Caracteristica.js";
+import { Moneda } from "./backend/modelo/enums/Moneda.js";
+import { Foto } from "./backend/modelo/alojamiento/Foto.js";
+import { Direccion } from "./backend/modelo/alojamiento/Direccion.js";
+import { Reserva } from "./backend/modelo/reserva/Reserva.js";
+import { RangoFechas } from "./backend/modelo/reserva/RangoFechas.js";
 
 // Crear un usuario anfitrión
 const anfitrion = new Usuario("Juan", "juan@mail.com", "anfitrión");
@@ -11,6 +18,12 @@ const ciudadSpringfield = new Ciudad("Springfield", new Pais("USA"));
 const paisUSA = new Pais("USA");
 const direccionSimpson = new Direccion("Evergreen Terrace", 555, ciudadSpringfield, paisUSA, "62704", "3000");
 
+// Crear un conjunto de fotos
+const fotosCabaña = [
+  new Foto("Vista de la cabaña", "/pureba.jpg"),
+  new Foto("Interior de la cabaña", "prueba.jpg"),
+];
+
 
 // Crear un alojamiento con ese anfitrión y direccion
 const alojamiento = new Alojamiento({
@@ -18,14 +31,14 @@ const alojamiento = new Alojamiento({
   nombre: "Cabaña en el bosque",
   descripcion: "Una cabaña tranquila para desconectar",
   precioPorNoche: 100,
-  moneda: "USD",
+  moneda: Moneda.USD,
   horarioCheckIn: "14:00",
   horarioCheckOut: "11:00",
   direccion: direccionSimpson,
   cantHuespedesMax: 4,
-  caracteristicas: [Caracteristicas.PILETA, Caracteristicas.WIFI],
+  caracteristicas: [Caracteristica.PILETA, Caracteristica.WIFI],
   reservas: [],
-  fotos: []
+  fotos: fotosCabaña,
 });
 
 console.log("✅ Alojamiento creado:", alojamiento);
