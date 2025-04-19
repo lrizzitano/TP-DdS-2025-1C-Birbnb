@@ -1,4 +1,5 @@
-import { Reserva, RangoFechas } from "../reserva/Reserva.js";
+import { Reserva } from "../reserva/Reserva.js";
+import { RangoFechas } from "../reserva/RangoFechas.js";
 import { Usuario } from "../Usuario.js";
 
 export class Alojamiento {
