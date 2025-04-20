@@ -1,0 +1,114 @@
+@startuml birbnb
+
+class Alojamiento {
+  - anfitrion: Usuario
+  - nombre: String
+  - descripcion: String
+  - precioPorNoche: Double
+  - moneda: Moneda
+  - horarioCheckIn: String
+  - horarioCheckOut: String
+  - direccion: Direccion
+  - cantHuespedesMax: number
+  - caracteristicas: Caracteristica[]
+  - reservas: Reserva[]
+  - fotos: Foto[]
+
+  + estasDisponibleEn(rangoDeFechas): boolean
+  + tuPrecioEstaDentroDe(valorMinimo, valorMaximo): boolean
+  + tenesCaracteristica(caracteristica): boolean
+  + puedenAlojarse(cantHuespedes): boolean
+}
+
+class Foto {
+  - descripcion: String
+  - path: String
+}
+
+class Direccion {
+  - calle: String
+  - altura: String
+  - ciudad: Ciudad
+  - lat: String
+  - long: String
+}
+
+class Ciudad {
+  - nombre: String
+  - pais: Pais
+}
+
+class Pais {
+  - nombre: String
+}
+
+class RangoFechas {
+  - fechaInicio: Date
+  - fechaFin: Date
+}
+
+class Reserva {
+  - fechaAlta: Date
+  - huespedReservador: Usuario
+  - cantHuespedes: number
+  - alojamiento: Alojamiento
+  - rangoFechas: RangoFechas
+  - estado: EstadoReserva
+  - precioPorNoche: Double
+  - historialCambiosEstado: CambioEstadoReserva[]
+
+  + actualizarEstado(estadoReserva: EstadoReserva): void
+  + agregarCambioDeEstado(cambioEstadoReserva: unCambioDeEstado): void
+}
+
+class CambioEstadoReserva {
+  - fecha: Date
+  - estado: EstadoReserva
+  - motivo: String
+  - usuario: Usuario
+}
+
+class FactoryNotificacion {
+  + crearSegunReserva(reserva: Reserva): Notificacion
+}
+
+class Notificacion {
+  - mensaje: String
+  - fechaAlta: Date
+  - leida: boolean
+  - fechaLeida: Date
+
+  + marcarComoLeida(): void
+}
+
+class Usuario {
+  - nombre: String
+  - email: String
+  - tipo: TipoUsuario
+  - notificacines: Notificacion[]
+
+  + agregarNotificacion(unaNotificacion: Notificacion): void
+}
+
+Alojamiento -> Direccion
+Alojamiento -->"*" Foto
+Alojamiento --> Usuario
+Alojamiento ..> RangoFechas
+Alojamiento -l->"*" Reserva
+
+Reserva -r-> Alojamiento
+Reserva -l-> RangoFechas
+Reserva --> Usuario
+Reserva -->"*" CambioEstadoReserva
+
+Direccion --> Ciudad
+Ciudad --> Pais
+
+CambioEstadoReserva --> Usuario
+
+Usuario -u->"*" Notificacion
+
+FactoryNotificacion .r.> Reserva
+FactoryNotificacion ..> Notificacion
+
+@enduml
