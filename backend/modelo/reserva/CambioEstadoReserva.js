@@ -4,7 +4,5 @@ export class CambioEstadoReserva {
         this.estadoReserva = estadoReserva; // instancia de EstadoReserva
         this.motivo = motivo; 
         this.usuario = usuario; // instancia de Usuario que realiza el cambio
-
-        reserva.actualizarEstado(estadoReserva); 
     }
 }
