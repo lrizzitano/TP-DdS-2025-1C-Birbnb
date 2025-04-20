@@ -10,4 +10,8 @@ export class Usuario {
     this.tipo = tipo; // TipoUsuario
     this.notificaciones = notificaciones
   }
+
+  agregarNotificacion(unaNotificacion) {
+    this.notificaciones.push(unaNotificacion)
+  }
 }

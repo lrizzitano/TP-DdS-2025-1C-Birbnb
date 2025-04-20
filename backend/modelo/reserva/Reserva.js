@@ -19,4 +19,8 @@ export class Reserva {
   actualizarEstado(nuevoEstado) {
     this.estado = nuevoEstado;
   }
+
+  agregarCambioDeEstado(unCambioDeEstado) {
+    this.historialDeCambios.push(unCambioDeEstado);
+  }
 }
