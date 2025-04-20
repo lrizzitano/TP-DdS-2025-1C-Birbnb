@@ -1,3 +1,5 @@
+import { CambioEstadoReserva } from "./CambioEstadoReserva";
+
 export class Reserva {
   constructor(rangoDeFechas,
     cantHuespedes,
@@ -16,8 +18,10 @@ export class Reserva {
     this.historialDeCambios = historialDeCambios
   }
 
-  actualizarEstado(nuevoEstado) {
+  actualizarEstado(nuevoEstado, motivo, fecha = new Date(), usuario) {
     this.estado = nuevoEstado;
+    let cambio = new CambioEstadoReserva(fecha, nuevoEstado, motivo, usuario);
+    this.agregarCambioDeEstado(cambio);
   }
 
   agregarCambioDeEstado(unCambioDeEstado) {
