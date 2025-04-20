@@ -4,9 +4,10 @@ const TipoUsuario = {
 };
 
 export class Usuario {
-  constructor(nombre, email, tipo) {
+  constructor(nombre, email, tipo, notificaciones = []) {
     this.nombre = nombre;
     this.email = email;
     this.tipo = tipo; // TipoUsuario
+    this.notificaciones = notificaciones
   }
 }

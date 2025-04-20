@@ -1,6 +1,5 @@
 export class Notificacion {
-  constructor(mensaje, usuario, fechaAlta, leida, fechaLeida) {
-    this.usuario = usuario; // instancia de Usuario
+  constructor(mensaje, fechaAlta, leida, fechaLeida) {
     this.mensaje = mensaje;
     this.fechaAlta = fechaAlta; 
     this.leida = leida; // booleano
