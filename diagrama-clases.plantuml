@@ -70,7 +70,7 @@ class CambioEstadoReserva {
   - usuario: Usuario
 }
 
-class FactoryNotificacion {
+abstract class FactoryNotificacion {
   + crearSegunReserva(reserva: Reserva): Notificacion
 }
 
@@ -117,6 +117,7 @@ Reserva -r-> Alojamiento
 Reserva -l-> RangoFechas
 Reserva --> Usuario
 Reserva -->"*" CambioEstadoReserva
+Reserva .l.> FactoryNotificacion
 
 Direccion --> Ciudad
 Ciudad --> Pais
@@ -125,7 +126,6 @@ CambioEstadoReserva --> Usuario
 
 Usuario -u->"*" Notificacion
 
-FactoryNotificacion .r.> Reserva
 FactoryNotificacion ..> Notificacion
 
 FactoryNotificacionReservaCreada --> FactoryNotificacion
