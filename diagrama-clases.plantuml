@@ -58,6 +58,8 @@ class Reserva {
   - historialCambiosEstado: CambioEstadoReserva[]
 
   + actualizarEstado(estadoReserva: EstadoReserva): void
+  + aceptarReserva(usuaio: Usuario): void
+  + cancelarReserva(usuario: Usuario): void
   + agregarCambioDeEstado(cambioEstadoReserva: unCambioDeEstado): void
 }
 
@@ -70,6 +72,21 @@ class CambioEstadoReserva {
 
 class FactoryNotificacion {
   + crearSegunReserva(reserva: Reserva): Notificacion
+}
+
+class FactoryNotificacionReservaCreada {
+  + obtenerMensaje(reserva: Reserva): String
+  + obtenerDestinatario(reserva: Reserva): Usuario
+}
+
+class FactoryNotificacionReservaAceptada {
+  + obtenerMensaje(reserva: Reserva): String
+  + obtenerDestinatario(reserva: Reserva): Usuario
+}
+
+class FactoryNotificacionReservaCancelada {
+  + obtenerMensaje(reserva: Reserva): String
+  + obtenerDestinatario(reserva: Reserva): Usuario
 }
 
 class Notificacion {
@@ -110,5 +127,9 @@ Usuario -u->"*" Notificacion
 
 FactoryNotificacion .r.> Reserva
 FactoryNotificacion ..> Notificacion
+
+FactoryNotificacionReservaCreada --> FactoryNotificacion
+FactoryNotificacionReservaAceptada --> FactoryNotificacion
+FactoryNotificacionReservaCancelada --> FactoryNotificacion
 
 @enduml
