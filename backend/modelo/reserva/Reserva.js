@@ -1,20 +1,30 @@
+import { CambioEstadoReserva } from "./CambioEstadoReserva";
+
 export class Reserva {
   constructor(rangoDeFechas,
     cantHuespedes,
     usuario,
     alojamiento,
     estado,
-    precioPorNoche) {
-    this.fechaAlta = new Date(); // fecha en la que se crea la reserva
+    precioPorNoche,
+    historialDeCambios = []) {
+    this.fechaAlta = new Date(); 
     this.huespedReservador = usuario; // instancia de Usuario
-    this.cantHuespedes = cantHuespedes; // por defecto
+    this.cantHuespedes = cantHuespedes; 
     this.alojamiento = alojamiento; // instancia de Alojamiento
     this.rangoDeFechas = rangoDeFechas;
     this.estado = estado;
-    this.precioPorNoche = precioPorNoche; // precio por noche del alojamiento
+    this.precioPorNoche = precioPorNoche; 
+    this.historialDeCambios = historialDeCambios
   }
 
-  actualizarEstado(nuevoEstado) {
+  actualizarEstado(nuevoEstado, motivo, fecha = new Date(), usuario) {
     this.estado = nuevoEstado;
+    let cambio = new CambioEstadoReserva(fecha, nuevoEstado, motivo, usuario);
+    this.agregarCambioDeEstado(cambio);
+  }
+
+  agregarCambioDeEstado(unCambioDeEstado) {
+    this.historialDeCambios.push(unCambioDeEstado);
   }
 }
