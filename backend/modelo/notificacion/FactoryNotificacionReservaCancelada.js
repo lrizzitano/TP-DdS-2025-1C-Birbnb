@@ -11,6 +11,6 @@ export class FactoryNotificacionReservaCancelada extends FactoryNotification {
     }
     
     static obtenerDestinatario(reserva){ 
-        const destinatario = reserva.alojamiento.anfitrion;
+        return reserva.alojamiento.anfitrion;
     }
 }
