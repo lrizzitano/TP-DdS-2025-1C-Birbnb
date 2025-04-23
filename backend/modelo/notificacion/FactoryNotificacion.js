@@ -1,6 +1,15 @@
+import { Notificacion } from './Notificacion.js';
+import { NotImplementedError } from './NotImplementedException.js'
+ 
 export class FactoryNotification {
-    constructor() {}
+    static crearSegunReserva(reserva) {
+        return new Notificacion(this.obtenerMensaje(), obtenerDestinatario.destinatario(), new Date(), 0, null);
+    }
 
-    // TODO: Implementar el método crearSegunReserva
-    crearSegunReserva(reserva) {}
+    obtenerMensaje() {
+        throw new NotImplementedError();
+    }
+    obtenerDestinatario() {
+        throw new NotImplementedError();
+    }
 }
