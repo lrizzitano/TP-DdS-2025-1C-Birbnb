@@ -1,9 +1,15 @@
 import { Notificacion } from './Notificacion.js';
-
+import { NotImplementedError } from './NotImplementedException.js'
+ 
 export class FactoryNotification {
-    static crearSegunReserva(reserva) {}
+    static crearSegunReserva(reserva) {
+        return new Notificacion(this.obtenerMensaje(), obtenerDestinatario.destinatario(), new Date(), 0, null);
+    }
 
-    static crearNotificacion(mensaje, destinatario) {
-        return new Notificacion(mensaje, destinatario, new Date(), 0, null);
+    obtenerMensaje() {
+        throw new NotImplementedError();
+    }
+    obtenerDestinatario() {
+        throw new NotImplementedError();
     }
 }
