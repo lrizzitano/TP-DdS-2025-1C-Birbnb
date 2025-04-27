@@ -53,3 +53,16 @@ const rango = new RangoFechas("2025-04-15", "2025-04-20");
 const reserva = new Reserva(rango, 2, huesped, alojamiento, "pendiente", alojamiento.precioPorNoche);
 
 console.log("✅ Reserva creada:", reserva);
+console.log("🔔 Notificacion del anfitrion:", reserva.alojamiento.anfitrion.ultimaNotificacion());
+
+reserva.aceptarReserva(anfitrion);
+console.log("✅ Reserva aceptada");
+console.log("🔔 Notificacion del huesped:", reserva.huespedReservador.ultimaNotificacion());
+
+reserva.cancelarReserva(huesped, "No hay plata");
+console.log("✅ Reserva cancelada");
+console.log("🔔 Notificacion del anfitrion:", reserva.alojamiento.anfitrion.ultimaNotificacion());
+
+reserva.alojamiento.anfitrion.ultimaNotificacion().marcarComoLeida();
+console.log("✅ Notificacion leida");
+console.log("🔔 Notificacion del anfitrion leida:", reserva.alojamiento.anfitrion.ultimaNotificacion());
