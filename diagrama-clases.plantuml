@@ -70,31 +70,15 @@ class CambioEstadoReserva {
   - usuario: Usuario
 }
 
-abstract class FactoryNotificacion {
-  + crearSegunReserva(reserva: Reserva): Notificacion
-}
-
-class FactoryNotificacionReservaCreada {
-  + obtenerMensaje(reserva: Reserva): String
-  + obtenerDestinatario(reserva: Reserva): Usuario
-}
-
-class FactoryNotificacionReservaAceptada {
-  + obtenerMensaje(reserva: Reserva): String
-  + obtenerDestinatario(reserva: Reserva): Usuario
-}
-
-class FactoryNotificacionReservaCancelada {
-  + obtenerMensaje(reserva: Reserva): String
-  + obtenerDestinatario(reserva: Reserva): Usuario
-}
-
 class Notificacion {
   - mensaje: String
   - fechaAlta: Date
   - leida: boolean
   - fechaLeida: Date
 
+  + crearNotificacionReservaCreada(reserva): Notificacion
+  + crearNotificacionReservaAceptada(reserva): Notificacion
+  + crearNotificacionReservaCancelada(reserva): Notificacion
   + marcarComoLeida(): void
 }
 
@@ -105,6 +89,7 @@ class Usuario {
   - notificacines: Notificacion[]
 
   + agregarNotificacion(unaNotificacion: Notificacion): void
+  + ultimaNotificacion(): Notificacion
 }
 
 Alojamiento -> Direccion
@@ -117,7 +102,6 @@ Reserva -r-> Alojamiento
 Reserva -l-> RangoFechas
 Reserva --> Usuario
 Reserva -->"*" CambioEstadoReserva
-Reserva .l.> FactoryNotificacion
 
 Direccion --> Ciudad
 Ciudad --> Pais
@@ -126,10 +110,6 @@ CambioEstadoReserva --> Usuario
 
 Usuario -u->"*" Notificacion
 
-FactoryNotificacion ..> Notificacion
-
-FactoryNotificacionReservaCreada --> FactoryNotificacion
-FactoryNotificacionReservaAceptada --> FactoryNotificacion
-FactoryNotificacionReservaCancelada --> FactoryNotificacion
+Reserva .d.> Notificacion
 
 @enduml
