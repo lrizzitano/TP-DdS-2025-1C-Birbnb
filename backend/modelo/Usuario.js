@@ -9,4 +9,8 @@ export class Usuario {
   agregarNotificacion(unaNotificacion) {
     this.notificaciones.push(unaNotificacion)
   }
+
+  ultimaNotificacion() {
+    return this.notificaciones.slice(-1).pop()
+  }
 }
