@@ -1,7 +1,3 @@
-import { Reserva } from "../reserva/Reserva.js";
-import { RangoFechas } from "../reserva/RangoFechas.js";
-import { Usuario } from "../Usuario.js";
-
 export class Alojamiento {
   constructor({
     anfitrion,

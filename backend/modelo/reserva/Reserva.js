@@ -1,8 +1,6 @@
-import { CambioEstadoReserva } from "./CambioEstadoReserva";
-import { EstadoReserva } from "../enums/EstadoReserva";
-import { FactoryNotificacionReservaAceptada } from "../notificacion/FactoryNotificacionReservaAceptada";
-import { FactoryNotificacionReservaCancelada } from "../notificacion/FactoryNotificacionReservaCancelada";
-import { FactoryNotificacionReservaCreada } from "../notificacion/FactoryNotificacionReservaCreada";
+import { CambioEstadoReserva } from "./CambioEstadoReserva.js";
+import { EstadoReserva } from "../enums/EstadoReserva.js";
+import { Notificacion } from "../notificacion/Notificacion.js";
 
 export class Reserva {
   constructor(rangoDeFechas,
@@ -21,7 +19,7 @@ export class Reserva {
     this.precioPorNoche = precioPorNoche; 
     this.historialDeCambios = historialDeCambios
 
-    FactoryNotificacionReservaCreada.crearSegunReserva(this);
+    Notificacion.crearNotificacionReservaCreada(this);
   }
 
   actualizarEstado(nuevoEstado, motivo, fecha = new Date(), usuario) {
@@ -32,12 +30,12 @@ export class Reserva {
 
   aceptarReserva(usuario) {
     this.actualizarEstado(EstadoReserva.CONFIRMADA, "Reserva aceptada por el anfitrion", new Date(), usuario);
-    FactoryNotificacionReservaAceptada.crearSegunReserva(this);
+    Notificacion.crearNotificacionReservaAceptada(this);
   }
 
   cancelarReserva(usuario, motivo) {
     this.actualizarEstado(EstadoReserva.CANCELADA, motivo, new Date(), usuario);
-    FactoryNotificacionReservaCancelada.crearSegunReserva(this);
+    Notificacion.crearNotificacionReservaCancelada(this, motivo);
   }
 
   agregarCambioDeEstado(unCambioDeEstado) {
