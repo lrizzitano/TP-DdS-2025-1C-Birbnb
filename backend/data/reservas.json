@@ -1,0 +1,42 @@
+[
+  {
+    "alojamiento": "cabaña-101",
+    "huesped": "usuario1",
+    "rangoFechas": {
+      "fechaInicio": "2025-06-10",
+      "fechaFin": "2025-06-15"
+    },
+    "estado": "pendiente",
+    "id": "77055eca-138c-4838-83be-be16a71bb84a"
+  },
+  {
+    "alojamiento": "cabaña-102",
+    "huesped": "usuario2",
+    "rangoFechas": {
+      "fechaInicio": "2025-07-01",
+      "fechaFin": "2025-07-10"
+    },
+    "estado": "pendiente",
+    "id": "173b81c9-3dd2-4681-b84e-2bdbb51ae158"
+  },
+  {
+    "alojamiento": "cabaña-A",
+    "huesped": "cliente1",
+    "rangoFechas": {
+      "fechaInicio": "2025-08-01",
+      "fechaFin": "2025-08-05"
+    },
+    "estado": "pendiente",
+    "id": "59692167-a229-4a07-b3d1-d7b887d3f32a"
+  },
+  {
+    "alojamiento": "cabaña-B",
+    "huesped": "cliente2",
+    "rangoFechas": {
+      "fechaInicio": "2025-08-10",
+      "fechaFin": "2025-08-15"
+    },
+    "estado": "pendiente",
+    "id": "0f797691-fcd6-4a64-abe3-f055d78fa7d2"
+  }
+]
