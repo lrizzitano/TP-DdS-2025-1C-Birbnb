@@ -50,4 +50,14 @@ export class ReservaRepository {
       new Date(r.rangoFechas.fechaFin) > new Date(fechaInicio) 
     );
   }
+
+  async update(reservaActualizada) {
+    const reservas = await this.findAll();
+    const index = reservas.findIndex(r => r.id === reservaActualizada.id);
+    if (index === -1) throw new Error("Reserva no encontrada");
+
+    reservas[index] = reservaActualizada;
+    await writeFile(rutaArchivo, JSON.stringify(reservas, null, 2));
+    return reservaActualizada;
+  }
 }

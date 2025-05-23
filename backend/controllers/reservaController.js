@@ -37,10 +37,44 @@ export class ReservaController {
 
   async listar(req, res) {
     try {
+      const email = req.query.usuario || req.query.huesped;
+
+      if (email) {
+        const filtradas = await this.reservaService.obtenerReservasPorUsuario(email);
+        return res.status(200).json(filtradas);
+      }
+
       const reservas = await this.reservaService.listarReservas();
       res.status(200).json(reservas);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const { motivo } = req.body || {};
+
+    try {
+      const resultado = await this.reservaService.cancelarReserva(id, motivo);
+      res.status(200).json({ mensaje: "Reserva cancelada", reserva: resultado });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+
+
+    async update(req, res) {
+    const { id } = req.params;
+    const nuevosDatos = req.body;
+
+    try {
+      const reservaModificada = await this.reservaService.update(id, nuevosDatos);
+      res.status(200).json({ mensaje: "Reserva modificada", reserva: reservaModificada });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
 }
