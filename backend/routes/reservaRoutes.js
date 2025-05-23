@@ -1,6 +1,6 @@
 import { ReservaController } from "../controllers/reservaController.js";
 
-export function registerProductRoutes(app, getController) {
+export function registerReservaRoutes(app, getController) {
 // TODO: estas son genericas, veamos cuales nos sirven y cuales se van
   app.get("/reservas", (req, res) =>
     getController(ReservaController).listar(req, res)

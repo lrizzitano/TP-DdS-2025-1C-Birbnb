@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test.js",
-    "start": "node ./backend/server.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",

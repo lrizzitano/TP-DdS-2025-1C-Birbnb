@@ -47,7 +47,7 @@ export class ReservaRepository {
       r.alojamiento === alojamientoId &&
       r.estado !== 'cancelada' &&
       new Date(r.rangoFechas.fechaInicio) < new Date(fechaFin) &&
-      new Date(r.rangoFechas.fechaFin) > new Date(fechaInicio)
+      new Date(r.rangoFechas.fechaFin) > new Date(fechaInicio) 
     );
   }
 }

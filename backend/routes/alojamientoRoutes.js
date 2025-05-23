@@ -1,4 +1,4 @@
-import { AlojamientoController } from "../controllers/alojamientoController.js";
+// import { AlojamientoController } from "../controllers/alojamientoController.js";
 
 export function registerProductRoutes(app, getController) {
     // TODO
