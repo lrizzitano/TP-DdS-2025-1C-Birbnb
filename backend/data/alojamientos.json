@@ -1,0 +1,80 @@
+[
+  {
+    "anfitrion": "anfitrion1",
+    "nombre": "Cabaña en la montaña",
+    "descripcion": "Hermosa cabaña rodeada de naturaleza.",
+    "precioPorNoche": 120,
+    "moneda": "USD",
+    "horarioCheckIn": "14:00",
+    "horarioCheckOut": "11:00",
+    "direccion": "San Carlos de Bariloche, Argentina",
+    "cantHuespedesMax": 4,
+    "caracteristicas": [
+      "Wi-Fi",
+      "piscina",
+      "mascotas"
+    ],
+    "reservas": [],
+    "fotos": [
+      "cabaña1.jpg"
+    ]
+  },
+  {
+    "anfitrion": "anfitrion2",
+    "nombre": "Departamento céntrico",
+    "descripcion": "Departamento moderno en el centro de la ciudad.",
+    "precioPorNoche": 80,
+    "moneda": "USD",
+    "horarioCheckIn": "15:00",
+    "horarioCheckOut": "10:00",
+    "direccion": "Buenos Aires, Argentina",
+    "cantHuespedesMax": 2,
+    "caracteristicas": [
+      "Wi-Fi",
+      "aire acondicionado"
+    ],
+    "reservas": [],
+    "fotos": [
+      "depto1.jpg"
+    ]
+  },
+  {
+    "anfitrion": "anfitrion3",
+    "nombre": "Casa con pileta",
+    "descripcion": "Casa espaciosa ideal para familias.",
+    "precioPorNoche": 200,
+    "moneda": "USD",
+    "horarioCheckIn": "13:00",
+    "horarioCheckOut": "12:00",
+    "direccion": "Mendoza, Argentina",
+    "cantHuespedesMax": 6,
+    "caracteristicas": [
+      "Wi-Fi",
+      "piscina",
+      "estacionamiento"
+    ],
+    "reservas": [],
+    "fotos": [
+      "casa1.jpg"
+    ]
+  },
+  {
+    "anfitrion": "anfitrion4",
+    "nombre": "Loft moderno",
+    "descripcion": "Un loft con estilo industrial y todas las comodidades.",
+    "precioPorNoche": 100,
+    "moneda": "USD",
+    "horarioCheckIn": "14:00",
+    "horarioCheckOut": "11:00",
+    "direccion": "Córdoba, Argentina",
+    "cantHuespedesMax": 2,
+    "caracteristicas": [
+      "Wi-Fi",
+      "terraza"
+    ],
+    "reservas": [],
+    "fotos": [
+      "loft1.jpg"
+    ]
+  }
+]
