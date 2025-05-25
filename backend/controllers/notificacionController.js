@@ -1,8 +1,8 @@
 import { EstadoNotificacion } from '../modelo/enums/EstadoNotificacion.js';
 
-export class NotificaccionController {
-    constructor(notificaccionController) {
-        this.notificaccionController = notificaccionController;
+export class NotificacionController {
+    constructor(notificacionService) {
+        this.notificacionService = notificacionService;
     }
 
     async findByUsuario(req, res) {
