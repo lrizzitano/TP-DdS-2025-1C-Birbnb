@@ -1,4 +1,4 @@
-import { EstadoNotificacion } from '../modelo/enums/EstadoNotificacion';
+import { EstadoNotificacion } from "../modelo/enums/EstadoNotificacion.js";
 
 
 export class NotificacionService {
@@ -7,7 +7,7 @@ export class NotificacionService {
   }
 
   async findByUsuario(idUsuario, estado = EstadoNotificacion.PENDIENTE) {
-    const notificaciones = await this.reservaRepository.findByUsuario(idUsuario);
+    const notificaciones = await this.notificacionRepository.findByUsuario(idUsuario);
 
     notificaciones = notificaciones.filter(
       (notificacion) => notificacion.estado === estado
@@ -20,7 +20,7 @@ export class NotificacionService {
     const notificacion = await this.notificacionRepository.findById(idUsuario, idNotificacion);
 
     notificacion.estado = EstadoNotificacion.LEIDO;
-    const notificacionModificada = await this.reservaRepository.update(notificacion);
+    const notificacionModificada = await this.notificacionRepository.update(notificacion);
     return this.toDTO(notificacionModificada);
   }
 
