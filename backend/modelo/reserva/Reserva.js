@@ -1,6 +1,6 @@
 import { CambioEstadoReserva } from "./CambioEstadoReserva.js";
 import { EstadoReserva } from "../enums/EstadoReserva.js";
-import { Notificacion } from "../notificacion/Notificacion.js";
+import { Notificacion } from "../Notificacion.js";
 
 export class Reserva {
   constructor(rangoDeFechas,
