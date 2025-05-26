@@ -15,6 +15,10 @@ export class NotificacionService {
   async updateEstado(id) {
     const notificacion = await this.notificacionRepository.findById(id);
 
+    if (!notificacion) {
+      return null;
+    }
+    
     notificacion.estado = EstadoNotificacion.LEIDA;
     const notificacionModificada = await this.notificacionRepository.update(notificacion);
     return this.toDTO(notificacionModificada);
