@@ -29,6 +29,9 @@ export class UsuarioService {
     }
 
     toDTO(usuario) {
+        if (!usuario) {
+            return null;
+        }
         return {
             id: usuario.id,
             nombre: usuario.nombre,
