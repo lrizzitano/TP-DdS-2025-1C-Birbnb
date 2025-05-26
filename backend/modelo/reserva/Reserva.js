@@ -6,18 +6,15 @@ export class Reserva {
   constructor(rangoDeFechas,
     cantHuespedes,
     usuario,
-    alojamiento,
-    estado,
-    precioPorNoche,
-    historialDeCambios = []) {
+    alojamiento) {
     this.fechaAlta = new Date(); 
     this.huespedReservador = usuario; // instancia de Usuario
     this.cantHuespedes = cantHuespedes; 
     this.alojamiento = alojamiento; // instancia de Alojamiento
     this.rangoDeFechas = rangoDeFechas;
-    this.estado = estado;
-    this.precioPorNoche = precioPorNoche; 
-    this.historialDeCambios = historialDeCambios
+    this.estado = EstadoReserva.PENDIENTE;
+    this.precioPorNoche = alojamiento.precioPorNoche; 
+    this.historialDeCambios = [];
 
     Notificacion.crearNotificacionReservaCreada(this);
   }
