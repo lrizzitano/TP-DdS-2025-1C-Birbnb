@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { Notificacion } from '../notificacion/Notificacion';
-import { EstadoNotificacion } from '../enums/EstadoNotificacion';
+import { Notificacion } from '../Notificacion.js';
+import { EstadoNotificacion } from '../enums/EstadoNotificacion.js';
 
 const notificacionSchema = new mongoose.Schema({
     mensaje: {
