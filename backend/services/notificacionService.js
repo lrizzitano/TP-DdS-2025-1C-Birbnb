@@ -20,6 +20,7 @@ export class NotificacionService {
     }
     
     notificacion.estado = EstadoNotificacion.LEIDA;
+    notificacion.fechaLeida = new Date();
     const notificacionModificada = await this.notificacionRepository.update(notificacion);
     return this.toDTO(notificacionModificada);
   }
