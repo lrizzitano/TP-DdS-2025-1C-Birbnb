@@ -1,16 +1,19 @@
+import mongoose from 'mongoose';
+import { NotificacionModel } from '../modelo/schemas/notificacionSchema.js';
+
 export class NotificacionRepository { 
-    constructor(notificacionModel) {
-        this.model = notificacionModel;
+    constructor() {
+        this.model = NotificacionModel;
     }
-    
-    async findByUsuario(idUsuario) {
-        return await this.model.find({ idUsuario });
+
+    async findByDestinatario(destinatario, filter = {}) {
+        return await this.model.find({ destinatario, ...filter });
     }
-    
-    async findById(idUsuario, idNotificacion) {
-        return await this.model.findOne({ idUsuario, idNotificacion });
+
+    async findById(id) {
+        return await this.model.findById(id);
     }
-    
+
     async update(notificacion) {
         return await this.model.findByIdAndUpdate(
         notificacion.id,

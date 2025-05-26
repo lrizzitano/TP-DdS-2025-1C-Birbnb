@@ -20,6 +20,11 @@ const notificacionSchema = new mongoose.Schema({
     fechaLeida: {
         type: Date,
         default: null
+    },
+    destinatario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
     }
 }, {
     timestamps: true,

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { EstadoNotificacion } from '../modelo/enums/EstadoNotificacion.js';
 
 export class NotificacionController {
@@ -5,16 +6,21 @@ export class NotificacionController {
         this.notificacionService = notificacionService;
     }
 
-    async findByUsuario(req, res) {
+    async findByDestinatario(req, res) {
         try {
-            const idUsuario = Number(req.params.idUsuario);
+            const idDestinatario = req.params.idDestinatario;
+            const filter = {};
             const estado = EstadoNotificacion[req.query.estado];
-
-            if (Number.isNaN(idUsuario) || !(req.query.estado in EstadoNotificacion)) {
-                return res.status(400).json({ error: 'Parámetros obligatorios inválidos' });
+            if (estado) {
+                filter.estado = estado;
             }
 
-            const notificaciones = await this.notificacionService.findByUsuario(idUsuario, estado);
+
+            if (!mongoose.isValidObjectId(idDestinatario)) {
+                return res.status(400).json({ error: 'El id del destinatario es inválido' });
+            }
+
+            const notificaciones = await this.notificacionService.findByDestinatario(idDestinatario, filter);
             res.status(200).json(notificaciones);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -23,14 +29,13 @@ export class NotificacionController {
 
     async updateEstado(req, res) {
         try {
-            const idUsuario = Number(req.params.idUsuario);
-            const idNotificacion = Number(req.params.idNotificacion);
+            const id = req.params.id;
 
-            if (Number.isNaN(idUsuario) || Number.isNaN(idNotificacion)) {
-                return res.status(400).json({ error: 'Parámetros obligatorios inválidos' });
+            if (!mongoose.isValidObjectId(id)) {
+                return res.status(400).json({ error: 'El id de la notificación es inválido' });
             }
 
-            const notificacion = await this.notificacionService.updateEstado(idUsuario, idNotificacion);
+            const notificacion = await this.notificacionService.updateEstado(id);
 
             if (!notificacion) {
                 return res.status(404).json({ error: 'Notificación no encontrada' });
