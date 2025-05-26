@@ -1,4 +1,4 @@
-import { EstadoNotificacion } from "../enums/EstadoNotificacion.js";
+import { EstadoNotificacion } from "./enums/EstadoNotificacion.js";
 
 export class Notificacion {
   constructor(mensaje, fechaAlta = new Date(), estado = EstadoNotificacion.PENDIENTE, fechaLeida = null) {
