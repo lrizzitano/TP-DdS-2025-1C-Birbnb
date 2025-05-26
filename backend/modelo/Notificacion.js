@@ -1,10 +1,10 @@
-import { EstadoNotificacion } from "../enums/EstadoNotificacion.js";
+import { EstadoNotificacion } from "./enums/EstadoNotificacion.js";
 
 export class Notificacion {
-  constructor(mensaje, fechaAlta = new Date(), leida = EstadoNotificacion.PENDIENTE, fechaLeida = null) {
+  constructor(mensaje, fechaAlta = new Date(), estado = EstadoNotificacion.PENDIENTE, fechaLeida = null) {
     this.mensaje = mensaje;
     this.fechaAlta = fechaAlta;
-    this.leida = leida;
+    this.estado = estado;
     this.fechaLeida = fechaLeida;
   }
 
@@ -52,7 +52,7 @@ export class Notificacion {
   }
 
   marcarComoLeida() {
-    this.leida = EstadoNotificacion.LEIDA;
+    this.estado = EstadoNotificacion.LEIDA;
     this.fechaLeida = new Date();
   }
 

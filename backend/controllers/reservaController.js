@@ -1,26 +1,3 @@
-// import {
-//   crearReserva,
-//   listarReservas
-// } from '../services/reservaService.js';
-
-// export const crearReservaController = async (req, res) => {
-//   try {
-//     const reserva = await crearReserva(req.body);
-//     res.status(201).json(reserva);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// export const obtenerReservasController = async (req, res) => {
-//   try {
-//     const reservas = await listarReservas();
-//     res.status(200).json(reservas);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 export class ReservaController {
   constructor(reservaService) {
     this.reservaService = reservaService;
@@ -35,16 +12,10 @@ export class ReservaController {
     }
   }
 
-  async listar(req, res) {
+  async getReservas(req, res) {
     try {
-      const email = req.query.usuario || req.query.huesped;
-
-      if (email) {
-        const filtradas = await this.reservaService.obtenerReservasPorUsuario(email);
-        return res.status(200).json(filtradas);
-      }
-
-      const reservas = await this.reservaService.listarReservas();
+      const { idUsuario } = req.params;
+      const reservas = await this.reservaService.getReservasDeUsuario(idUsuario);
       res.status(200).json(reservas);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -63,9 +34,7 @@ export class ReservaController {
     }
   }
 
-
-
-    async update(req, res) {
+  async update(req, res) {
     const { id } = req.params;
     const nuevosDatos = req.body;
 
@@ -77,4 +46,13 @@ export class ReservaController {
     }
   }
 
+  async actualizar(req, res) {
+    try {
+      const { id } = req.params;
+      const reserva = await this.reservaService.actualizar(id);
+      res.status(200).json(reserva);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }

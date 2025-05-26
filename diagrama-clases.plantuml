@@ -73,7 +73,7 @@ class CambioEstadoReserva {
 class Notificacion {
   - mensaje: String
   - fechaAlta: Date
-  - leida: boolean
+  - estado: EstadoNotificacion
   - fechaLeida: Date
 
   + crearNotificacionReservaCreada(reserva): Notificacion

@@ -1,7 +1,8 @@
 import express from "express";
-import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
-//import { registerNotificacionRoutes } from "./backend/routes/notificacionRoutes.js";
+//import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
+import { registerNotificacionRoutes } from "./backend/routes/notificacionRoutes.js";
 import { registerReservaRoutes } from "./backend/routes/reservaRoutes.js";
+import { registerUsuarioRoutes } from "./backend/routes/usuarioRoutes.js";
 
 export class Server {
   #controllers = {};
@@ -30,9 +31,10 @@ export class Server {
   }
 
   configureRoutes() {
-    registerAlojamientoRoutes(this.app, this.getController.bind(this));
-    //registerNotificacionRoutes(this.app, this.getController.bind(this));
+    //registerAlojamientoRoutes(this.app, this.getController.bind(this));
+    registerNotificacionRoutes(this.app, this.getController.bind(this));
     registerReservaRoutes(this.app, this.getController.bind(this));
+    registerUsuarioRoutes(this.app, this.getController.bind(this));
   }
 
   launch() {
