@@ -170,6 +170,170 @@ paths:
         "500":
           description: Error del servidor
 
+  /alojamientos:
+    get:
+      summary: Obtener lista de alojamientos
+      tags:
+        - Alojamientos
+      parameters:
+        - name: calle
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: altura
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ciudad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pais
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: lat
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: long
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: precioMin
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: precioMax
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: cantHuespedes
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: caracteristicas
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: number
+              enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/alojamiento"
+        "400":
+          description: Rango de precios inválido
+        "500":
+          description: Error del servidor
+
+    post:
+      summary: Crear un nuevo alojamiento
+      tags:
+        - Alojamientos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alojamiento"
+      responses:
+        "201":
+          description: Alojamiento creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "500":
+          description: Error del servidor
+
+  /alojamientos/{id}:
+    get:
+      summary: Obtener un alojamiento por ID
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Alojamiento encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
+    delete:
+      summary: Eliminar un alojamiento por ID
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Alojamiento eliminado exitosamente
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
+    put:
+      summary: Actualizar un alojamiento existente
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alojamiento"
+      responses:
+        "200":
+          description: Alojamiento actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
 components:
   schemas:
     usuario:
@@ -214,3 +378,75 @@ components:
         - id
         - mensaje
         - destinatario
+
+    alojamiento:
+      type: object
+      properties:
+        id:
+          type: string
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precioPorNoche:
+          type: number
+          format: number
+        moneda:
+          type: number
+          enum: [DOLAR_USA, PESO_ARG, REALES]
+        horarioCheckIn:
+          type: string
+          format: time
+        horarioCheckOut:
+          type: string
+          format: time
+        direccion:
+          type: object
+          properties:
+            calle:
+              type: string
+            altura:
+              type: string
+            ciudad:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                pais:
+                  type: object
+                  properties:
+                    nombre:
+                      type: string
+            lat:
+              type: number
+              format: float
+            long:
+              type: number
+              format: float
+        catidadHuespedesMax:
+          type: number
+        caracteristicas:
+          type: array
+          items:
+            type: number
+            enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
+        fotos:
+          type: array
+          items:
+            type: object
+            properties:
+              descripcion:
+                type: string
+              path:
+                type: string
+      required:
+        - id
+        - nombre
+        - descripcion
+        - precioPorNoche
+        - moneda
+        - horarioCheckIn
+        - horarioCheckOut
+        - direccion
+        - cantidadHuespedesMax
+        - fotos
