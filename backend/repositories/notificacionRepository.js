@@ -6,8 +6,8 @@ export class NotificacionRepository {
         this.model = NotificacionModel;
     }
 
-    async findByDestinatario(destinatario, filter = {}) {
-        return await this.model.find({ destinatario, ...filter });
+    async findByDestinatario(filters = {}) {
+        return await this.model.find({ ...filters });
     }
 
     async findById(id) {

@@ -6,8 +6,8 @@ export class NotificacionService {
     this.notificacionRepository = notificacionRepository;
   }
 
-  async findByDestinatario(destinatario, filter = {}) {
-    const notificaciones = await this.notificacionRepository.findByDestinatario(destinatario, filter);
+  async findByDestinatario(filters = {}) {
+    const notificaciones = await this.notificacionRepository.findByDestinatario(filters);
 
     return notificaciones.map(notificacion => this.toDTO(notificacion));
   }

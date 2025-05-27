@@ -8,19 +8,18 @@ export class NotificacionController {
 
     async findByDestinatario(req, res) {
         try {
-            const idDestinatario = req.params.idDestinatario;
-            const filter = {};
-            const estado = EstadoNotificacion[req.query.estado];
-            if (estado) {
-                filter.estado = estado;
-            }
-
+            const idDestinatario = req.query.destinatario;
+            const estado = EstadoNotificacion[req.query.estado] 
+            const filters = {
+                destinatario: idDestinatario,
+                estado: estado
+            };
 
             if (!mongoose.isValidObjectId(idDestinatario)) {
                 return res.status(400).json({ error: 'El id del destinatario es inválido' });
             }
 
-            const notificaciones = await this.notificacionService.findByDestinatario(idDestinatario, filter);
+            const notificaciones = await this.notificacionService.findByDestinatario(filters);
             res.status(200).json(notificaciones);
         } catch (error) {
             res.status(500).json({ error: error.message });
