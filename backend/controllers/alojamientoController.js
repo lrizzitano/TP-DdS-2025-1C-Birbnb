@@ -9,10 +9,12 @@ export class AlojamientoController {
     res.json(alojamientos);
   }
 
-  async findById(req, res) {
-    const alojamiento = await this.alojamientoService.findById(req.params.id);
-    res.json(alojamiento);
-  }
+async findAll(req, res) {
+  const filtros = req.query;
+  const alojamientos = await this.alojamientoService.findAll(filtros);
+  res.json(alojamientos);
+}
+
 
   async create(req, res) {
     const nuevoAlojamiento = await this.alojamientoService.create(req.body);
