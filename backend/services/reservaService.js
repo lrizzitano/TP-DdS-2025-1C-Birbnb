@@ -4,10 +4,11 @@ import { RangoFechas } from "../modelo/reserva/RangoFechas.js";
 import { Notificacion } from "../modelo/Notificacion.js"
 
 export class ReservaService {
-  constructor(reservaRepository, alojamientoRepository, usuarioRepository) {
+  constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository) {
     this.reservaRepository = reservaRepository;
     this.alojamientoRepository = alojamientoRepository;
     this.usuarioRepository = usuarioRepository;
+    this.notificacionRepository = notificacionRepository;
   }
 
 

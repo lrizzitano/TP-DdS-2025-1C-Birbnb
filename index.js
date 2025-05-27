@@ -12,10 +12,6 @@ import { ReservaController } from "./backend/controllers/reservaController.js";
 import { AlojamientoRepository } from "./backend/repositories/alojamientoRepository.js";
 import { AlojamientoService } from "./backend/services/alojamientoService.js";
 import { AlojamientoController } from "./backend/controllers/alojamientoController.js";
-<<<<<<< HEAD
-=======
-
->>>>>>> implementacion-alojamiento
 
 import { NotificacionRepository } from "./backend/repositories/notificacionRepository.js";
 import { NotificacionService } from "./backend/services/notificacionService.js";
@@ -33,18 +29,9 @@ const server = new Server(app, port);
 MongoDBClient.connect();
 
 // Config dependencias
-const reservaRepo = new ReservaRepository();
-const reservaService = new ReservaService(reservaRepo);
-const reservaController = new ReservaController(reservaService);
-
-
 const alojamientoRepo = new AlojamientoRepository();
 const alojamientoService = new AlojamientoService(alojamientoRepo);
 const alojamientoController = new AlojamientoController(alojamientoService);
-<<<<<<< HEAD
-=======
-
->>>>>>> implementacion-alojamiento
 
 const notificacionRepo = new NotificacionRepository();
 const notificacionService = new NotificacionService(notificacionRepo);
@@ -53,6 +40,10 @@ const notificacionController = new NotificacionController(notificacionService);
 const usuarioRepo = new UsuarioRepository();
 const usuarioService = new UsuarioService(usuarioRepo);
 const usuarioController = new UsuarioController(usuarioService);
+
+const reservaRepo = new ReservaRepository();
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, usuarioRepo, notificacionRepo);
+const reservaController = new ReservaController(reservaService);
 
 // registro de controllers
 server.setController(ReservaController, reservaController);
