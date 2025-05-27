@@ -1,4 +1,6 @@
 import { Reserva } from "../modelo/reserva/Reserva.js"
+import { EstadoReserva } from "../modelo/enums/EstadoReserva.js"
+import { Notificacion } from "../modelo/Notificacion.js"
 
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, usuarioRepository) {
@@ -32,19 +34,25 @@ export class ReservaService {
       usuario,
       alojamiento
     );
-    // TODO, se podra usar el metodo alojamiento.estaDisponibleEn ? el tema es 
-    // que la lista de reservas no esta persistida, se podra hacer?
-    const conflicto = this.reservaRepository.estaReservado() 
+
+    const filtro = {estado : EstadoReserva.CONFIRMADA};
+    alojamiento.reservas = await this.reservaRepository.findByAlojamiento(datos.alojamientoId,
+                                                                           filtro);
                                                             
-    if (conflicto) {
+    if (!alojamiento.estaDisponibleEn(datos.rangoFechas)) {
       throw new Error('El alojamiento no esta disponible en las fechas seleccionadas');
     }
 
+
+    // TODO: TESTEAR. aca estamos suponiendo que al tener reserva inyectado usuario y alojamiento que provienen de un findById
+    // son documentos. Entonces agarra la notificacion y en su campo usuario pone reserva.alojamiento.anfitrion
+    // como alojamiento es un documento, su atributo anfitrion es un objectId de mongo
+    const notificacionReservaCreada = Notificacion.crearNotificacionReservaCreada(reserva);
+    this.notificacionRepository.save(notificacionReservaCreada);
+
     const reservaGuardada =  await this.reservaRepository.save(reserva);
 
-    // TODO el .toDto, estaria bueno q la clase reserva tenga un metodo
-    // para pasarse a dto y podamos usar eso + sumarle el id q me dio mongo
-    // que esta metido en el bojeto de reservaGuardada
+    // TODO el .toDto metiendole el _id que va a estar en reservaGuardada ya que es un documento que me devuelve mongo con el _id ya metido
     return this.toDto(reservaGuardada);
   }
 

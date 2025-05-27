@@ -1,6 +1,7 @@
 import { CambioEstadoReserva } from "./CambioEstadoReserva.js";
 import { EstadoReserva } from "../enums/EstadoReserva.js";
 import { Notificacion } from "../Notificacion.js";
+import { RangoFechas } from "./RangoFechas.js";
 
 export class Reserva {
   constructor(rangoDeFechas,
@@ -11,7 +12,7 @@ export class Reserva {
     this.huespedReservador = usuario; // instancia de Usuario
     this.cantHuespedes = cantHuespedes; 
     this.alojamiento = alojamiento; // instancia de Alojamiento
-    this.rangoDeFechas = rangoDeFechas;
+    this.rangoDeFechas = new RangoFechas(rangoDeFechas.inicio, rangoDeFechas.fin);
     this.estado = EstadoReserva.PENDIENTE;
     this.precioPorNoche = alojamiento.precioPorNoche; 
     this.historialDeCambios = [];

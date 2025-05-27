@@ -48,5 +48,4 @@ export class Alojamiento {
   puedenAlojarse(cantHuespedes) {
     return cantHuespedes <= this.cantHuespedesMax;
   }
-
 }
