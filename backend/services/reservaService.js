@@ -1,5 +1,6 @@
 import { Reserva } from "../modelo/reserva/Reserva.js"
 import { EstadoReserva } from "../modelo/enums/EstadoReserva.js"
+import { RangoFechas } from "../modelo/reserva/RangoFechas.js";
 import { Notificacion } from "../modelo/Notificacion.js"
 
 export class ReservaService {
@@ -24,9 +25,8 @@ export class ReservaService {
       throw new Error("El alojamiento sobre el que se quiere crear la reserva no existe");
     }
     
-    if (!alojamiento.puedenAlojarse(datos.cantidadHuespedes)) {
-      throw new Error("El alojamiento no permite esa cantidad de huespedes");
-    }
+    this.verificarHuespedesDe(alojamiento, datos.cantidadHuespedes);
+    this.verificarDisponibilidad(alojamiento, datos.rangoDeFechas);
 
     const reserva = new Reserva(
       datos.rangoFechas,
@@ -34,15 +34,6 @@ export class ReservaService {
       usuario,
       alojamiento
     );
-
-    const filtro = {estado : EstadoReserva.CONFIRMADA};
-    alojamiento.reservas = await this.reservaRepository.findByAlojamiento(datos.alojamientoId,
-                                                                           filtro);
-                                                            
-    if (!alojamiento.estaDisponibleEn(datos.rangoFechas)) {
-      throw new Error('El alojamiento no esta disponible en las fechas seleccionadas');
-    }
-
 
     // TODO: TESTEAR. aca estamos suponiendo que al tener reserva inyectado usuario y alojamiento que provienen de un findById
     // son documentos. Entonces agarra la notificacion y en su campo usuario pone reserva.alojamiento.anfitrion
@@ -55,6 +46,75 @@ export class ReservaService {
     return this.toDto(reservaGuardada);
   }
 
+  async getReservasDeUsuario(id) {
+    const reservas = await this.reservaRepository.findByUsuario(id);
+    reservas.map(reserva => this.toDto(reserva));
+    return reservas;
+  }
+
+  async cancelarReserva(id, motivo) {
+    //necesito el alojamiento y el huespedReservador populados para enviar la notificacion
+    const reserva = await this.reservaRepository.findByIdConAlojamientoYHuespedPopulado(id);
+    this.verificarReservaActualizable(reserva, "cancelar");
+
+    const notificacionReservaCancelada = reserva.cancelar(motivo);
+    this.notificacionRepository.save(notificacionReservaCancelada);
+
+    const reservaGuardada = await this.reservaRepository.save(reserva);
+
+    return this.toDto(reservaGuardada);
+  }
+
+  async aceptarReserva(id) {
+    //necesito el alojamiento y anfitrion populados para enviar la notificacion
+    const reserva = await this.reservaRepository.findByIdConAlojamientoYAnfitrionPopulado(id);
+    this.verificarReservaActualizable(reserva, "cancelar");
+
+    const notificacionReservaAceptada = reserva.aceptar();
+    this.notificacionRepository.save(notificacionReservaAceptada);
+
+    const reservaGuardada = await this.reservaRepository.save(reserva);
+
+    return this.toDto(reservaGuardada);
+  }
+
+  async actualizarReserva(id, nuevosDatos) {
+    // necesito el alojamiento populado para poder verificar sus reglas de negocio
+    const reserva = await this.reservaRepository.findByIdConAlojamientoPopulado(id);
+    this.verificarReservaActualizable(reserva, "actualizar");
+    
+    const seModificaronFechas =
+      nuevosDatos.rangoFechas &&
+      (nuevosDatos.rangoFechas.fechaInicio != reserva.rangoFechas.fechaInicio ||
+      nuevosDatos.rangoFechas.fechaFin != reserva.rangoFechas.fechaFin);
+
+    // reglas de negocio -> TODO : pensar / preguntar si tiene sentido verificar aca o esta verificacion se haria en el front end
+    if (seModificaronFechas) {
+      this.verificarDisponibilidad(reserva.alojamiento, nuevosDatos.rangoFechas);
+      reserva.rangoFechas = nuevosDatos.rangoFechas;
+    }
+
+    if (reserva.cantidadHuespedes != nuevosDatos.cantidadHuespedes && nuevosDatos.cantidadHuespedes) {
+      this.verificarHuespedesDe(reserva.alojamiento, nuevosDatos.cantidadHuespedes);
+      reserva.cantidadHuespedes = nuevosDatos.cantidadHuespedes;
+    }
+
+    return await this.reservaRepository.save(reserva);
+  }
+
+  // utils
+
+  async verificarReservaActualizable(reserva, mensaje) {
+    if (!reserva) {
+      throw new Error("Reserva no encontrada");
+    }
+
+    const hoy = new Date();
+    const fechaInicioActual = new Date(reserva.rangoFechas.fechaInicio);
+    if (hoy >= fechaInicioActual) {
+      throw new Error("No se puede " + mensaje + " una reserva que ya comenzo o termino");
+    }
+  }
 
   toDto(reserva) {
     // TODO , ver si nos interesa que el DTO pase algo mas
@@ -66,80 +126,19 @@ export class ReservaService {
     }
   }
 
-
-  async listarReservas() {
-    return await this.reservaRepository.findAll();
+  async verificarHuespedesDe(unAlojamiento, cantidadHuespedes) {
+    if (!unAlojamiento.puedenAlojarse(cantidadHuespedes)) {
+      throw new Error("El alojamiento no permite esa cantidad de huespedes");
+    }
   }
 
-
-
-  async cancelarReserva(id, motivo = null) {
-    const reservas = await this.reservaRepository.findAll();
-    const reserva = reservas.find(r => r.id === id);
-
-    if (!reserva) {
-      throw new Error("Reserva no encontrada");
+  async verificarDisponibilidad(unAlojamiento, rangoDeFechas) {
+    const filtro = {estado : EstadoReserva.CONFIRMADA};
+    unAlojamiento.reservas = await this.reservaRepository.findByAlojamiento(unAlojamiento._id,
+                                                                           filtro);
+                                                            
+    if (!unAlojamiento.estaDisponibleEn(rangoDeFechas)) {
+      throw new Error('El alojamiento no esta disponible en las fechas seleccionadas');
     }
-
-    const hoy = new Date();
-    const fechaInicio = new Date(reserva.rangoFechas.fechaInicio);
-
-    if (hoy >= fechaInicio) {
-      throw new Error("No se puede cancelar una reserva ya iniciada o pasada.");
-    }
-
-    reserva.estado = "cancelada";
-    if (motivo) {
-      reserva.motivoCancelacion = motivo;
-    }
-
-    return await this.reservaRepository.update(reserva);
   }
-
-
-
-    async update(id, nuevosDatos) {
-    const reservas = await this.reservaRepository.findAll();
-    const reserva = reservas.find(r => r.id === id);
-
-    if (!reserva) {
-      throw new Error("Reserva no encontrada");
-    }
-
-    const hoy = new Date();
-    const fechaInicioActual = new Date(reserva.rangoFechas.fechaInicio);
-    if (hoy >= fechaInicioActual) {
-      throw new Error("No se puede modificar una reserva que ya comenzó o terminó.");
-    }
-
-    // Si se modifican las fechas, validar que no haya conflicto(achequear esto si esta bien la logica)
-    const seModificaronFechas =
-      nuevosDatos.rangoFechas &&
-      (nuevosDatos.rangoFechas.fechaInicio !== reserva.rangoFechas.fechaInicio ||
-      nuevosDatos.rangoFechas.fechaFin !== reserva.rangoFechas.fechaFin);
-
-    if (seModificaronFechas) {
-      const conflicto = await this.reservaRepository.hasConflict(
-        reserva.alojamiento,
-        nuevosDatos.rangoFechas.fechaInicio,
-        nuevosDatos.rangoFechas.fechaFin
-      );
-
-      // Validamos que no haya superposición con otras reservas (excepto consigo misma)
-      if (conflicto && conflicto.id !== id) {
-        throw new Error("El alojamiento no está disponible en las nuevas fechas.");
-      }
-
-      reserva.rangoFechas = nuevosDatos.rangoFechas;
-    }
-
-    return await this.reservaRepository.update(reserva);
-  }
-
-  async getReservasDeUsuario(id) {
-    const reservas = await this.reservaRepository.findByUsuario(id);
-    reservas.map(reserva => this.toDto(reserva));
-    return reservas;
-  }
-
 }
