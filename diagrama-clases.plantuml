@@ -86,10 +86,6 @@ class Usuario {
   - nombre: String
   - email: String
   - tipo: TipoUsuario
-  - notificacines: Notificacion[]
-
-  + agregarNotificacion(unaNotificacion: Notificacion): void
-  + ultimaNotificacion(): Notificacion
 }
 
 Alojamiento -> Direccion
@@ -108,7 +104,7 @@ Ciudad --> Pais
 
 CambioEstadoReserva --> Usuario
 
-Usuario -u->"*" Notificacion
+Usuario <-u- Notificacion
 
 Reserva .d.> Notificacion
 

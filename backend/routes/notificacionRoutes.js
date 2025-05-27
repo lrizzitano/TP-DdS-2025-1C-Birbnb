@@ -1,7 +1,7 @@
 import { NotificacionController } from "../controllers/notificacionController.js";
 
 export function registerNotificacionRoutes(app, getController) {
-    app.get("/notificaciones/:idDestinatario", (req, res) =>
+    app.get("/notificaciones", (req, res) =>
         getController(NotificacionController).findByDestinatario(req, res)
     );
 

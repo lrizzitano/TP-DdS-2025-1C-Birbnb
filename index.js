@@ -50,6 +50,7 @@ const usuarioController = new UsuarioController(usuarioService);
 server.setController(ReservaController, reservaController);
 server.setController(AlojamientoController, alojamientoController);
 server.setController(NotificacionController, notificacionController);
+server.setController(UsuarioController, usuarioController);
 
 // rutas y lanzamiento
 server.configureRoutes();
