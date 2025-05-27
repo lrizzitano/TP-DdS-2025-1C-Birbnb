@@ -30,7 +30,7 @@ export class UsuarioController {
             const usuario = await this.usuarioService.create(req.body);
             res.status(201).json(usuario);
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            res.status(500).json({ error: error.message });
         }
     }
 
