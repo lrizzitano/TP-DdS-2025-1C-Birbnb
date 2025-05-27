@@ -1,36 +1,34 @@
-// backend/repositories/alojamientoRepository.js
-import { readFile, writeFile } from 'fs/promises';
-import path from 'node:path';
-import { Alojamiento } from '../modelo/alojamiento/Alojamiento.js';
-
-const rutaArchivo = path.join('backend', 'data', 'alojamientos.json');
+import { AlojamientoModel } from '../modelo/schemas/alojamientoSchema.js';
 
 export class AlojamientoRepository {
-  async findAll() {
-    const data = await readFile(rutaArchivo, 'utf-8');
-    const dataParseada = JSON.parse(data);
-    return dataParseada.map(obj => new Alojamiento(obj));
+  constructor() {
+    this.model = AlojamientoModel;
+  }
+
+  async findAll(filtros = {}) {
+    return await this.model.find(filtros).populate("anfitrion");
+  }
+
+  async findById(id) {
+    return await this.model.findById(id).populate("anfitrion");
   }
 
   async save(alojamiento) {
-    const alojamientos = await this.findAll();
-    alojamientos.push(alojamiento);
-    await writeFile(
-      rutaArchivo,
-      JSON.stringify(alojamientos, null, 2)
-    );
-    return alojamiento;
+    if (alojamiento.id) {
+      return await this.model.findByIdAndUpdate(
+        alojamiento.id,
+        { $set: alojamiento },
+        { new: true, runValidators: true }
+      );
+    } else {
+      const nuevo = new this.model(alojamiento);
+      return await nuevo.save();
+    }
   }
 
-  async findByFilters({ ubicacion, precioMin, precioMax, capacidad, caracteristicas }) {
-    const alojamientos = await this.findAll();
-    return alojamientos.filter(a => {
-      const matchUbicacion = !ubicacion || a.direccion?.toLowerCase().includes(ubicacion.toLowerCase());
-      const matchPrecio = (!precioMin || a.tuPrecioEstaDentroDe(precioMin, Infinity)) &&
-                          (!precioMax || a.tuPrecioEstaDentroDe(-Infinity, precioMax));
-      const matchCapacidad = !capacidad || a.puedenAlojarse(capacidad);
-      const matchCaracteristicas = !caracteristicas || caracteristicas.every(c => a.tenesCaracteristica(c));
-      return matchUbicacion && matchPrecio && matchCapacidad && matchCaracteristicas;
-    });
+
+  async deleteById(id) {
+    const resultado = await this.model.findByIdAndDelete(id);
+    return resultado !== null;
   }
 }

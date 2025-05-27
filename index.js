@@ -12,6 +12,10 @@ import { ReservaController } from "./backend/controllers/reservaController.js";
 import { AlojamientoRepository } from "./backend/repositories/alojamientoRepository.js";
 import { AlojamientoService } from "./backend/services/alojamientoService.js";
 import { AlojamientoController } from "./backend/controllers/alojamientoController.js";
+<<<<<<< HEAD
+=======
+
+>>>>>>> implementacion-alojamiento
 
 import { NotificacionRepository } from "./backend/repositories/notificacionRepository.js";
 import { NotificacionService } from "./backend/services/notificacionService.js";
@@ -37,6 +41,10 @@ const reservaController = new ReservaController(reservaService);
 const alojamientoRepo = new AlojamientoRepository();
 const alojamientoService = new AlojamientoService(alojamientoRepo);
 const alojamientoController = new AlojamientoController(alojamientoService);
+<<<<<<< HEAD
+=======
+
+>>>>>>> implementacion-alojamiento
 
 const notificacionRepo = new NotificacionRepository();
 const notificacionService = new NotificacionService(notificacionRepo);
