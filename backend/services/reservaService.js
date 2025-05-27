@@ -52,10 +52,19 @@ export class ReservaService {
 
     const reservaGuardada =  await this.reservaRepository.save(reserva);
 
-    // TODO el .toDto metiendole el _id que va a estar en reservaGuardada ya que es un documento que me devuelve mongo con el _id ya metido
     return this.toDto(reservaGuardada);
   }
 
+
+  toDto(reserva) {
+    // TODO , ver si nos interesa que el DTO pase algo mas
+    return {
+      id: reserva._id,
+      fechaAlta: reserva.fechaAlta.toString(),
+      huespuedReservadorId: reserva.huespuedReservador.toString(),
+      alojamientoId: reserva.alojamiento.toString()
+    }
+  }
 
 
   async listarReservas() {
