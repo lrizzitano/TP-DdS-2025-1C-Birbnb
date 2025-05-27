@@ -1,4 +1,5 @@
 import { EstadoNotificacion } from "../modelo/enums/EstadoNotificacion.js";
+import { Notificacion } from "../modelo/Notificacion.js";
 
 
 export class NotificacionService {
@@ -18,9 +19,9 @@ export class NotificacionService {
     if (!notificacion) {
       return null;
     }
-    
-    notificacion.estado = EstadoNotificacion.LEIDA;
-    notificacion.fechaLeida = new Date();
+
+    notificacion.marcarComoLeida();
+
     const notificacionModificada = await this.notificacionRepository.update(notificacion);
     return this.toDTO(notificacionModificada);
   }
