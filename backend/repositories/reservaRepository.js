@@ -1,63 +1,31 @@
-// import { readFile, writeFile } from 'fs/promises';
-// const rutaArchivo = new URL('../data/reservas.json', import.meta.url);
+import { ReservaModel } from '../modelo/schemas/reservaSchema.js';
 
-// export const obtenerReservas = async () => {
-//   const data = await readFile(rutaArchivo, 'utf-8');
-//   return JSON.parse(data);
-// };
+export class ReservaRepository { 
+    constructor() {
+        this.model = ReservaModel;
+    }
 
-// export const guardarReserva = async (reserva) => {
-//   const reservas = await obtenerReservas();
-//   reservas.push(reserva);
-//   await writeFile(rutaArchivo, JSON.stringify(reservas, null, 2));
-//   return reserva;
-// };
+    async findAll() {
+        return await this.model.find();
+    }
 
-// export const hayConflictoDeFechas = async (alojamientoId, inicio, fin) => {
-//   const reservas = await obtenerReservas();
-//   return reservas.find(r =>
-//     r.alojamiento === alojamientoId &&
-//     r.estado !== 'cancelada' &&
-//     new Date(r.rangoFechas.fechaInicio) < new Date(fin) &&
-//     new Date(r.rangoFechas.fechaFin) > new Date(inicio)
-//   );
-// };
+    async findById(id) {
+        return await this.model.findById(id);
+    }
 
-import { readFile, writeFile } from 'fs/promises';
-import path from 'node:path';
+    async findByAlojamiento(alojamientoId) {
+      return await this.model.find({alojamiento : alojamientoId})
+    }
 
-const rutaArchivo = path.join('backend', 'data', 'reservas.json');
+    async save(reserva) {
+        if (reserva.id) { // si tiene id es pq ya existe => lo actualizo
+          return await this.model.findByIdAndUpdate(reserva.id, reserva, { new: true, runValidators: true })
+        }
+        const nuevaReserva = new this.model(reserva); // si no existe, lo creo
+        return await nuevaReserva.save();
+    }
 
-export class ReservaRepository {
-  async findAll() {
-    const data = await readFile(rutaArchivo, 'utf-8');
-    return JSON.parse(data);
+    async delete(id) {
+        return await this.model.findByIdAndDelete(id);
+    }
   }
-
-  async save(reserva) {
-    const reservas = await this.findAll();
-    reservas.push(reserva);
-    await writeFile(rutaArchivo, JSON.stringify(reservas, null, 2));
-    return reserva;
-  }
-
-  async hasConflict(alojamientoId, fechaInicio, fechaFin) {
-    const reservas = await this.findAll();
-    return reservas.find(r =>
-      r.alojamiento === alojamientoId &&
-      r.estado !== 'cancelada' &&
-      new Date(r.rangoFechas.fechaInicio) < new Date(fechaFin) &&
-      new Date(r.rangoFechas.fechaFin) > new Date(fechaInicio) 
-    );
-  }
-
-  async update(reservaActualizada) {
-    const reservas = await this.findAll();
-    const index = reservas.findIndex(r => r.id === reservaActualizada.id);
-    if (index === -1) throw new Error("Reserva no encontrada");
-
-    reservas[index] = reservaActualizada;
-    await writeFile(rutaArchivo, JSON.stringify(reservas, null, 2));
-    return reservaActualizada;
-  }
-}
