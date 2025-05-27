@@ -133,17 +133,13 @@ export class ReservaService {
       reserva.rangoFechas = nuevosDatos.rangoFechas;
     }
 
-    // Si quisieras permitir otros cambios, agregalos aquí (usuario, etc.)
-
     return await this.reservaRepository.update(reserva);
   }
 
-    async obtenerReservasPorUsuario(email) {
-    const reservas = await this.reservaRepository.findAll();
-
-    return reservas.filter(r =>
-      r.usuario === email || r.huesped === email
-    );
+  async getReservasDeUsuario(id) {
+    const reservas = await this.reservaRepository.findByUsuario(id);
+    reservas.map(reserva => this.toDto(reserva));
+    return reservas;
   }
 
 }

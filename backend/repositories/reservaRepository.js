@@ -17,6 +17,10 @@ export class ReservaRepository {
       return await this.model.find({alojamiento : alojamientoId})
     }
 
+    async findByUsuario(usuarioId) {
+      return await this.model.find({huespuedReservador : usuarioId})
+    }
+
     async save(reserva) {
         if (reserva.id) { // si tiene id es pq ya existe => lo actualizo
           return await this.model.findByIdAndUpdate(reserva.id, reserva, { new: true, runValidators: true })
