@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { Reserva } from '../Reserva.js';
+import { Reserva } from '../reserva/Reserva.js';
 import { EstadoReserva } from '../enums/EstadoReserva.js';
 
 const rangoFechasSchema = new mongoose.Schema({
