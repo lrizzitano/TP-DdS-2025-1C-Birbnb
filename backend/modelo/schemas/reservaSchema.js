@@ -2,11 +2,17 @@ import mongoose from 'mongoose'
 import { Reserva } from '../Reserva.js';
 import { EstadoReserva } from '../enums/EstadoReserva.js';
 
-const rangoFechaSchema = new mongoose.Schema({
+const rangoFechasSchema = new mongoose.Schema({
     fechaInicio: { type: Date, required: true },
     fechaFin: { type: Date, required: true },
-  }, { _id: false }); // _id: false evita que Mongoose le ponga un id innecesario al subdocumento
+  });
 
+const cambioEstadoReservaSchema = new mongoose.Schema({
+    fecha: { type: Date, required: true },
+    estado: { type: String, enum: EstadoReserva, required: true },
+    motivo : {type: String, required : true},
+    usuario : {type : mongoose.Schema.Types.ObjectId, ref : 'Usuario', required :true}
+});
   
 const reservaSchema = new mongoose.Schema({
     fechaAlta: {
@@ -18,7 +24,7 @@ const reservaSchema = new mongoose.Schema({
         ref: 'Usuario',
         required: true
     },
-    cantHuespuedes: {
+    cantidadHuespuedes: {
         type: Number,
         required: true
     },
@@ -27,8 +33,8 @@ const reservaSchema = new mongoose.Schema({
         ref: 'Alojamiento',
         required: true
     },
-    rangoDeFechas: {
-        type: rangoFechaSchema,
+    rangoFechas: {
+        type: rangoFechasSchema,
         required: true 
     },
     estado: {
@@ -39,6 +45,9 @@ const reservaSchema = new mongoose.Schema({
     precioPorNoche: {
         type: Number,
         required: true
+    },
+    historialDeCambios : {
+        type: [cambioEstadoReservaSchema]
     }
 }, {
     timestamps: true,
