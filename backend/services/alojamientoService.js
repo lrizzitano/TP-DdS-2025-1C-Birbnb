@@ -1,3 +1,7 @@
+import { nombreEnum } from "../modelo/enums/nombreEnum.js";
+import { Moneda } from "../modelo/enums/Moneda.js";
+import { Caracteristica } from "../modelo/enums/Caracteristica.js";
+
 
 export class AlojamientoService {
   constructor(alojamientoRepository) {
@@ -44,10 +48,11 @@ export class AlojamientoService {
     }
 
     if (filtros.caracteristicas) {
-      alojamientos = alojamientos.filter(a =>
-        filtros.caracteristicas.forEach(caracteristica =>
-          a.tenesCaracteristica(caracteristica)));
+        alojamientos = alojamientos.filter(a =>
+          filtros.caracteristicas.every(caracteristica =>
+            a.tenesCaracteristica(caracteristica)));
     }
+
 
     return alojamientos.map(a => this.toDTO(a));
   }
@@ -87,7 +92,7 @@ export class AlojamientoService {
       nombre: alojamiento.nombre,
       descripcion: alojamiento.descripcion,
       precioPorNoche: alojamiento.precioPorNoche,
-      moneda: alojamiento.moneda,
+      moneda: nombreEnum(Moneda, alojamiento.moneda),
       horarioCheckIn: alojamiento.horarioCheckIn,
       horarioCheckOut: alojamiento.horarioCheckOut,
       direccion: {
@@ -99,11 +104,12 @@ export class AlojamientoService {
             nombre: alojamiento.direccion.ciudad.pais.nombre,
           },
         },
-        latitud: alojamiento.direccion.latitud,
-        longitud: alojamiento.direccion.longitud,
+        latitud: alojamiento.direccion.lat,
+        longitud: alojamiento.direccion.long,
       },
       cantHuespedesMax: alojamiento.cantHuespedesMax,
-      caracteristicas: alojamiento.caracteristicas,
+      caracteristicas: alojamiento.caracteristicas.map(caracteristica =>
+        nombreEnum(Caracteristica, caracteristica)),
       fotos: alojamiento.fotos.map(foto => ({
         descripcion: foto.descripcion,
       }))
