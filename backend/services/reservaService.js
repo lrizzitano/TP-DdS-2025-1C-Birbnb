@@ -58,6 +58,7 @@ export class ReservaService {
     const notificacionReservaCancelada = reserva.cancelar(motivo);
     this.notificacionRepository.create(notificacionReservaCancelada);
 
+    console.log(reserva.estado)
     const reservaGuardada = await this.reservaRepository.save(reserva);
 
     return this.toDto(reservaGuardada);
@@ -102,7 +103,7 @@ export class ReservaService {
 
   // utils
 
-  async verificarReservaActualizable(reserva, mensaje) {
+  verificarReservaActualizable(reserva, mensaje) {
     if (!reserva) {
       throw new Error("Reserva no encontrada");
     }

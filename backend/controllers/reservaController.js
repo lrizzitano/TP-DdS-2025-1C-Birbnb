@@ -9,7 +9,6 @@ export class ReservaController {
       res.status(201).json(reserva);
     } catch (error) {
       res.status(400).json({ error: error.message });
-      throw error
     }
   }
 
@@ -25,12 +24,16 @@ export class ReservaController {
 
   async actualizar(req, res) {
     try {
-      const nuevoEstado = req.query.estado;
-      const id = req.param.id;
+      const nuevoEstado = req.body.estado;
+      const id = req.params.id;
       let reserva;
       switch(nuevoEstado) {
         case 'cancelada':
-          reserva = await this.reservaService.cancelarReserva(id);
+          let motivo = req.body.motivo;
+          if (!motivo) {
+            motivo = "Sin motivo"
+          }
+          reserva = await this.reservaService.cancelarReserva(id, motivo);
           break;
         case 'aceptada':
           reserva = await this.reservaService.aceptarReserva(id);
@@ -41,6 +44,7 @@ export class ReservaController {
       res.status(200).json(reserva);
     } catch (error) {
       res.status(500).json({ error: error.message });
+      throw error
     }
   }
 }
