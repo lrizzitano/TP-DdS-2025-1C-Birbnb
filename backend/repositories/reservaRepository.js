@@ -30,7 +30,7 @@ export class ReservaRepository {
     }
 
     async findByUsuario(usuarioId) {
-      return await this.model.find({huespuedReservador : usuarioId});
+      return await this.model.find({huespedReservador : usuarioId});
     }
 
     async save(reserva) {

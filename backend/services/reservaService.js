@@ -11,7 +11,6 @@ export class ReservaService {
     this.notificacionRepository = notificacionRepository;
   }
 
-
   async crearReserva(datos) {
     const [usuario, alojamiento] = await Promise.all([
       this.usuarioRepository.findById(datos.usuarioId),
@@ -27,7 +26,7 @@ export class ReservaService {
     }
     
     this.verificarHuespedesDe(alojamiento, datos.cantidadHuespedes);
-    this.verificarDisponibilidad(alojamiento, datos.rangoDeFechas);
+    await this.verificarDisponibilidad(alojamiento, datos.rangoFechas);
 
     const reserva = new Reserva(
       datos.rangoFechas,
@@ -35,13 +34,11 @@ export class ReservaService {
       usuario,
       alojamiento
     );
-
     // TODO: TESTEAR. aca estamos suponiendo que al tener reserva inyectado usuario y alojamiento que provienen de un findById
     // son documentos. Entonces agarra la notificacion y en su campo usuario pone reserva.alojamiento.anfitrion
     // como alojamiento es un documento, su atributo anfitrion es un objectId de mongo
     const notificacionReservaCreada = Notificacion.crearNotificacionReservaCreada(reserva);
-    this.notificacionRepository.save(notificacionReservaCreada);
-
+    this.notificacionRepository.create(notificacionReservaCreada);
     const reservaGuardada =  await this.reservaRepository.save(reserva);
 
     return this.toDto(reservaGuardada);
@@ -59,7 +56,7 @@ export class ReservaService {
     this.verificarReservaActualizable(reserva, "cancelar");
 
     const notificacionReservaCancelada = reserva.cancelar(motivo);
-    this.notificacionRepository.save(notificacionReservaCancelada);
+    this.notificacionRepository.create(notificacionReservaCancelada);
 
     const reservaGuardada = await this.reservaRepository.save(reserva);
 
@@ -72,7 +69,7 @@ export class ReservaService {
     this.verificarReservaActualizable(reserva, "cancelar");
 
     const notificacionReservaAceptada = reserva.aceptar();
-    this.notificacionRepository.save(notificacionReservaAceptada);
+    this.notificacionRepository.create(notificacionReservaAceptada);
 
     const reservaGuardada = await this.reservaRepository.save(reserva);
 
@@ -122,8 +119,8 @@ export class ReservaService {
     return {
       id: reserva._id,
       fechaAlta: reserva.fechaAlta.toString(),
-      huespuedReservadorId: reserva.huespuedReservador.toString(),
-      alojamientoId: reserva.alojamiento.toString()
+      huespuedReservadorId: reserva.huespedReservador.id,
+      alojamientoId: reserva.alojamiento.id
     }
   }
 

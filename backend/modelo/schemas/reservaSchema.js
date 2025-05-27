@@ -24,7 +24,7 @@ const reservaSchema = new mongoose.Schema({
         ref: 'Usuario',
         required: true
     },
-    cantidadHuespuedes: {
+    cantidadHuespedes: {
         type: Number,
         required: true
     },

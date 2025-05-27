@@ -9,6 +9,7 @@ export class ReservaController {
       res.status(201).json(reserva);
     } catch (error) {
       res.status(400).json({ error: error.message });
+      throw error
     }
   }
 

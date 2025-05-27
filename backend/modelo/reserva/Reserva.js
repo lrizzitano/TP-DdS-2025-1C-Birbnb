@@ -12,7 +12,7 @@ export class Reserva {
     this.huespedReservador = usuario; // instancia de Usuario
     this.cantidadHuespedes = cantidadHuespedes; 
     this.alojamiento = alojamiento; // instancia de Alojamiento
-    this.rangoFechas = new RangoFechas(rangoFechas.inicio, rangoFechas.fin);
+    this.rangoFechas = new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
     this.estado = EstadoReserva.PENDIENTE;
     this.precioPorNoche = alojamiento.precioPorNoche; 
     this.historialDeCambios = [];

@@ -30,8 +30,8 @@ export class Alojamiento {
   estaDisponibleEn(rangoFechas) {
     return this.reservas.every((reserva) => {
       return (
-        reserva.rangoDeFechas.fechaFin < rangoFechas.fechaInicio ||
-        reserva.rangoDeFechas.fechaInicio > rangoFechas.fechaFin
+        reserva.rangoFechas.fechaFin < rangoFechas.fechaInicio ||
+        reserva.rangoFechas.fechaInicio > rangoFechas.fechaFin
       );
     })
   }
