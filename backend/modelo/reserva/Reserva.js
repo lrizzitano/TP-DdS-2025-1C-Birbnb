@@ -4,20 +4,18 @@ import { Notificacion } from "../Notificacion.js";
 import { RangoFechas } from "./RangoFechas.js";
 
 export class Reserva {
-  constructor(rangoDeFechas,
-    cantHuespedes,
+  constructor(rangoFechas,
+    cantidadHuespedes,
     usuario,
     alojamiento) {
     this.fechaAlta = new Date(); 
     this.huespedReservador = usuario; // instancia de Usuario
-    this.cantHuespedes = cantHuespedes; 
+    this.cantidadHuespedes = cantidadHuespedes; 
     this.alojamiento = alojamiento; // instancia de Alojamiento
-    this.rangoDeFechas = new RangoFechas(rangoDeFechas.inicio, rangoDeFechas.fin);
+    this.rangoFechas = new RangoFechas(rangoFechas.inicio, rangoFechas.fin);
     this.estado = EstadoReserva.PENDIENTE;
     this.precioPorNoche = alojamiento.precioPorNoche; 
     this.historialDeCambios = [];
-
-    Notificacion.crearNotificacionReservaCreada(this);
   }
 
   actualizarEstado(nuevoEstado, motivo, fecha = new Date(), usuario) {
@@ -26,14 +24,14 @@ export class Reserva {
     this.agregarCambioDeEstado(cambio);
   }
 
-  aceptarReserva(usuario) {
-    this.actualizarEstado(EstadoReserva.CONFIRMADA, "Reserva aceptada por el anfitrion", new Date(), usuario);
-    Notificacion.crearNotificacionReservaAceptada(this);
+  aceptar() {
+    this.actualizarEstado(EstadoReserva.CONFIRMADA, "Reserva aceptada por el anfitrion", new Date(), this.alojamiento.anfitrion);
+    return Notificacion.crearNotificacionReservaAceptada(this);
   }
 
-  cancelarReserva(usuario, motivo) {
-    this.actualizarEstado(EstadoReserva.CANCELADA, motivo, new Date(), usuario);
-    Notificacion.crearNotificacionReservaCancelada(this, motivo);
+  cancelar(motivo) {
+    this.actualizarEstado(EstadoReserva.CANCELADA, motivo, new Date(), this.huespedReservador);
+    return Notificacion.crearNotificacionReservaCancelada(this, motivo);
   }
 
   agregarCambioDeEstado(unCambioDeEstado) {
