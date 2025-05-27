@@ -9,7 +9,7 @@ export function registerReservaRoutes(app, getController) {
     getController(ReservaController).actualizar(req, res)
   );
 
-  app.get("/reservas/:idUsuario", (req, res) =>
+  app.get("/reservas", (req, res) =>
     getController(ReservaController).getReservas(req, res)
   );
 }
