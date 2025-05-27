@@ -5,31 +5,26 @@ export class AlojamientoRepository {
     this.model = AlojamientoModel;
   }
 
-  async findAll() {
-    return await this.model.find();
+  async findAll(filtros = {}) {
+    return await this.model.find(filtros).populate("anfitrion");
   }
 
   async findById(id) {
-    return await this.model.findById(id);
+    return await this.model.findById(id).populate("anfitrion");
   }
 
-async findByFilters(filtrosMongo) {
-  return await this.model.find(filtrosMongo);
-}
-
-
-async save(alojamiento) {
-  if (alojamiento.id) {
-    return await this.model.findByIdAndUpdate(
-      alojamiento.id,
-      { $set: alojamiento },
-      { new: true, runValidators: true }
-    );
-  } else {
-    const nuevo = new this.model(alojamiento);
-    return await nuevo.save();
+  async save(alojamiento) {
+    if (alojamiento.id) {
+      return await this.model.findByIdAndUpdate(
+        alojamiento.id,
+        { $set: alojamiento },
+        { new: true, runValidators: true }
+      );
+    } else {
+      const nuevo = new this.model(alojamiento);
+      return await nuevo.save();
+    }
   }
-}
 
 
   async deleteById(id) {

@@ -4,17 +4,64 @@ export class AlojamientoController {
   }
 
   async findAll(req, res) {
-    const filtros = req.query;
+    const {
+      calle,
+      altura,
+      ciudad,
+      pais,
+      lat,
+      long,
+      precioMin,
+      precioMax,
+      cantHuespedes,
+      caracteristicas
+    } = req.query;
+
+    const filtros = {};
+
+    if (calle) {
+      filtros.calle = calle;
+    }
+
+    if (altura) {
+      filtros.altura = altura;
+    }
+
+    if (ciudad) {
+      filtros.ciudad = ciudad;
+    }
+
+    if (pais) {
+      filtros.pais = pais;
+    }
+
+    if (lat) {
+      filtros.latitud = Number(lat);
+    }
+
+    if (long) {
+      filtros.longitud = Number(long);
+    }
+
+    if (precioMin) {
+      filtros.precioMin = Number(precioMin);
+    }
+
+    if (precioMax) {
+      filtros.precioMax = Number(precioMax);
+    }
+
+    if (cantHuespedes) {
+      filtros.cantHuespedes = Number(cantHuespedes);
+    }
+
+    if (caracteristicas) {
+      filtros.caracteristicas = caracteristicas;
+    }
+
     const alojamientos = await this.alojamientoService.findAll(filtros);
     res.json(alojamientos);
   }
-
-async findAll(req, res) {
-  const filtros = req.query;
-  const alojamientos = await this.alojamientoService.findAll(filtros);
-  res.json(alojamientos);
-}
-
 
   async create(req, res) {
     const nuevoAlojamiento = await this.alojamientoService.create(req.body);
