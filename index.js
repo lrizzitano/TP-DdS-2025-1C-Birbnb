@@ -8,11 +8,11 @@ import { MongoDBClient } from "./backend/config/database.js";
 import { ReservaRepository } from "./backend/repositories/reservaRepository.js";
 import { ReservaService } from "./backend/services/reservaService.js";
 import { ReservaController } from "./backend/controllers/reservaController.js";
-/*
+
 import { AlojamientoRepository } from "./backend/repositories/alojamientoRepository.js";
 import { AlojamientoService } from "./backend/services/alojamientoService.js";
 import { AlojamientoController } from "./backend/controllers/alojamientoController.js";
-*/
+
 
 import { NotificacionRepository } from "./backend/repositories/notificacionRepository.js";
 import { NotificacionService } from "./backend/services/notificacionService.js";
@@ -34,11 +34,11 @@ const reservaRepo = new ReservaRepository();
 const reservaService = new ReservaService(reservaRepo);
 const reservaController = new ReservaController(reservaService);
 
-/*
+
 const alojamientoRepo = new AlojamientoRepository();
 const alojamientoService = new AlojamientoService(alojamientoRepo);
 const alojamientoController = new AlojamientoController(alojamientoService);
-*/
+
 
 const notificacionRepo = new NotificacionRepository();
 const notificacionService = new NotificacionService(notificacionRepo);
@@ -50,7 +50,7 @@ const usuarioController = new UsuarioController(usuarioService);
 
 // registro de controllers
 server.setController(ReservaController, reservaController);
-//server.setController(AlojamientoController, alojamientoController);
+server.setController(AlojamientoController, alojamientoController);
 server.setController(NotificacionController, notificacionController);
 server.setController(UsuarioController, usuarioController);
 
