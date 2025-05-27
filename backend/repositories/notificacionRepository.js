@@ -14,6 +14,11 @@ export class NotificacionRepository {
         return await this.model.findById(id);
     }
 
+    async create(notificacion) {
+        const nuevaNotificacion = new this.model(notificacion);
+        return await nuevaNotificacion.save();
+    }
+
     async update(notificacion) {
         return await this.model.findByIdAndUpdate(
         notificacion.id,
