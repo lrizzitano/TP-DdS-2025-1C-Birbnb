@@ -11,6 +11,8 @@ paths:
   /usuarios:
     get:
       summary: Obtener lista de usuarios
+      tags:
+        - Usuarios
       responses:
         "200":
           description: OK
@@ -25,6 +27,8 @@ paths:
 
     post:
       summary: Crear un nuevo usuario
+      tags:
+        - Usuarios
       requestBody:
         required: true
         content:
@@ -44,6 +48,8 @@ paths:
   /usuarios/{id}:
     get:
       summary: Obtener un usuario por ID
+      tags:
+        - Usuarios
       parameters:
         - name: id
           in: path
@@ -64,6 +70,8 @@ paths:
 
     delete:
       summary: Eliminar un usuario por ID
+      tags:
+        - Usuarios
       parameters:
         - name: id
           in: path
@@ -80,6 +88,8 @@ paths:
 
     put:
       summary: Actualizar un usuario existente
+      tags:
+        - Usuarios
       parameters:
         - name: id
           in: path
@@ -103,6 +113,62 @@ paths:
           description: Usuario no encontrado
         "500":
           description: Error del servidor
+  
+  /notificaciones:
+    get:
+      summary: Obtener lista de notificaciones
+      tags:
+        - Notificaciones
+      parameters:
+        - name: destinatario
+          in: query
+          required: true
+          schema:
+            type: string
+            description: ID del usuario destinatario para filtrar notificaciones
+        - name: estado
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [PENDIENTE, LEIDA]
+            description: Filtrar notificaciones por estado (opcional)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/notificacion"
+        "500":
+          description: Error del servidor
+
+  /notificaciones/{id}:
+    put:
+      summary: Marcar una notificación como leída
+      tags:
+        - Notificaciones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Notificación actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notificacion"
+        "400":
+          description: ID de notificación inválido
+        "404":
+          description: Notificación no encontrada
+        "500":
+          description: Error del servidor
 
 components:
   schemas:
@@ -117,9 +183,34 @@ components:
           type: string
         tipo:
           type: string
-          enum: [cliente, anfitrion]
+          enum: [ANFITRION, HUÉSPED]
       required:
         - id
         - nombre
         - email
         - tipo
+
+    notificacion:
+      type: object
+      properties:
+        id:
+          type: string
+        mensaje:
+          type: string
+        fechaAlta:
+          type: string
+          format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, LEIDA]
+        fechaLeida:
+          type: string
+          format: date-time
+        destinatario:
+          type: string
+          description: ID del usuario destinatario
+        
+      required:
+        - id
+        - mensaje
+        - destinatario
