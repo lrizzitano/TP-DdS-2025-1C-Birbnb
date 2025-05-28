@@ -57,11 +57,11 @@ const mockNotificacionRepository = {
     })  
 }
 
-const notificacionService = new ReservaService(mockNotificacionRepository)
-const notificacionController = new ReservaController(notificacionService)
+const notificacionService = new NotificacionService(mockNotificacionRepository);
+const notificacionController = new NotificacionController(notificacionService);
 
+server.configureRoutes();
 server.setController(notificacionController);
-
 /*
 quiero testear estas routes
 
@@ -74,3 +74,12 @@ app.patch("/notificaciones/:id", (req, res) =>
 );
 
 */
+
+describe("GET /notificaciones?destinatario=idDestinatario", () => {
+    test("Debe retornar un estado 200 y 2 notificaciones", async () => {
+        const response = await request(server.app).get("/notificaciones").query({destinatario:"6650f1a5cfc8b9a4a1a00001"});
+
+        expect(response.status).toBe(200);
+        expect(response.body.data.length).toBe(2);
+    })
+})
