@@ -146,7 +146,7 @@ paths:
           description: Error del servidor
 
   /notificaciones/{id}:
-    put:
+    patch:
       summary: Marcar una notificación como leída
       tags:
         - Notificaciones
@@ -229,7 +229,7 @@ paths:
           schema:
             type: array
             items:
-              type: number
+              type: string
               enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
       responses:
         "200":
@@ -467,7 +467,7 @@ components:
           type: number
           format: number
         moneda:
-          type: number
+          type: string
           enum: [DOLAR_USA, PESO_ARG, REALES]
         horarioCheckIn:
           type: string
@@ -503,7 +503,7 @@ components:
         caracteristicas:
           type: array
           items:
-            type: number
+            type: string
             enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
         fotos:
           type: array

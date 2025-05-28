@@ -5,7 +5,7 @@ export function registerNotificacionRoutes(app, getController) {
         getController(NotificacionController).findByDestinatario(req, res)
     );
 
-    app.put("/notificaciones/:id", (req, res) =>
+    app.patch("/notificaciones/:id", (req, res) =>
         getController(NotificacionController).updateEstado(req, res)
     );
 }
