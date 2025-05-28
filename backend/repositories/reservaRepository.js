@@ -17,8 +17,13 @@ export class ReservaRepository {
       return await this.model.findById(id).populate('alojamiento').populate('huespedReservador');   
     }
 
-    async findByIdConAlojamientoYAnfitrionPopulado() {
-      return await this.model.findById(id).populate('alojamiento').populate('alojamiento.anfitrion');   
+    async findByIdConAlojamientoYAnfitrionPopulado(id) {
+      return await this.model.findById(id).populate({
+        path: 'alojamiento',
+        populate: {
+          path: 'anfitrion'
+        }
+      });
     }
 
     async findById(id) {
