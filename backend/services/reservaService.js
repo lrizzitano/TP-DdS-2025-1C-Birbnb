@@ -1,8 +1,8 @@
-import { Reserva } from "../modelo/reserva/Reserva.js"
-import { EstadoReserva } from "../modelo/enums/EstadoReserva.js"
-import { RangoFechas } from "../modelo/reserva/RangoFechas.js";
-import { Notificacion } from "../modelo/Notificacion.js"
+import { Reserva } from "../modelo/reserva/Reserva.js";
+import { EstadoReserva } from "../modelo/enums/EstadoReserva.js";
+import { Notificacion } from "../modelo/Notificacion.js";
 import { mongoose } from 'mongoose';
+import { nombreEnum } from "../modelo/enums/nombreEnum.js";
 
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository) {
@@ -45,8 +45,7 @@ export class ReservaService {
 
   async getReservasDeUsuario(id) {
     const reservas = await this.reservaRepository.findByUsuario(id);
-    reservas.map(reserva => this.toDto(reserva));
-    return reservas;
+    return reservas.map(reserva => this.toDto(reserva));
   }
 
   async cancelarReserva(id, motivo) {
@@ -132,9 +131,20 @@ export class ReservaService {
       id: reserva._id,
       fechaAlta: reserva.fechaAlta.toString(),
       huespedReservadorId: huespedString,
-      alojamientoId: alojamientoString,
       cantidadHuespedes: reserva.cantidadHuespedes,
-      rangoFechas: reserva.rangoFechas
+      alojamientoId: alojamientoString,
+      rangoFechas: {
+        fechaInicio: reserva.rangoFechas.fechaInicio.toString(),
+        fechaFin: reserva.rangoFechas.fechaFin.toString()
+      },
+      estado: nombreEnum(EstadoReserva, reserva.estado),
+      precioPorNoche: reserva.precioPorNoche,
+      historialDeCambios: reserva.historialDeCambios.map(cambio => ({
+        fecha: cambio.fecha.toString(),
+        estado: nombreEnum(EstadoReserva, cambio.estado),
+        motivo: cambio.motivo,
+        usuarioId: cambio.usuario.toString()
+      }))
     }
   }
 
