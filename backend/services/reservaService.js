@@ -45,6 +45,11 @@ export class ReservaService {
   }
 
   async getReservasDeUsuario(id) {
+    const usuario = await this.usuarioRepository.findById(id);
+    if (!usuario) {
+      throw new NotFoundError("Usuario no encontrado");
+    }
+
     const reservas = await this.reservaRepository.findByUsuario(id);
     return reservas.map(reserva => this.toDto(reserva));
   }
