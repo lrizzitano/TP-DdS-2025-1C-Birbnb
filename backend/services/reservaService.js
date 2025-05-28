@@ -138,7 +138,7 @@ export class ReservaService {
     }
   }
 
-  async verificarHuespedesDe(unAlojamiento, cantidadHuespedes) {
+  verificarHuespedesDe(unAlojamiento, cantidadHuespedes) {
     if (!unAlojamiento.puedenAlojarse(cantidadHuespedes)) {
       throw new Error("El alojamiento no permite esa cantidad de huespedes");
     }
