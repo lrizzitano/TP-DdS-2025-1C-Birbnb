@@ -1,11 +1,11 @@
 import { NotificacionController } from "../controllers/notificacionController.js";
 
 export function registerNotificacionRoutes(app, getController) {
-    app.get("/notificaciones/:idDestinatario", (req, res) =>
-        getController(NotificacionController).findByDestinatario(req, res)
+    app.get("/notificaciones", (req, res, next) =>
+        getController(NotificacionController).findByDestinatario(req, res, next)
     );
 
-    app.put("/notificaciones/:id", (req, res) =>
-        getController(NotificacionController).updateEstado(req, res)
+    app.patch("/notificaciones/:id", (req, res, next) =>
+        getController(NotificacionController).updateEstado(req, res, next)
     );
 }

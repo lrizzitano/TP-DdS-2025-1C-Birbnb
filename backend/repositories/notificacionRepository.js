@@ -6,12 +6,17 @@ export class NotificacionRepository {
         this.model = NotificacionModel;
     }
 
-    async findByDestinatario(destinatario, filter = {}) {
-        return await this.model.find({ destinatario, ...filter });
+    async findByDestinatario(filters = {}) {
+        return await this.model.find({ ...filters });
     }
 
     async findById(id) {
         return await this.model.findById(id);
+    }
+
+    async create(notificacion) {
+        const nuevaNotificacion = new this.model(notificacion);
+        return await nuevaNotificacion.save();
     }
 
     async update(notificacion) {

@@ -4,7 +4,7 @@
     "huesped": "usuario1",
     "rangoFechas": {
       "fechaInicio": "2025-06-10",
-      "fechaFin": "2025-06-15"
+      "fechaFin": "2025-06-14"
     },
     "estado": "pendiente",
     "id": "77055eca-138c-4838-83be-be16a71bb84a"
@@ -33,10 +33,30 @@
     "alojamiento": "cabaña-B",
     "huesped": "cliente2",
     "rangoFechas": {
-      "fechaInicio": "2025-08-10",
-      "fechaFin": "2025-08-15"
+      "fechaInicio": "2025-01-01",
+      "fechaFin": "2025-01-02"
     },
     "estado": "pendiente",
     "id": "0f797691-fcd6-4a64-abe3-f055d78fa7d2"
+  },
+  {
+    "alojamiento": "abc123",
+    "usuario": "juan@mail.com",
+    "rangoFechas": {
+      "fechaInicio": "2025-06-01",
+      "fechaFin": "2025-06-05"
+    },
+    "estado": "cancelada",
+    "id": "6120621e-f478-4af5-a4b7-633ce8dd10d3"
+  },
+  {
+    "id": "572e87f5-9d77-4316-b568-61901ba6fa62",
+    "alojamiento": "abc123",
+    "usuario": "juan@mail.com",
+    "estado": "pendiente",
+    "rangoFechas": {
+      "fechaInicio": "2025-06-03",
+      "fechaFin": "2025-06-08"
+    }
   }
 ]

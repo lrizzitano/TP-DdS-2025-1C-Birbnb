@@ -1,0 +1,589 @@
+openapi: "3.0.3"
+info:
+  title: Birbnb
+  description: Plataforma de Reservas de Alojamientos.
+  version: "1.0"
+servers:
+  - url: https://localhost:3000
+    description: Local server
+
+paths:
+  /usuarios:
+    get:
+      summary: Obtener lista de usuarios
+      tags:
+        - Usuarios
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/usuario"
+        "500":
+          description: Error del servidor
+
+    post:
+      summary: Crear un nuevo usuario
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/usuario"
+      responses:
+        "201":
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuario"
+        "500":
+          description: Error del servidor
+
+  /usuarios/{id}:
+    get:
+      summary: Obtener un usuario por ID
+      tags:
+        - Usuarios
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuario"
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
+
+    delete:
+      summary: Eliminar un usuario por ID
+      tags:
+        - Usuarios
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado exitosamente
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
+
+    put:
+      summary: Actualizar un usuario existente
+      tags:
+        - Usuarios
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/usuario"
+      responses:
+        "200":
+          description: Usuario actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuario"
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
+
+  /notificaciones:
+    get:
+      summary: Obtener lista de notificaciones
+      tags:
+        - Notificaciones
+      parameters:
+        - name: destinatario
+          in: query
+          required: true
+          schema:
+            type: string
+            description: ID del usuario destinatario para filtrar notificaciones
+        - name: estado
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [PENDIENTE, LEIDA]
+            description: Filtrar notificaciones por estado (opcional)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/notificacion"
+        "400":
+          description: El id del destinatario es inválido
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
+
+  /notificaciones/{id}:
+    patch:
+      summary: Marcar una notificación como leída
+      tags:
+        - Notificaciones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Notificación actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notificacion"
+        "400":
+          description: ID de notificación inválido
+        "404":
+          description: Notificación no encontrada
+        "500":
+          description: Error del servidor
+
+  /alojamientos:
+    get:
+      summary: Obtener lista de alojamientos
+      tags:
+        - Alojamientos
+      parameters:
+        - name: calle
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: altura
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ciudad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pais
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: lat
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: long
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: precioMin
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: precioMax
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: cantHuespedes
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: caracteristicas
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/alojamiento"
+        "400":
+          description: Rango de precios inválido
+        "500":
+          description: Error del servidor
+
+    post:
+      summary: Crear un nuevo alojamiento
+      tags:
+        - Alojamientos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alojamiento"
+      responses:
+        "201":
+          description: Alojamiento creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "500":
+          description: Error del servidor
+
+  /alojamientos/{id}:
+    get:
+      summary: Obtener un alojamiento por ID
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Alojamiento encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
+    delete:
+      summary: Eliminar un alojamiento por ID
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Alojamiento eliminado exitosamente
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
+    put:
+      summary: Actualizar un alojamiento existente
+      tags:
+        - Alojamientos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alojamiento"
+      responses:
+        "200":
+          description: Alojamiento actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alojamiento"
+        "404":
+          description: Alojamiento no encontrado
+        "500":
+          description: Error del servidor
+
+  /reservas:
+    post:
+      summary: Reservar un alojamiento
+      tags:
+        - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/reserva"
+      responses:
+        "201":
+          description: Reserva creada exitosamente
+        "400":
+          description: Datos de reserva inválidos
+        "500":
+          description: Error del servidor"
+
+    get:
+      summary: Obtener lista de reservas de un usuario
+      tags:
+        - Reservas
+      parameters:
+        - name: huespedReservador
+          in: query
+          required: false
+          schema:
+            type: string
+            description: ID del usuario reservador
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/reserva"
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
+
+  /reservas/{id}:
+    patch:
+      summary: Actualizar el estado de una reserva
+      tags:
+        - Reservas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                estado:
+                  type: string
+                  enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+                motivo:
+                  type: string
+              required:
+                - estado
+      responses:
+        "200":
+          description: Reserva actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/reserva"
+        "404":
+          description: Reserva inexistente
+        "500":
+          description: Error del servidor
+
+components:
+  schemas:
+    usuario:
+      type: object
+      properties:
+        id:
+          type: string
+        nombre:
+          type: string
+        email:
+          type: string
+        tipo:
+          type: string
+          enum: [ANFITRION, HUÉSPED]
+      required:
+        - id
+        - nombre
+        - email
+        - tipo
+
+    notificacion:
+      type: object
+      properties:
+        id:
+          type: string
+        mensaje:
+          type: string
+        fechaAlta:
+          type: string
+          format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, LEIDA]
+        fechaLeida:
+          type: string
+          format: date-time
+        destinatario:
+          type: string
+          description: ID del usuario destinatario
+
+      required:
+        - id
+        - mensaje
+        - destinatario
+
+    alojamiento:
+      type: object
+      properties:
+        id:
+          type: string
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precioPorNoche:
+          type: number
+          format: number
+        moneda:
+          type: string
+          enum: [DOLAR_USA, PESO_ARG, REALES]
+        horarioCheckIn:
+          type: string
+          format: time
+        horarioCheckOut:
+          type: string
+          format: time
+        direccion:
+          type: object
+          properties:
+            calle:
+              type: string
+            altura:
+              type: string
+            ciudad:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                pais:
+                  type: object
+                  properties:
+                    nombre:
+                      type: string
+            lat:
+              type: number
+              format: float
+            long:
+              type: number
+              format: float
+        catidadHuespedesMax:
+          type: number
+        caracteristicas:
+          type: array
+          items:
+            type: string
+            enum: [WIFI, PILETA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
+        fotos:
+          type: array
+          items:
+            type: object
+            properties:
+              descripcion:
+                type: string
+              path:
+                type: string
+      required:
+        - id
+        - nombre
+        - descripcion
+        - precioPorNoche
+        - moneda
+        - horarioCheckIn
+        - horarioCheckOut
+        - direccion
+        - cantidadHuespedesMax
+        - fotos
+
+    reserva:
+      type: object
+      properties:
+        id:
+          type: string
+        huespedReservador:
+          type: string
+          description: ID del huésped que realiza la reserva
+        cantidadDeHuespedes:
+          type: number
+        alojamiento:
+          type: string
+          description: ID del alojamiento reservado
+        rangoFechas:
+          type: object
+          properties:
+            fechaInicio:
+              type: string
+              format: date-time
+            fechaFin:
+              type: string
+              format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+        precioPorNoche:
+          type: number
+        historialDeCambios:
+          type: array
+          items:
+            type: object
+            properties:
+              fecha:
+                type: string
+                format: date-time
+              estado:
+                type: string
+                enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+              motivo:
+                type: string
+              usuario:
+                type: string
+                description: ID del usuario que realizó el cambio
+      required:
+        - id
+        - huespedReservador
+        - cantidadDeHuespedes
+        - alojamiento
+        - rangoFechas
+        - estado
+        - precioPorNoche

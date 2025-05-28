@@ -1,49 +1,51 @@
 import mongoose from 'mongoose';
 import { EstadoNotificacion } from '../modelo/enums/EstadoNotificacion.js';
+import { ValidationError } from '../errors/AppError.js';
 
 export class NotificacionController {
     constructor(notificacionService) {
         this.notificacionService = notificacionService;
     }
 
-    async findByDestinatario(req, res) {
+    async findByDestinatario(req, res, next) {
         try {
-            const idDestinatario = req.params.idDestinatario;
-            const filter = {};
+            const destinatario = req.query.destinatario;
             const estado = EstadoNotificacion[req.query.estado];
-            if (estado) {
-                filter.estado = estado;
+            const filters = { };
+
+            if (!mongoose.isValidObjectId(destinatario)) {
+                throw new ValidationError('El id del destinatario es inválido');
             }
-
-
-            if (!mongoose.isValidObjectId(idDestinatario)) {
-                return res.status(400).json({ error: 'El id del destinatario es inválido' });
+            
+            filters.destinatario = destinatario;
+            if (estado != undefined) {
+                filters.estado = estado;
             }
-
-            const notificaciones = await this.notificacionService.findByDestinatario(idDestinatario, filter);
+            
+            const notificaciones = await this.notificacionService.findByDestinatario(filters);
             res.status(200).json(notificaciones);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            next(error);
         }
     }
 
-    async updateEstado(req, res) {
+    async updateEstado(req, res, next) {
         try {
             const id = req.params.id;
 
             if (!mongoose.isValidObjectId(id)) {
-                return res.status(400).json({ error: 'El id de la notificación es inválido' });
+                throw new ValidationError('El id de la notificación es inválido');
             }
 
             const notificacion = await this.notificacionService.updateEstado(id);
 
             if (!notificacion) {
-                return res.status(404).json({ error: 'Notificación no encontrada' });
+                throw new NotFoundError('Notificación no encontrada');
             }
 
             res.status(200).json(notificacion);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            next(error);
         }
     }
 }

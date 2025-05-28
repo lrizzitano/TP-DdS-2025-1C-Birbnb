@@ -1,15 +1,20 @@
-import { ReservaModel } from '../modelo/schemas/reservaSchema.js';
+/*
+NO ANDA
 
-export class ReservaRepository { 
-    constructor() {
-        this.model = ReservaModel;
-    }
+import { buildTestServer } from "./util/server"
+import { describe, expect, jest, test } from "@jest/globals"
+import request from 'supertest'
+import { ReservaService } from "../../backend/services/reservaService"
+import { ReservaController } from "../../backend/controllers/reservaController"
 
-    async findAll() {
-        return await this.model.find();
-    }
+const server = buildTestServer()
 
-    async findByIdConAlojamientoPopulado(id) {
+const mockReservaRepository = {
+    findByIdConAlojamientoPopulado: jest.fn(id).mockResolvedValue({
+        
+    })
+    
+    {
         return await this.model.findById(id).populate('alojamiento');
     }
 
@@ -30,8 +35,8 @@ export class ReservaRepository {
       return await this.model.findById(id);
     }
 
-    async findByAlojamiento(alojamientoId, filtros = {}) {
-      return await this.model.find({alojamiento : alojamientoId, ...filtros});
+    async findByAlojamiento(alojamientoId) {
+      return await this.model.find({alojamiento : alojamientoId});
     }
 
     async findByUsuario(usuarioId) {
@@ -46,8 +51,11 @@ export class ReservaRepository {
     async update(documentoDeReservaConDatosActualizados) { 
       return await documentoDeReservaConDatosActualizados.save();
     }
+}
 
-    async delete(id) {
-        return await this.model.findByIdAndDelete(id);
-    }
-  }
+const reservaService = new ReservaService(productRepository)
+const reservaController = new ReservaController(productService)
+
+server.setController(reservaController);
+
+*/

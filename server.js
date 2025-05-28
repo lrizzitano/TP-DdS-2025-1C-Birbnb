@@ -1,8 +1,9 @@
 import express from "express";
-//import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
+import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
 import { registerNotificacionRoutes } from "./backend/routes/notificacionRoutes.js";
 import { registerReservaRoutes } from "./backend/routes/reservaRoutes.js";
 import { registerUsuarioRoutes } from "./backend/routes/usuarioRoutes.js";
+import { errorHandler } from "./backend/middleware/errorHandler.js";
 
 export class Server {
   #controllers = {};
@@ -31,10 +32,19 @@ export class Server {
   }
 
   configureRoutes() {
-    //registerAlojamientoRoutes(this.app, this.getController.bind(this));
+    registerAlojamientoRoutes(this.app, this.getController.bind(this));
     registerNotificacionRoutes(this.app, this.getController.bind(this));
     registerReservaRoutes(this.app, this.getController.bind(this));
     registerUsuarioRoutes(this.app, this.getController.bind(this));
+
+    this.#app.use((req, res, next) => {
+      res.status(404).json({
+        status: 'fail',
+        message: "La ruta solicitada no existe"
+      });
+    });
+
+    this.#app.use(errorHandler);
   }
 
   launch() {
