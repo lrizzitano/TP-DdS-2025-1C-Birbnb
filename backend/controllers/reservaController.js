@@ -5,6 +5,8 @@ export class ReservaController {
 
   async crear(req, res) {
     try {
+      req.body.rangoFechas.fechaInicio = new Date(req.body.rangoFechas.fechaInicio);
+      req.body.rangoFechas.fechaFin = new Date(req.body.rangoFechas.fechaFin);
       const reserva = await this.reservaService.crearReserva(req.body);
       res.status(201).json(reserva);
     } catch (error) {
