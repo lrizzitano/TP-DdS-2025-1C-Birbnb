@@ -17,6 +17,7 @@ export class UsuarioService {
     }
 
     async create(usuario) {
+        usuario.tipo =  TipoUsuario[usuario.tipo]
         const usuarioCreado = await this.usuarioRepository.create(usuario);
         return this.toDTO(usuarioCreado);
     }
