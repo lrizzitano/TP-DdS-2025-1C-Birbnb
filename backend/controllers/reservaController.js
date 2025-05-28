@@ -1,30 +1,40 @@
+import mongoose from 'mongoose';
+import { ValidationError } from '../errors/AppError.js';
 export class ReservaController {
   constructor(reservaService) {
     this.reservaService = reservaService;
   }
 
-  async crear(req, res) {
+  async crear(req, res, next) {
     try {
       req.body.rangoFechas.fechaInicio = new Date(req.body.rangoFechas.fechaInicio);
       req.body.rangoFechas.fechaFin = new Date(req.body.rangoFechas.fechaFin);
+
+      if (!mongoose.isValidObjectId(req.body.usuarioId)) {
+        throw new ValidationError('El id del usuario es inválido');
+      }
+      if (!mongoose.isValidObjectId(req.body.alojamientoId)) {
+        throw new ValidationError('El id del alojamiento es inválido');
+      }
+      
       const reserva = await this.reservaService.crearReserva(req.body);
       res.status(201).json(reserva);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      next(error);
     }
   }
 
-  async getReservas(req, res) {
+  async getReservas(req, res, next) {
     try {
       const idUsuario = req.query.id;
       const reservas = await this.reservaService.getReservasDeUsuario(idUsuario);
       res.status(200).json(reservas);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      next(error);
     }
   }
 
-  async actualizar(req, res) {
+  async actualizar(req, res, next) {
     try {
       const nuevoEstado = req.body.estado;
       const id = req.params.id;
@@ -49,7 +59,7 @@ export class ReservaController {
       }
       res.status(200).json(reserva);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      next(error);
     }
   }
 }

@@ -3,6 +3,7 @@ import { EstadoReserva } from "../modelo/enums/EstadoReserva.js";
 import { Notificacion } from "../modelo/Notificacion.js";
 import { mongoose } from 'mongoose';
 import { nombreEnum } from "../modelo/enums/nombreEnum.js";
+import { NotFoundError, ValidationError } from "../errors/AppError.js";
 
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository) {
@@ -19,13 +20,13 @@ export class ReservaService {
     ]);
     
     if(!usuario) {
-      throw new Error("El usuario que quiere crear la reserva no existe");
+      throw new NotFoundError("El usuario que quiere crear la reserva no existe");
     }
 
     if (!alojamiento) {
-      throw new Error("El alojamiento sobre el que se quiere crear la reserva no existe");
+      throw new NotFoundError("El alojamiento sobre el que se quiere crear la reserva no existe");
     }
-    
+
     this.verificarHuespedesDe(alojamiento, datos.cantidadHuespedes);
     await this.verificarDisponibilidad(alojamiento, datos.rangoFechas);
 
@@ -99,17 +100,17 @@ export class ReservaService {
 
   verificarReservaActualizable(reserva, mensaje) {
     if (!reserva) {
-      throw new Error("Reserva inexistente : no se puede " + mensaje);
+      throw new NotFoundError("Reserva inexistente : no se puede " + mensaje);
     }
 
     if (reserva.estado == EstadoReserva.CANCELADA) {
-      throw new Error("Reserva cancelada : no se puede " + mensaje)
+      throw new ValidationError("Reserva cancelada : no se puede " + mensaje)
     }
 
     const hoy = new Date();
     const fechaInicioActual = new Date(reserva.rangoFechas.fechaInicio);
     if (hoy >= fechaInicioActual) {
-      throw new Error("Alojamiento en curso/terminado : no se puede " + mensaje + " la reserva");
+      throw new ValidationError("Alojamiento en curso/terminado : no se puede " + mensaje + " la reserva");
     }
   }
 
@@ -150,7 +151,7 @@ export class ReservaService {
 
   verificarHuespedesDe(unAlojamiento, cantidadHuespedes) {
     if (!unAlojamiento.puedenAlojarse(cantidadHuespedes)) {
-      throw new Error("El alojamiento no permite esa cantidad de huespedes");
+      throw new ValidationError("El alojamiento no permite esa cantidad de huespedes");
     }
   }
 
@@ -160,7 +161,7 @@ export class ReservaService {
                                                                            filtro);
                                                                            
     if (!unAlojamiento.estaDisponibleEn(rangoDeFechas)) {
-      throw new Error('El alojamiento no esta disponible en las fechas seleccionadas');
+      throw new ValidationError('El alojamiento no esta disponible en las fechas seleccionadas');
     }
   }
 }
