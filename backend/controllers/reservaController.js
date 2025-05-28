@@ -16,7 +16,7 @@ export class ReservaController {
 
   async getReservas(req, res) {
     try {
-      const { idUsuario } = req.query.id;
+      const idUsuario = req.query.id;
       const reservas = await this.reservaService.getReservasDeUsuario(idUsuario);
       res.status(200).json(reservas);
     } catch (error) {
