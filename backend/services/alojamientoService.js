@@ -21,7 +21,7 @@ export class AlojamientoService {
     if (filtros.pais) filtrosDB["direccion.ciudad.pais.nombre"] = filtros.pais;
 
     if (filtros.lat) filtrosDB["direccion.lat"] = filtros.lat;
-    
+
     if (filtros.long) filtrosDB["direccion.long"] = filtros.long;
 
     // obtención paginada
@@ -40,9 +40,19 @@ export class AlojamientoService {
       alojamientos = alojamientos.filter(a =>
         filtros.caracteristicas.every(caracteristica => a.tenesCaracteristica(caracteristica))
       );
-  }
+    }
 
-  return alojamientos.map(a => this.toDTO(a));
+    const data = alojamientos.map(a => this.toDTO(a));
+    const total = await this.alojamientoRepository.countAll(filtrosDB);
+    const totalPages = Math.ceil(total / limit);
+    return {
+      pagina: page,
+      por_pagina: limit,
+      total: total,
+      paginas_totales: totalPages,
+      data: data
+    };
+
   }
 
   async findById(id) {
@@ -54,7 +64,8 @@ export class AlojamientoService {
   }
 
   async create(alojamiento) {
-    const alojamientoCreado = await this.alojamientoRepository.save(alojamiento);
+    const creado = { ...alojamiento, id: null };
+    const alojamientoCreado = await this.alojamientoRepository.save(creado);
     return this.toDTO(alojamientoCreado);
   }
 
