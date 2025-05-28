@@ -13,7 +13,7 @@ const notificacionSchema = new mongoose.Schema({
         default: Date.now
     },
     estado: {
-        type: String,
+        type: Number,
         enum: EstadoNotificacion,
         default: EstadoNotificacion.PENDIENTE
     },

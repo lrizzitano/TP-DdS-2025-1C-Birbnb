@@ -1,5 +1,5 @@
 import { EstadoNotificacion } from "../modelo/enums/EstadoNotificacion.js";
-import { Notificacion } from "../modelo/Notificacion.js";
+import { nombreEnum } from "../modelo/enums/nombreEnum.js";
 
 
 export class NotificacionService {
@@ -30,11 +30,12 @@ export class NotificacionService {
     if (!notificacion) {
       return null;
     }
+
     return {
       id: notificacion.id,
       mensaje: notificacion.mensaje,
       fechaAlta: notificacion.fechaAlta,
-      estado: notificacion.estado,
+      estado: nombreEnum(EstadoNotificacion, notificacion.estado),
       fechaLeida: notificacion.fechaLeida
     };
   }
