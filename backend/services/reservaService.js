@@ -39,9 +39,9 @@ export class ReservaService {
     // como alojamiento es un documento, su atributo anfitrion es un objectId de mongo
     const notificacionReservaCreada = Notificacion.crearNotificacionReservaCreada(reserva);
     this.notificacionRepository.create(notificacionReservaCreada);
-    const reservaGuardada =  await this.reservaRepository.save(reserva);
+    const reservaCreada =  await this.reservaRepository.create(reserva);
 
-    return this.toDto(reservaGuardada);
+    return this.toDto(reservaCreada);
   }
 
   async getReservasDeUsuario(id) {
@@ -58,8 +58,7 @@ export class ReservaService {
     const notificacionReservaCancelada = reserva.cancelar(motivo);
     this.notificacionRepository.create(notificacionReservaCancelada);
 
-    console.log(reserva.estado)
-    const reservaGuardada = await this.reservaRepository.save(reserva);
+    const reservaGuardada = await reserva.save(reserva);
 
     return this.toDto(reservaGuardada);
   }
@@ -72,7 +71,7 @@ export class ReservaService {
     const notificacionReservaAceptada = reserva.aceptar();
     this.notificacionRepository.create(notificacionReservaAceptada);
 
-    const reservaGuardada = await this.reservaRepository.save(reserva);
+    const reservaGuardada = await reserva.save();
 
     return this.toDto(reservaGuardada);
   }
@@ -98,7 +97,9 @@ export class ReservaService {
       reserva.cantidadHuespedes = nuevosDatos.cantidadHuespedes;
     }
 
-    return await this.reservaRepository.save(reserva);
+    const reservaActualizada = await reserva.save();
+    
+    return this.toDto(reservaActualizada);
   }
 
   // utils
