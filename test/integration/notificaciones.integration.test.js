@@ -56,7 +56,14 @@ const mockNotificacionRepository = {
         })  
 }
 
-const notificacionService = new NotificacionService(mockNotificacionRepository);
+const mockUsuarioRepository = {
+    findById: jest.fn().mockImplementation((id) => {
+        if (id == "6650f1a5cfc8b9a4a1a00001") return Promise.resolve({nombre : "usuarioTest"});
+        return null;
+    })
+}
+
+const notificacionService = new NotificacionService(mockNotificacionRepository, mockUsuarioRepository);
 const notificacionController = new NotificacionController(notificacionService);
 
 server.setController(NotificacionController, notificacionController);
@@ -85,7 +92,7 @@ describe("GET /notificaciones?destinatario=idDestinatario", () => {
         const response = await request(server.app).get("/notificaciones").query({"destinatario": idDestinatarioInexistente});
 
         expect(response.status).toBe(404);
-        expect(mockNotificacionRepository.findByDestinatario).toHaveBeenCalledWith({"destinatario": idDestinatarioInexistente});
+        expect(mockUsuarioRepository.findById).toBeCalledWith(idDestinatarioInexistente);
     })
 })
 
