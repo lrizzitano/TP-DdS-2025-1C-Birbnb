@@ -1,5 +1,5 @@
 export const EstadoReserva = {
-    PENDIENTE: '0',
-    CONFIRMADA: '1',
-    CANCELADA: '2'
+    PENDIENTE: 0,
+    CONFIRMADA: 1,
+    CANCELADA: 2
 }

@@ -1,4 +1,4 @@
 export const EstadoNotificacion = {
-    PENDIENTE: '0',
-    LEIDA: '1'
+    PENDIENTE: 0,
+    LEIDA: 1
 };

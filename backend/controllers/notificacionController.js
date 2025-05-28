@@ -17,7 +17,7 @@ export class NotificacionController {
             }
             
             filters.destinatario = destinatario;
-            if (estado) {
+            if (estado != undefined) {
                 filters.estado = estado;
             }
             
