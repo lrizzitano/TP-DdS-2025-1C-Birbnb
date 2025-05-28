@@ -2,6 +2,7 @@ import { Reserva } from "../modelo/reserva/Reserva.js"
 import { EstadoReserva } from "../modelo/enums/EstadoReserva.js"
 import { RangoFechas } from "../modelo/reserva/RangoFechas.js";
 import { Notificacion } from "../modelo/Notificacion.js"
+import { mongoose } from 'mongoose';
 
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository) {
@@ -66,7 +67,7 @@ export class ReservaService {
   async aceptarReserva(id) {
     //necesito el alojamiento y anfitrion populados para enviar la notificacion
     const reserva = await this.reservaRepository.findByIdConAlojamientoYAnfitrionPopulado(id);
-    this.verificarReservaActualizable(reserva, "cancelar");
+    this.verificarReservaActualizable(reserva, "aceptar");
 
     const notificacionReservaAceptada = reserva.aceptar();
     this.notificacionRepository.create(notificacionReservaAceptada);
@@ -76,7 +77,7 @@ export class ReservaService {
     return this.toDto(reservaGuardada);
   }
 
-  async actualizarReserva(id, nuevosDatos) {
+  async actualizarReserva(id, nuevosDatos) { // TODO : hay que enviar notif de estos cambios? y agregarlos al historialCambiosEstado?
     // necesito el alojamiento populado para poder verificar sus reglas de negocio
     const reserva = await this.reservaRepository.findByIdConAlojamientoPopulado(id);
     this.verificarReservaActualizable(reserva, "actualizar");
@@ -106,23 +107,41 @@ export class ReservaService {
 
   verificarReservaActualizable(reserva, mensaje) {
     if (!reserva) {
-      throw new Error("Reserva no encontrada");
+      throw new Error("Reserva inexistente : no se puede " + mensaje);
+    }
+
+    if (reserva.estado == EstadoReserva.CANCELADA) {
+      throw new Error("Reserva cancelada : no se puede " + mensaje)
     }
 
     const hoy = new Date();
     const fechaInicioActual = new Date(reserva.rangoFechas.fechaInicio);
     if (hoy >= fechaInicioActual) {
-      throw new Error("No se puede " + mensaje + " una reserva que ya comenzo o termino");
+      throw new Error("Alojamiento en curso/terminado : no se puede " + mensaje + " la reserva");
     }
   }
 
   toDto(reserva) {
-    // TODO , ver si nos interesa que el DTO pase algo mas
+    let huespedString, alojamientoString;
+    if (reserva.huespedReservador instanceof mongoose.Types.ObjectId) {
+      huespedString = reserva.huespedReservador.toString()
+    } else {
+      huespedString = reserva.huespedReservador.id
+    }
+
+    if (reserva.alojamiento instanceof mongoose.Types.ObjectId) {
+      alojamientoString = reserva.alojamiento.toString()
+    } else {
+      alojamientoString = reserva.alojamiento.id
+    }
+
     return {
       id: reserva._id,
       fechaAlta: reserva.fechaAlta.toString(),
-      huespuedReservadorId: reserva.huespedReservador.id,
-      alojamientoId: reserva.alojamiento.id
+      huespedReservadorId: huespedString,
+      alojamientoId: alojamientoString,
+      cantidadHuespedes: reserva.cantidadHuespedes,
+      rangoFechas: reserva.rangoFechas
     }
   }
 
