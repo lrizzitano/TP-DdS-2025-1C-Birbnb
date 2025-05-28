@@ -1,13 +1,19 @@
 import { EstadoNotificacion } from "../modelo/enums/EstadoNotificacion.js";
 import { nombreEnum } from "../modelo/enums/nombreEnum.js";
-
+import { NotFoundError } from "../errors/AppError.js";
 
 export class NotificacionService {
-  constructor(notificacionRepository) {
+  constructor(notificacionRepository, usuarioRepository) {
+    this.usuarioRepository = usuarioRepository;
     this.notificacionRepository = notificacionRepository;
   }
 
   async findByDestinatario(filters = {}) {
+    const usuario = await this.usuarioRepository.findById(filters.destinatario);
+    if (!usuario) {
+      throw new NotFoundError(`Usuario con ID ${filters.destinatario} no encontrado`);
+    }
+
     const notificaciones = await this.notificacionRepository.findByDestinatario(filters);
 
     return notificaciones.map(notificacion => this.toDTO(notificacion));
