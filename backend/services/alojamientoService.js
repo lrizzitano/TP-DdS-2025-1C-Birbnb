@@ -1,54 +1,48 @@
+import { nombreEnum } from "../modelo/enums/nombreEnum.js";
+import { Moneda } from "../modelo/enums/Moneda.js";
+import { Caracteristica } from "../modelo/enums/Caracteristica.js";
+
+
 export class AlojamientoService {
   constructor(alojamientoRepository) {
     this.alojamientoRepository = alojamientoRepository;
   }
 
-  async findAll(filtros = {}) {
+  async findAll(filtros = {}, page = 1, limit = 10) {
     const filtrosDB = {};
 
-    if (filtros.calle) {
-      filtrosDB["direccion.calle"] = filtros.calle;
-    }
+    // filtros de ubicación
+    if (filtros.calle) filtrosDB["direccion.calle"] = filtros.calle;
 
-    if (filtros.altura) {
-      filtrosDB["direccion.altura"] = filtros.altura;
-    }
+    if (filtros.altura) filtrosDB["direccion.altura"] = filtros.altura;
 
-    if (filtros.ciudad) {
-      filtrosDB["direccion.ciudad.nombre"] = filtros.ciudad;
-    }
+    if (filtros.ciudad) filtrosDB["direccion.ciudad.nombre"] = filtros.ciudad;
 
-    if (filtros.pais) {
-      filtrosDB["direccion.ciudad.pais.nombre"] = filtros.pais;
-    }
+    if (filtros.pais) filtrosDB["direccion.ciudad.pais.nombre"] = filtros.pais;
 
-    if (filtros.lat) {
-      filtrosDB["direccion.lat"] = filtros.lat;
-    }
+    if (filtros.lat) filtrosDB["direccion.lat"] = filtros.lat;
+    
+    if (filtros.long) filtrosDB["direccion.long"] = filtros.long;
 
-    if (filtros.long) {
-      filtrosDB["direccion.long"] = filtros.long;
-    }
+    // obtención paginada
+    let alojamientos = await this.alojamientoRepository.findAll(filtrosDB, page, limit);
 
-    var alojamientos = await this.alojamientoRepository.findAll(filtrosDB);
-
+    // filtros con lógica de dominio
     if (filtros.precioMin && filtros.precioMax) {
-      alojamientos = alojamientos.filter(a =>
-        a.tuPrecioEstaDentroDe(filtros.precioMin, filtros.precioMax));
+      alojamientos = alojamientos.filter(a => a.tuPrecioEstaDentroDe(filtros.precioMin, filtros.precioMax));
     }
 
     if (filtros.cantHuespedes) {
-      alojamientos = alojamientos.filter(a =>
-        a.puedenAlojarse(filtros.cantHuespedes));
+      alojamientos = alojamientos.filter(a => a.puedenAlojarse(filtros.cantHuespedes));
     }
 
     if (filtros.caracteristicas) {
       alojamientos = alojamientos.filter(a =>
-        filtros.caracteristicas.forEach(caracteristica =>
-          a.tenesCaracteristica(caracteristica)));
-    }
+        filtros.caracteristicas.every(caracteristica => a.tenesCaracteristica(caracteristica))
+      );
+  }
 
-    return alojamientos.map(a => this.toDTO(a));
+  return alojamientos.map(a => this.toDTO(a));
   }
 
   async findById(id) {
@@ -86,7 +80,7 @@ export class AlojamientoService {
       nombre: alojamiento.nombre,
       descripcion: alojamiento.descripcion,
       precioPorNoche: alojamiento.precioPorNoche,
-      moneda: alojamiento.moneda,
+      moneda: nombreEnum(Moneda, alojamiento.moneda),
       horarioCheckIn: alojamiento.horarioCheckIn,
       horarioCheckOut: alojamiento.horarioCheckOut,
       direccion: {
@@ -98,11 +92,12 @@ export class AlojamientoService {
             nombre: alojamiento.direccion.ciudad.pais.nombre,
           },
         },
-        latitud: alojamiento.direccion.latitud,
-        longitud: alojamiento.direccion.longitud,
+        latitud: alojamiento.direccion.lat,
+        longitud: alojamiento.direccion.long,
       },
       cantHuespedesMax: alojamiento.cantHuespedesMax,
-      caracteristicas: alojamiento.caracteristicas,
+      caracteristicas: alojamiento.caracteristicas.map(caracteristica =>
+        nombreEnum(Caracteristica, caracteristica)),
       fotos: alojamiento.fotos.map(foto => ({
         descripcion: foto.descripcion,
       }))

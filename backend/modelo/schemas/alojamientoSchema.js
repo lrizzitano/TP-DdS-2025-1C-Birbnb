@@ -42,12 +42,12 @@ const alojamientoSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     descripcion: { type: String, required: true },
     precioPorNoche: { type: Number, required: true },
-    moneda: { type: String, enum: Moneda, required: true },
+    moneda: { type: Number, enum: Moneda, required: true },
     horarioCheckIn: { type: String, required: true },
     horarioCheckOut: { type: String, required: true },
     direccion : { type: DireccionSchema, required: true },
     cantHuespedesMax : { type: Number, required: true },
-    caracteristicas : {type: [String], enum: Caracteristica },
+    caracteristicas : {type: [Number], enum: Caracteristica },
     fotos : [{ type: FotoSchema, required : true}]
 }, {
     timestamps: true,

@@ -15,7 +15,7 @@ const usuarioSchema = new mongoose.Schema({
         trim: true
     },
     tipo: {
-        type: String,
+        type: Number,
         enum: TipoUsuario,
         required: true
     }

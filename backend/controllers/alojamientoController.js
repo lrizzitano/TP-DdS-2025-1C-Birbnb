@@ -1,3 +1,5 @@
+import { Caracteristica } from "../modelo/enums/Caracteristica.js";
+
 export class AlojamientoController {
   constructor(alojamientoService) {
     this.alojamientoService = alojamientoService;
@@ -14,7 +16,9 @@ export class AlojamientoController {
       precioMin,
       precioMax,
       cantHuespedes,
-      caracteristicas
+      caracteristicas,
+      page,
+      limit
     } = req.query;
 
     const filtros = {};
@@ -36,30 +40,38 @@ export class AlojamientoController {
     }
 
     if (lat) {
-      filtros.latitud = Number(lat);
+      filtros.lat = Number(lat);
     }
 
     if (long) {
-      filtros.longitud = Number(long);
+      filtros.long = Number(long);
     }
 
-    if (precioMin) {
+    if ((precioMin == undefined) !== (precioMax == undefined) || precioMin > precioMax) {
+      return res.status(400).json({ error: 'Rango de precios inválido' });
+    }
+
+    if (precioMin && precioMax) {
       filtros.precioMin = Number(precioMin);
-    }
-
-    if (precioMax) {
       filtros.precioMax = Number(precioMax);
     }
-
     if (cantHuespedes) {
       filtros.cantHuespedes = Number(cantHuespedes);
     }
 
     if (caracteristicas) {
-      filtros.caracteristicas = caracteristicas;
+      if (Array.isArray(caracteristicas)) {
+        filtros.caracteristicas = caracteristicas.map(c => Caracteristica[c]);
+      } else {
+        filtros.caracteristicas = [Caracteristica[caracteristicas]];
+      }
     }
 
-    const alojamientos = await this.alojamientoService.findAll(filtros);
+    const pageNumber = parseInt(page) || 1;
+    const limitNumber = parseInt(limit) || 10;
+
+    const alojamientos = await this.alojamientoService.findAll(filtros, pageNumber, limitNumber);
+
     res.json(alojamientos);
   }
 

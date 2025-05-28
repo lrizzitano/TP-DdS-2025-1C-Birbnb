@@ -1,3 +1,6 @@
+import { nombreEnum } from "../modelo/enums/nombreEnum.js";
+import { TipoUsuario } from "../modelo/enums/TipoUsuario.js";
+
 export class UsuarioService { 
     constructor(usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -14,6 +17,7 @@ export class UsuarioService {
     }
 
     async create(usuario) {
+        usuario.tipo =  TipoUsuario[usuario.tipo]
         const usuarioCreado = await this.usuarioRepository.create(usuario);
         return this.toDTO(usuarioCreado);
     }
@@ -36,7 +40,7 @@ export class UsuarioService {
             id: usuario.id,
             nombre: usuario.nombre,
             email: usuario.email,
-            tipo: usuario.tipo,
+            tipo: nombreEnum(TipoUsuario, Number(usuario.tipo)),
             notificaciones: usuario.notificaciones
         };
     }
