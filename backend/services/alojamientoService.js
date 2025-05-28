@@ -1,7 +1,7 @@
 import { nombreEnum } from "../modelo/enums/nombreEnum.js";
 import { Moneda } from "../modelo/enums/Moneda.js";
 import { Caracteristica } from "../modelo/enums/Caracteristica.js";
-
+import { NotFoundError } from "../errors/AppError.js";
 
 export class AlojamientoService {
   constructor(alojamientoRepository) {
@@ -47,6 +47,9 @@ export class AlojamientoService {
 
   async findById(id) {
     const alojamiento = await this.alojamientoRepository.findById(id);
+    if (!alojamiento) {
+      throw new NotFoundError(`Alojamiento con ID ${id} no encontrado`);
+    }
     return this.toDTO(alojamiento);
   }
 
@@ -56,7 +59,11 @@ export class AlojamientoService {
   }
 
   async delete(id) {
-    return await this.alojamientoRepository.deleteById(id);
+    const eliminado = await this.alojamientoRepository.deleteById(id);
+    if (!eliminado) {
+      throw new NotFoundError(`Alojamiento con ID ${id} no encontrado`);
+    }
+    return eliminado;
   }
 
   async update(id, datosActualizados) {
