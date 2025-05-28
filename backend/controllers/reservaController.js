@@ -16,7 +16,7 @@ export class ReservaController {
       if (!mongoose.isValidObjectId(req.body.alojamientoId)) {
         throw new ValidationError('El id del alojamiento es inválido');
       }
-      
+
       const reserva = await this.reservaService.crearReserva(req.body);
       res.status(201).json(reserva);
     } catch (error) {
@@ -36,10 +36,15 @@ export class ReservaController {
 
   async actualizar(req, res, next) {
     try {
-      const nuevoEstado = req.body.estado.toLowerCase();
+      let nuevoEstado = req.body.estado;
+
+      if (nuevoEstado) {
+        nuevoEstado = req.body.estado.toLowerCase();
+      }
+
       const id = req.params.id;
       let reserva;
-      switch(nuevoEstado) {
+      switch (nuevoEstado) {
         case 'cancelada':
           let motivo = req.body.motivo;
           if (!motivo) {

@@ -30,8 +30,8 @@ export class ReservaRepository {
       return await this.model.findById(id);
     }
 
-    async findByAlojamiento(alojamientoId) {
-      return await this.model.find({alojamiento : alojamientoId});
+    async findByAlojamiento(alojamientoId, filtros = {}) {
+      return await this.model.find({alojamiento : alojamientoId, ...filtros});
     }
 
     async findByUsuario(usuarioId) {

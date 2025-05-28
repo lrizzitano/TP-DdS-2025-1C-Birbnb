@@ -161,10 +161,10 @@ export class ReservaService {
   }
 
   async verificarDisponibilidad(unAlojamiento, rangoDeFechas) {
-    const filtro = {estado : EstadoReserva.CONFIRMADA};
+    const filtro = {estado: EstadoReserva.CONFIRMADA};
     unAlojamiento.reservas = await this.reservaRepository.findByAlojamiento(unAlojamiento._id,
                                                                            filtro);
-                                                                           
+                                          
     if (!unAlojamiento.estaDisponibleEn(rangoDeFechas)) {
       throw new ValidationError('El alojamiento no esta disponible en las fechas seleccionadas');
     }

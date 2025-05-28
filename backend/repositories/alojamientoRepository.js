@@ -15,6 +15,10 @@ export class AlojamientoRepository {
     return await this.model.findById(id).populate("anfitrion");
   }
 
+  async countAll(filtros = {}) {
+    return await this.model.countDocuments(filtros);
+  }
+
   async save(alojamiento) {
     if (alojamiento.id) {
       return await this.model.findByIdAndUpdate(
