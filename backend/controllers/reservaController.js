@@ -41,12 +41,15 @@ export class ReservaController {
           reserva = await this.reservaService.aceptarReserva(id);
           break;
         default:
+          if (req.body.rangoFechas) {
+            req.body.rangoFechas.fechaInicio = new Date(req.body.rangoFechas.fechaInicio);
+            req.body.rangoFechas.fechaFin = new Date(req.body.rangoFechas.fechaFin);
+          }
           reserva = await this.reservaService.actualizarReserva(id, req.body);
       }
       res.status(200).json(reserva);
     } catch (error) {
       res.status(500).json({ error: error.message });
-      throw error
     }
   }
 }
