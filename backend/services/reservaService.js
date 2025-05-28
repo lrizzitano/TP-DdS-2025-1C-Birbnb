@@ -35,9 +35,7 @@ export class ReservaService {
       usuario,
       alojamiento
     );
-    // TODO: TESTEAR. aca estamos suponiendo que al tener reserva inyectado usuario y alojamiento que provienen de un findById
-    // son documentos. Entonces agarra la notificacion y en su campo usuario pone reserva.alojamiento.anfitrion
-    // como alojamiento es un documento, su atributo anfitrion es un objectId de mongo
+
     const notificacionReservaCreada = Notificacion.crearNotificacionReservaCreada(reserva);
     this.notificacionRepository.create(notificacionReservaCreada);
     const reservaCreada =  await this.reservaRepository.create(reserva);
@@ -77,23 +75,18 @@ export class ReservaService {
     return this.toDto(reservaGuardada);
   }
 
-  async actualizarReserva(id, nuevosDatos) { // TODO : hay que enviar notif de estos cambios? y agregarlos al historialCambiosEstado?
+  async actualizarReserva(id, nuevosDatos) {
     // necesito el alojamiento populado para poder verificar sus reglas de negocio
     const reserva = await this.reservaRepository.findByIdConAlojamientoPopulado(id);
     this.verificarReservaActualizable(reserva, "actualizar");
     
-    const seModificaronFechas =
-      nuevosDatos.rangoFechas &&
-      (nuevosDatos.rangoFechas.fechaInicio != reserva.rangoFechas.fechaInicio ||
-      nuevosDatos.rangoFechas.fechaFin != reserva.rangoFechas.fechaFin);
-
     // reglas de negocio -> TODO : pensar / preguntar si tiene sentido verificar aca o esta verificacion se haria en el front end
-    if (seModificaronFechas) {
+    if (nuevosDatos.rangoFechas) {
       this.verificarDisponibilidad(reserva.alojamiento, nuevosDatos.rangoFechas);
       reserva.rangoFechas = nuevosDatos.rangoFechas;
     }
 
-    if (reserva.cantidadHuespedes != nuevosDatos.cantidadHuespedes && nuevosDatos.cantidadHuespedes) {
+    if (nuevosDatos.cantidadHuespedes) {
       this.verificarHuespedesDe(reserva.alojamiento, nuevosDatos.cantidadHuespedes);
       reserva.cantidadHuespedes = nuevosDatos.cantidadHuespedes;
     }
