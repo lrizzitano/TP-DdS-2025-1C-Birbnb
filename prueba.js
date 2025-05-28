@@ -1,4 +1,4 @@
-import { Usuario } from "./backend/modelo/Usuario.js";
+/*import { Usuario } from "./backend/modelo/Usuario.js";
 import { Alojamiento } from "./backend/modelo/alojamiento/Alojamiento.js";
 import { Ciudad } from "./backend/modelo/alojamiento/Ciudad.js";
 import { Pais } from "./backend/modelo/alojamiento/Pais.js";
@@ -65,4 +65,4 @@ console.log("🔔 Notificacion del anfitrion:", reserva.alojamiento.anfitrion.ul
 
 reserva.alojamiento.anfitrion.ultimaNotificacion().marcarComoLeida();
 console.log("✅ Notificacion leida");
-console.log("🔔 Notificacion del anfitrion leida:", reserva.alojamiento.anfitrion.ultimaNotificacion());
+console.log("🔔 Notificacion del anfitrion leida:", reserva.alojamiento.anfitrion.ultimaNotificacion());*/
