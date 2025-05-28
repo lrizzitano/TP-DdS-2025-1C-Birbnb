@@ -5,9 +5,11 @@ export class AlojamientoRepository {
     this.model = AlojamientoModel;
   }
 
-  async findAll(filtros = {}) {
-    return await this.model.find(filtros).populate("anfitrion");
+  async findAll(filtros = {}, page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+    return await this.model.find(filtros).skip(skip).limit(limit).populate("anfitrion");
   }
+
 
   async findById(id) {
     return await this.model.findById(id).populate("anfitrion");

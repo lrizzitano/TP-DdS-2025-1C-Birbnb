@@ -14,7 +14,9 @@ export class AlojamientoController {
       precioMin,
       precioMax,
       cantHuespedes,
-      caracteristicas
+      caracteristicas,
+      page,
+      limit
     } = req.query;
 
     const filtros = {};
@@ -59,7 +61,11 @@ export class AlojamientoController {
       filtros.caracteristicas = caracteristicas;
     }
 
-    const alojamientos = await this.alojamientoService.findAll(filtros);
+    const pageNumber = parseInt(page) || 1;
+    const limitNumber = parseInt(limit) || 10;
+
+    const alojamientos = await this.alojamientoService.findAll(filtros, pageNumber, limitNumber);
+
     res.json(alojamientos);
   }
 
