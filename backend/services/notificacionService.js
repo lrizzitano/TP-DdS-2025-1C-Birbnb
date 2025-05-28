@@ -17,7 +17,7 @@ export class NotificacionService {
     const notificacion = await this.notificacionRepository.findById(id);
 
     if (!notificacion) {
-      return null;
+      throw new NotFoundError(`Notificación con ID ${id} no encontrada`);
     }
 
     notificacion.marcarComoLeida();
@@ -28,7 +28,7 @@ export class NotificacionService {
 
   toDTO(notificacion) {
     if (!notificacion) {
-      return null;
+      throw new NotFoundError(`Notificación con ID ${id} no encontrada`);
     }
 
     return {

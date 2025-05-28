@@ -1,15 +1,15 @@
 import { ReservaController } from "../controllers/reservaController.js";
 
 export function registerReservaRoutes(app, getController) {
-  app.post("/reservas", (req, res) => 
-    getController(ReservaController).crear(req, res)
+  app.post("/reservas", (req, res, next) => 
+    getController(ReservaController).crear(req, res, next)
   );
 
-  app.patch("/reservas/:id", (req, res) => 
-    getController(ReservaController).actualizar(req, res)
+  app.patch("/reservas/:id", (req, res, next) => 
+    getController(ReservaController).actualizar(req, res, next)
   );
 
-  app.get("/reservas", (req, res) =>
-    getController(ReservaController).getReservas(req, res)
+  app.get("/reservas", (req, res, next) =>
+    getController(ReservaController).getReservas(req, res, next)
   );
 }

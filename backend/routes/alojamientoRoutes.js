@@ -1,23 +1,23 @@
 import { AlojamientoController } from "../controllers/alojamientoController.js";
 
 export function registerAlojamientoRoutes(app, getController) {
-  app.get("/alojamientos", (req, res) =>
-    getController(AlojamientoController).findAll(req, res)
+  app.get("/alojamientos", (req, res, next) =>
+    getController(AlojamientoController).findAll(req, res, next)
   );
 
-  app.get("/alojamientos/:id", (req, res) =>
-    getController(AlojamientoController).findById(req, res)
+  app.get("/alojamientos/:id", (req, res, next) =>
+    getController(AlojamientoController).findById(req, res, next)
   );
 
-  app.post("/alojamientos", (req, res) =>
-    getController(AlojamientoController).create(req, res)
+  app.post("/alojamientos", (req, res, next) =>
+    getController(AlojamientoController).create(req, res, next)
   );
 
-  app.delete("/alojamientos/:id", (req, res) =>
-    getController(AlojamientoController).delete(req, res)
+  app.delete("/alojamientos/:id", (req, res, next) =>
+    getController(AlojamientoController).delete(req, res, next)
   );
 
-  app.put("/alojamientos/:id", (req, res) =>
-    getController(AlojamientoController).update(req, res)
+  app.put("/alojamientos/:id", (req, res, next) =>
+    getController(AlojamientoController).update(req, res, next)
   );
 }
