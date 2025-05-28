@@ -53,7 +53,7 @@ const mockNotificacionRepository = {
         destinatario : {
             nombre: "usuarioTest"
         }
-    })  
+        })  
 }
 
 const notificacionService = new NotificacionService(mockNotificacionRepository);
@@ -70,7 +70,7 @@ describe("GET /notificaciones?destinatario=idDestinatario", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(2);
-        expect(mockNotificacionRepository.findByDestinatario).toHaveBeenCalledWith({"destinatario": "6650f1a5cfc8b9a4a1a00001"});
+        expect(mockNotificacionRepository.findByDestinatario).toHaveBeenCalledWith({"destinatario": idDestinatarioExistente});
     })
 
     test("Debe retornar un estado 400 ante query con id invalido", async () => {
@@ -81,10 +81,11 @@ describe("GET /notificaciones?destinatario=idDestinatario", () => {
     })
 
     test("Debe retornar un estado 404 ante query con id invalido pero plausible", async () => {
-        const idInvalido = "6650f1a5cfc8b9a4a1a00002"
-        const response = await request(server.app).get("/notificaciones").query({"destinatario": idInvalido});
+        const idDestinatarioInexistente = "6650f1a5cfc8b9a4a1a00002"
+        const response = await request(server.app).get("/notificaciones").query({"destinatario": idDestinatarioInexistente});
 
         expect(response.status).toBe(404);
+        expect(mockNotificacionRepository.findByDestinatario).toHaveBeenCalledWith({"destinatario": idDestinatarioInexistente});
     })
 })
 
