@@ -113,7 +113,7 @@ paths:
           description: Usuario no encontrado
         "500":
           description: Error del servidor
-  
+
   /notificaciones:
     get:
       summary: Obtener lista de notificaciones
@@ -334,6 +334,81 @@ paths:
         "500":
           description: Error del servidor
 
+  /reservas:
+    post:
+      summary: Reservar un alojamiento
+      tags:
+        - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/reserva"
+      responses:
+        "201":
+          description: Reserva creada exitosamente
+        "400":
+          description: Datos de reserva inválidos
+
+    get:
+      summary: Obtener lista de reservas de un usuario
+      tags:
+        - Reservas
+      parameters:
+        - name: huespedReservador
+          in: query
+          required: false
+          schema:
+            type: string
+            description: ID del usuario reservador
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/reserva"
+        "500":
+          description: Error del servidor
+
+  /reservas/{id}:
+    patch:
+      summary: Actualizar el estado de una reserva
+      tags:
+        - Reservas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                estado:
+                  type: string
+                  enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+                motivo:
+                  type: string
+              required:
+                - estado
+      responses:
+        "200":
+          description: Reserva actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/reserva"
+        "500":
+          description: Error del servidor
+
 components:
   schemas:
     usuario:
@@ -373,7 +448,7 @@ components:
         destinatario:
           type: string
           description: ID del usuario destinatario
-        
+
       required:
         - id
         - mensaje
@@ -450,3 +525,55 @@ components:
         - direccion
         - cantidadHuespedesMax
         - fotos
+
+    reserva:
+      type: object
+      properties:
+        id:
+          type: string
+        huespedReservador:
+          type: string
+          description: ID del huésped que realiza la reserva
+        cantidadDeHuespedes:
+          type: number
+        alojamiento:
+          type: string
+          description: ID del alojamiento reservado
+        rangoFechas:
+          type: object
+          properties:
+            fechaInicio:
+              type: string
+              format: date-time
+            fechaFin:
+              type: string
+              format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+        precioPorNoche:
+          type: number
+        historialDeCambios:
+          type: array
+          items:
+            type: object
+            properties:
+              fecha:
+                type: string
+                format: date-time
+              estado:
+                type: string
+                enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+              motivo:
+                type: string
+              usuario:
+                type: string
+                description: ID del usuario que realizó el cambio
+      required:
+        - id
+        - huespedReservador
+        - cantidadDeHuespedes
+        - alojamiento
+        - rangoFechas
+        - estado
+        - precioPorNoche
