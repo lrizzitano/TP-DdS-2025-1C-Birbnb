@@ -82,7 +82,7 @@ export class ReservaService {
     
     // reglas de negocio -> TODO : pensar / preguntar si tiene sentido verificar aca o esta verificacion se haria en el front end
     if (nuevosDatos.rangoFechas) {
-      this.verificarDisponibilidad(reserva.alojamiento, nuevosDatos.rangoFechas);
+      await this.verificarDisponibilidad(reserva.alojamiento, nuevosDatos.rangoFechas);
       reserva.rangoFechas = nuevosDatos.rangoFechas;
     }
 
@@ -148,7 +148,7 @@ export class ReservaService {
     const filtro = {estado : EstadoReserva.CONFIRMADA};
     unAlojamiento.reservas = await this.reservaRepository.findByAlojamiento(unAlojamiento._id,
                                                                            filtro);
-                                                            
+                                                                           
     if (!unAlojamiento.estaDisponibleEn(rangoDeFechas)) {
       throw new Error('El alojamiento no esta disponible en las fechas seleccionadas');
     }
