@@ -36,7 +36,7 @@ export class ReservaController {
 
   async actualizar(req, res, next) {
     try {
-      const nuevoEstado = req.body.estado;
+      const nuevoEstado = req.body.estado.toLowerCase();
       const id = req.params.id;
       let reserva;
       switch(nuevoEstado) {
