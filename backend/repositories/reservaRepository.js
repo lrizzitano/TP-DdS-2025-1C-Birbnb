@@ -38,9 +38,13 @@ export class ReservaRepository {
       return await this.model.find({huespedReservador : usuarioId});
     }
 
-    async create(reserva) {
-        const nuevaReserva = new this.model(reserva);
-        return await nuevaReserva.save();
+    async create(instanciaDeReservaDominio) {
+      const nuevaReserva = new this.model(instanciaDeReservaDominio);
+      return await nuevaReserva.save();
+    }
+
+    async update(documentoDeReservaConDatosActualizados) { 
+      return await documentoDeReservaConDatosActualizados.save();
     }
 
     async delete(id) {

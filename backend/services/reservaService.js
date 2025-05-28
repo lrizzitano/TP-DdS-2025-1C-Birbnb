@@ -56,7 +56,7 @@ export class ReservaService {
     const notificacionReservaCancelada = reserva.cancelar(motivo);
     this.notificacionRepository.create(notificacionReservaCancelada);
 
-    const reservaGuardada = await reserva.save(reserva);
+    const reservaGuardada = await this.reservaRepository.update(reserva);
 
     return this.toDto(reservaGuardada);
   }
@@ -69,7 +69,7 @@ export class ReservaService {
     const notificacionReservaAceptada = reserva.aceptar();
     this.notificacionRepository.create(notificacionReservaAceptada);
 
-    const reservaGuardada = await reserva.save();
+    const reservaGuardada = await this.reservaRepository.update(reserva);
 
     return this.toDto(reservaGuardada);
   }
@@ -90,7 +90,7 @@ export class ReservaService {
       reserva.cantidadHuespedes = nuevosDatos.cantidadHuespedes;
     }
 
-    const reservaActualizada = await reserva.save();
+    const reservaActualizada = await this.reservaRepository.update(reserva);
     
     return this.toDto(reservaActualizada);
   }
