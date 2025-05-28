@@ -9,7 +9,7 @@ const rangoFechasSchema = new mongoose.Schema({
 
 const cambioEstadoReservaSchema = new mongoose.Schema({
     fecha: { type: Date, required: true },
-    estado: { type: String, enum: EstadoReserva, required: true },
+    estado: { type: Number, enum: EstadoReserva, required: true },
     motivo : {type: String, required : true},
     usuario : {type : mongoose.Schema.Types.ObjectId, ref : 'Usuario', required :true}
 });
@@ -38,7 +38,7 @@ const reservaSchema = new mongoose.Schema({
         required: true 
     },
     estado: {
-        type: String,
+        type: Number,
         enum: EstadoReserva,
         required: true
     },
