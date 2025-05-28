@@ -1,3 +1,4 @@
+import { NotFoundError } from "../errors/AppError.js";
 import { nombreEnum } from "../modelo/enums/nombreEnum.js";
 import { TipoUsuario } from "../modelo/enums/TipoUsuario.js";
 
@@ -34,7 +35,7 @@ export class UsuarioService {
 
     toDTO(usuario) {
         if (!usuario) {
-            return null;
+            throw new NotFoundError("Usuario no encontrado");
         }
         return {
             id: usuario.id,
