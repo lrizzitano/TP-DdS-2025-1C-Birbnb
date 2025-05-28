@@ -74,7 +74,7 @@ export class AlojamientoService {
 
   toDTO(alojamiento) {
     if (!alojamiento) {
-      return null;
+      throw new NotFoundError("Alojamiento no encontrado");
     }
 
     return {
