@@ -142,6 +142,10 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/notificacion"
+        "400":
+          description: El id del destinatario es inválido
+        "404":
+          description: Usuario no encontrado
         "500":
           description: Error del servidor
 
@@ -350,6 +354,8 @@ paths:
           description: Reserva creada exitosamente
         "400":
           description: Datos de reserva inválidos
+        "500":
+          description: Error del servidor"
 
     get:
       summary: Obtener lista de reservas de un usuario
@@ -371,6 +377,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/reserva"
+        "404":
+          description: Usuario no encontrado
         "500":
           description: Error del servidor
 
@@ -406,6 +414,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/reserva"
+        "404":
+          description: Reserva inexistente
         "500":
           description: Error del servidor
 
