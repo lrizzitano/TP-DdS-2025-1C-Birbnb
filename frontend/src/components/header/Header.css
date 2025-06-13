@@ -4,4 +4,10 @@
     box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.2);
     color: white;
     text-align: center;
+    display: flex;
+    height: 3rem;
+}
+
+.logo {
+    height: 100%;
 }
