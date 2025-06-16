@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "localhost:3000";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 export const fetchAlojamientosBackend = async (filtros = {}) => {
     /*
@@ -16,12 +16,12 @@ export const fetchAlojamientosBackend = async (filtros = {}) => {
         limit
     */
   try {
-    const response = await axios.get(`${API_BASE_URL}/products`, {
+    const response = await axios.get(`${API_BASE_URL}/alojamientos`, {
       params: filtros
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error fetching alojamientos:", error);
     throw error;
   }
 };
