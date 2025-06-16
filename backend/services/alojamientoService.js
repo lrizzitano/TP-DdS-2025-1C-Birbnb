@@ -114,8 +114,8 @@ export class AlojamientoService {
         longitud: alojamiento.direccion.long,
       },
       cantHuespedesMax: alojamiento.cantHuespedesMax,
-      caracteristicas: alojamiento.caracteristicas.map(caracteristica =>
-        nombreEnum(Caracteristica, caracteristica)),
+      caracteristicas: alojamiento.caracteristicas ? alojamiento.caracteristicas.map(caracteristica =>
+        nombreEnum(Caracteristica, caracteristica)) : [],
       fotos: alojamiento.fotos.map(foto => ({
         descripcion: foto.descripcion,
       }))
