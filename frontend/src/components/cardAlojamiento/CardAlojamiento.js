@@ -8,7 +8,8 @@ const CardAlojamiento = ({alojamiento}) => {
     return (
         <div className="card">
             <Link to={`/alojamientos/${alojamiento.id}`}>
-                <img src={alojamiento.fotos[0]} alt={alojamiento.nombre} className="imagen"></img>
+            {/* la foto esta hardcodeada, pq las fotos de la DB no son reales, habria q arreglarlas y aca poner alojamiento.fotos[0] */}
+                <img src={"https://a0.muscache.com/im/pictures/c42d676c-4733-4151-9f40-c2903f4a3cd0.jpg?im_w=960"} alt={alojamiento.nombre} className="imagen"></img>
             </Link>
             <h4>{alojamiento.nombre}</h4>
             <p>{`Precio por noche: $${alojamiento.precioPorNoche}`}</p>
