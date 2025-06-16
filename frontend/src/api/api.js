@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "localhost:3000";
 
-export const getAlojamientos = async (filtros = {}) => {
+export const fetchAlojamientosBackend = async (filtros = {}) => {
     /*
     el objeto filtro debe tener las keys nombradas asi:
         pais
