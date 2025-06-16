@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
 import { registerNotificacionRoutes } from "./backend/routes/notificacionRoutes.js";
 import { registerReservaRoutes } from "./backend/routes/reservaRoutes.js";
@@ -13,6 +14,7 @@ export class Server {
     this.#app = app;
     this.port = port;
     this.#app.use(express.json());
+    this.#app.use(cors()); // aca dejamos que le pegue cualquiera, asi le podemos dar con el front, para deployear seria interesante ver de limitar esto
   }
 
   get app() {
