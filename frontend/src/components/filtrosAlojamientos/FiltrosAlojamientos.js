@@ -1,15 +1,13 @@
 import "./FiltrosAlojamientos.css";
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
 import SearchIcon from '@mui/icons-material/Search';
-import { FormControl, InputLabel, Select, MenuItem, OutlinedInput } from "@mui/material";
+import FiltroTextual from "../filtroTextual/FiltroTextual";
+import FiltroCaracteristicas from "../filtroCaracteristicas/FiltroCaracteristicas"
+import FiltroPrecio from "../filtroPrecio/FiltroPrecio";
 
 const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
 
-    const setFiltroTemporal = (event, key, value) => {
+    const setFiltroTemporal = (key, value) => {
         if (value === '') {
             delete filtrosTemporales[key];
         } else {
@@ -20,15 +18,15 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
         }
     }
 
-    const setRangoPrecio = (event, newValue) => {
+    const setRangoPrecio = ([precioMin, precioMax]) => {
         setFiltrosTemporales({
             ...filtrosTemporales,
-            precioMin: newValue[0],
-            precioMax: newValue[1]
+            precioMin: precioMin,
+            precioMax: precioMax
         });
     }
 
-    const setCaracteristicas = (event, value) => {
+    const setCaracteristicas = (value) => {
         if (value.length === 0) {
             delete filtrosTemporales.caracteristicas;
             // Reseteo los filtros temporales para que se re-renderice el selector de características
@@ -41,63 +39,16 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
         }
     }
 
-    const caracteristicas = [
-        'WIFI',
-        'PILETA',
-        'MASCOTAS_PERMITIDAS',
-        'ESTACIONAMIENTO'
-    ];
-
-
     return (
         <div className="contenedorFiltros">
 
-            <TextField
-                label="País"
-                onChange={(e) => setFiltroTemporal(e, 'pais', e.target.value)}
-            />
-
-            <TextField
-                label="Ciudad"
-                onChange={(e) => setFiltroTemporal(e, 'ciudad', e.target.value)}
-            />
-            
-            <FormControl className="selectorCaracteristicas">
-                <InputLabel id="caracteristicasLabel">Características</InputLabel>
-                <Select
-                    labelId="caracteristicasLabel"
-                    multiple
-                    value={filtrosTemporales.caracteristicas ?? []}
-                    onChange={(e) => setCaracteristicas(e, e.target.value)}
-                    input={<OutlinedInput label="Características" />}
-                >
-                    {caracteristicas.map((c) => (
-                        <MenuItem key={c} value={c}>
-                            {c}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-
-            <Box sx={{ width: 300 }}>
-                <Typography gutterBottom>
-                    Precio por noche:
-                </Typography>
-                <Slider
-                    getAriaLabel={() => 'Rango de precios'}
-                    value={[filtrosTemporales.precioMin, filtrosTemporales.precioMax]}
-                    onChange={setRangoPrecio}
-                    valueLabelDisplay="auto"
-                    step={10}
-                    min={10}
-                    max={200}
-                />
-            </Box>
-
+            <FiltroTextual campo='pais' setter={setFiltroTemporal} />
+            <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
+            <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
+            <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
                 Buscar
             </Button>
-
         </div>
     )
 }
