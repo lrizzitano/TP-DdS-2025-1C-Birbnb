@@ -49,7 +49,7 @@ export class AlojamientoController {
         filtros.long = Number(long);
       }
 
-      if ((precioMin == undefined) !== (precioMax == undefined) || precioMin > precioMax) {
+      if ((precioMin == undefined) != (precioMax == undefined) || Number(precioMin) > Number(precioMax)) {
         throw new ValidationError('Rango de precios inválido');
       }
 
