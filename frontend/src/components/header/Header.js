@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Header.css';
 import { Link } from "react-router-dom";
-import { Drawer, IconButton, List, ListItem, ListItemText, Divider, Badge } from '@mui/material';
+import { Drawer, IconButton, List, Divider, Badge } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import logo from '../../images/logo.png'
 import CardNotificacion from '../cardNotificacion/CardNotificacion';
@@ -11,7 +11,7 @@ const Header = (props) => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const notificaciones = [{
+  const [notificaciones, setNotificaciones] = useState([{
     "id": "683764e6cb7c32307e0a2fb3",
     "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n      desde Sat Mar 31 2029 21:00:00 GMT-0300 (Argentina Standard Time)  \n      hasta Wed Apr 04 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      hecha por Ornella Mosca.",
     "fechaAlta": "2025-05-28T19:32:54.241Z",
@@ -32,7 +32,11 @@ const Header = (props) => {
     "estado": "PENDIENTE",
     "fechaLeida": null
   }
-  ];
+  ]);
+
+  const eliminarNotificacion = (id) => {
+    setNotificaciones(notificaciones.filter(n => n.id !== id));
+  }
 
   const toggleDrawer = (open) => () => {
     setOpenDrawer(open);
@@ -62,7 +66,11 @@ const Header = (props) => {
           <Divider />
           <List className='listaNotificaciones'>
             {notificaciones.map((notif) => (
-              <CardNotificacion key={notif.id} notificacion={notif} />
+              <CardNotificacion
+                key={notif.id}
+                notificacion={notif}
+                marcarComoLeida={eliminarNotificacion}
+              />
             ))}
           </List>
         </div>
