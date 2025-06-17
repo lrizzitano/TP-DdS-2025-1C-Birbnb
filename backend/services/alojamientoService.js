@@ -11,7 +11,6 @@ export class AlojamientoService {
   async findAll(filtros = {}, page = 1, limit = 10) {
     const filtrosDB = {};
 
-    // filtros de ubicación
     if (filtros.calle) filtrosDB["direccion.calle"] = filtros.calle;
 
     if (filtros.altura) filtrosDB["direccion.altura"] = filtros.altura;
@@ -24,23 +23,22 @@ export class AlojamientoService {
 
     if (filtros.long) filtrosDB["direccion.long"] = filtros.long;
 
-    // obtención paginada
-    let alojamientos = await this.alojamientoRepository.findAll(filtrosDB, page, limit);
-
-    // filtros con lógica de dominio
     if (filtros.precioMin && filtros.precioMax) {
-      alojamientos = alojamientos.filter(a => a.tuPrecioEstaDentroDe(filtros.precioMin, filtros.precioMax));
+      filtrosDB.precioPorNoche = {
+        $gte: filtros.precioMin,
+        $lte: filtros.precioMax
+      };
     }
 
     if (filtros.cantHuespedes) {
-      alojamientos = alojamientos.filter(a => a.puedenAlojarse(filtros.cantHuespedes));
+      filtrosDB.cantHuespedesMax = { $gte: filtros.cantHuespedes };
     }
 
-    if (filtros.caracteristicas) {
-      alojamientos = alojamientos.filter(a =>
-        filtros.caracteristicas.every(caracteristica => a.tenesCaracteristica(caracteristica))
-      );
+    if (filtros.caracteristicas && filtros.caracteristicas.length > 0) {
+      filtrosDB.caracteristicas = { $all: filtros.caracteristicas };
     }
+
+    let alojamientos = await this.alojamientoRepository.findAll(filtrosDB, page, limit);
 
     const data = alojamientos.map(a => this.toDTO(a));
     const total = await this.alojamientoRepository.countAll(filtrosDB);
