@@ -39,7 +39,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
     }
 
     return (
-        <div className="contenedorFiltros">
+        <>
             <FiltroTextual campo='pais' setter={setFiltroTemporal} />
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
@@ -47,7 +47,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
                 Buscar
             </Button>
-        </div>
+        </>
     )
 }
 
