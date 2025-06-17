@@ -1,19 +1,36 @@
 import './CardAlojamiento.css'
 import { Link } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
 
-// aca arme una card a mano, hay que ponderar si queremos hacerlo asi o usar alguna
-// biblioteca de componentes ya existente
 
-const CardAlojamiento = ({alojamiento}) => {
+
+const CardAlojamiento = ({ alojamiento }) => {
     return (
-        <div className="card">
-            <Link to={`/alojamientos/${alojamiento.id}`}>
-            {/* la foto esta hardcodeada, pq las fotos de la DB no son reales, habria q arreglarlas y aca poner alojamiento.fotos[0] */}
-                <img src={"https://a0.muscache.com/im/pictures/c42d676c-4733-4151-9f40-c2903f4a3cd0.jpg?im_w=960"} alt={alojamiento.nombre} className="imagen"></img>
-            </Link>
-            <h4>{alojamiento.nombre}</h4>
-            <p>{`Precio por noche: $${alojamiento.precioPorNoche}`}</p>
-        </div>
+        <Card sx={{ width: 350, height: 360, display: 'flex', flexDirection: 'column' }}>
+            <CardActionArea component={Link}
+                to={`/alojamientos/${alojamiento.id}`}
+                sx={{ height: '100%', flexGrow: 1 }}>
+                <CardMedia
+                    component="img"
+                    height="270"
+                    image={alojamiento.fotos[0].path}
+                    alt={alojamiento.fotos[0].descripcion}
+                    sx={{ objectFit: 'cover' }}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {alojamiento.nombre}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {`Precio por noche: $${alojamiento.precioPorNoche}`}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
     );
 }
 

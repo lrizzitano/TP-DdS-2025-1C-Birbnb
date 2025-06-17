@@ -118,6 +118,7 @@ export class AlojamientoService {
         nombreEnum(Caracteristica, caracteristica)) : [],
       fotos: alojamiento.fotos.map(foto => ({
         descripcion: foto.descripcion,
+        path: foto.path
       }))
     }
   }
