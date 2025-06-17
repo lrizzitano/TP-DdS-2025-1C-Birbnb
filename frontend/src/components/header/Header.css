@@ -1,13 +1,30 @@
 .header {
     background-color: var(--color-fondo);
-    padding: 0.5rem 0;
+    padding: 0.5rem 3rem;
     box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.2);
-    color: white;
-    text-align: center;
+    color: var(--color-principal);
+    align-items: center;
+    justify-content: space-between;
     display: flex;
     height: 3rem;
 }
 
-.logo {
+.linkHome {
+    display: inline-block;
     height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.logo {
+    display: block;
+    height: 100%;
+    width: auto;
+}
+
+.listaNotificaciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
