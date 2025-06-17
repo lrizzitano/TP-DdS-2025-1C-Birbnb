@@ -1,3 +1,4 @@
+import "./FiltrosAlojamientos.css";
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -49,8 +50,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
 
 
     return (
-        <div className="contenedor-filtros" style={{ display: 'flex', gap: '10px'}}>
-
+        <div className="contenedorFiltros">
 
             <TextField
                 label="País"
@@ -62,10 +62,10 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
                 onChange={(e) => setFiltroTemporal(e, 'ciudad', e.target.value)}
             />
             
-            <FormControl sx={{ width: 300 }}>
-                <InputLabel id="caracteristicas-label">Características</InputLabel>
+            <FormControl className="selectorCaracteristicas">
+                <InputLabel id="caracteristicasLabel">Características</InputLabel>
                 <Select
-                    labelId="caracteristicas-label"
+                    labelId="caracteristicasLabel"
                     multiple
                     value={filtrosTemporales.caracteristicas ?? []}
                     onChange={(e) => setCaracteristicas(e, e.target.value)}
