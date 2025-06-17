@@ -6,9 +6,12 @@ import FiltrosAlojamientos from "../../components/filtrosAlojamientos/FiltrosAlo
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { IconButton } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Pagination from '@mui/material/Pagination';
 
 const Alojamientos = () => {
   const [alojamientos, setAlojamientos] = useState([]);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(1);
   const [loading, setLoading] = useState(false);
   const [filtersOut, setFiltersOut] = useState(true);
   const matches = useMediaQuery('(min-width: 768px)')
@@ -23,6 +26,8 @@ const Alojamientos = () => {
     setLoading(true);
     fetchAlojamientosBackend(filtrosAplicados).then(alojamientos => {
       setAlojamientos(alojamientos.data);
+      setPaginaActual(alojamientos.pagina);
+      setTotalPaginas(alojamientos.paginas_totales);
     })
       .then(() => setLoading(false))
       .catch(() => setLoading(false))
@@ -32,10 +37,16 @@ const Alojamientos = () => {
     setFiltrosAplicados({ ...filtrosTemporales });
   };
 
+  const handleCambioPagina = (event, nuevaPagina) => {
+    setFiltrosAplicados({ ...filtrosAplicados, page: nuevaPagina });
+  };
+
+
   return (
-      <div className = "pageAlojamientos">
-      <IconButton onClick={() => {setFiltersOut(!filtersOut)}} color="inherit" sx={{display: 'none', '@media (max-width: 768px)': { display: 'flex' }}}>
-          <FilterListIcon />
+    <div className="pageAlojamientos">
+
+      <IconButton onClick={() => { setFiltersOut(!filtersOut) }} color="inherit" sx={{ display: 'none', '@media (max-width: 768px)': { display: 'flex' } }}>
+        <FilterListIcon />
       </IconButton>
 
       {(filtersOut || matches) && <div className={"contenedorFiltros"}>
@@ -46,16 +57,23 @@ const Alojamientos = () => {
         />
       </div>}
 
-        {loading ? (
-          <p>Cargando alojamientos...</p>
-        ) : (
-          <div className="contenedorCardsAlojamiento">
-            {alojamientos.map((a) => (
-              <CardAlojamiento alojamiento={a} key={a.id} />
-            ))}
-          </div>
-        )}
-      </div>
+      {loading ? (
+        <p>Cargando alojamientos...</p>
+      ) : (
+        <div className="contenedorCardsAlojamiento">
+          {alojamientos.map((a) => (
+            <CardAlojamiento alojamiento={a} key={a.id} />
+          ))}
+        </div>
+      )}
+
+      <Pagination
+        count={totalPaginas}
+        size="large"
+        page={paginaActual}
+        onChange={handleCambioPagina}
+      />
+    </div>
   )
 };
 
