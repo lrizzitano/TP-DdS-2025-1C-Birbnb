@@ -1,4 +1,3 @@
-import "./FiltrosAlojamientos.css";
 import Button from "@mui/material/Button";
 import SearchIcon from '@mui/icons-material/Search';
 import FiltroTextual from "../filtroTextual/FiltroTextual";
@@ -41,7 +40,6 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
 
     return (
         <div className="contenedorFiltros">
-
             <FiltroTextual campo='pais' setter={setFiltroTemporal} />
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />

@@ -27,13 +27,12 @@ const Alojamientos = () => {
   };
 
   return (
-      <div className="contenedorAlojamientos">
-        <FiltrosAlojamientos
-          filtrosTemporales={filtrosTemporales}
-          setFiltrosTemporales={setFiltrosTemporales}
-          onBuscar={handleBuscar}
-        />
-
+      <div className = "pageAlojamientos">
+          <FiltrosAlojamientos
+            filtrosTemporales={filtrosTemporales}
+            setFiltrosTemporales={setFiltrosTemporales}
+            onBuscar={handleBuscar}
+          />
         {loading ? (
           <p>Cargando alojamientos...</p>
         ) : (
