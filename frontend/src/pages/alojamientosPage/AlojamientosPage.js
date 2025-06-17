@@ -27,9 +27,7 @@ const Alojamientos = () => {
   };
 
   return (
-    <>
-
-      <div className="contenedor-alojamientos">
+      <div className="contenedorAlojamientos">
         <FiltrosAlojamientos
           filtrosTemporales={filtrosTemporales}
           setFiltrosTemporales={setFiltrosTemporales}
@@ -39,14 +37,13 @@ const Alojamientos = () => {
         {loading ? (
           <p>Cargando alojamientos...</p>
         ) : (
-          <div className="contenedor-cards-alojamiento">
+          <div className="contenedorCardsAlojamiento">
             {alojamientos.map((a) => (
               <CardAlojamiento alojamiento={a} key={a.id} />
             ))}
           </div>
         )}
       </div>
-    </>
   )
 };
 
