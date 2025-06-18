@@ -1,5 +1,5 @@
 import CardNotificacion from '../cardNotificacion/CardNotificacion';
-import { Drawer, List, Divider } from '@mui/material';
+import { Drawer, List, Divider, Typography } from '@mui/material';
 
 const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, eliminarNotificacion}) => {
 
@@ -13,7 +13,9 @@ const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, eli
             }
         }}>
             <div style={{ width: 350, padding: '16px' }}>
-                <h3>Notificaciones</h3>
+                <Typography variant='h5'>
+                    Notificaciones
+                </Typography>
                 <Divider />
                 <List className='listaNotificaciones'>
                     {listaNotificaciones.map((notif) => (

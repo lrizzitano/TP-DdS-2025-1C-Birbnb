@@ -8,8 +8,6 @@
     overflow-y: auto;
 }
 
-/* esto deja los filtros horizontales arriba */
-
 .contenedorCardsAlojamiento {
     display: flex;
     flex-wrap: wrap;
@@ -26,9 +24,6 @@
     justify-content: center;
     padding: 1rem;
 }
-
-
-/* esto deja los filtros en vertical */
 
 @media (max-width: 768px) {
     .pageAlojamientos {
