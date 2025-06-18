@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import './Header.css';
 import { Link } from "react-router-dom";
-import { Drawer, IconButton, List, Divider, Badge } from '@mui/material';
+import { IconButton, Badge } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo from '../../images/logo.png'
-import CardNotificacion from '../cardNotificacion/CardNotificacion';
+import DrawerNotificaciones from '../drawerNotificaciones/DrawerNotificaciones';
+import ModalUsuario from '../modalUsuario/ModalUsuario';
 
 
 const Header = (props) => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  // Notifcaciones de ejemplo
   const [notificaciones, setNotificaciones] = useState([{
     "id": "683764e6cb7c32307e0a2fb3",
     "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n      desde Sat Mar 31 2029 21:00:00 GMT-0300 (Argentina Standard Time)  \n      hasta Wed Apr 04 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      hecha por Ornella Mosca.",
@@ -42,10 +45,43 @@ const Header = (props) => {
     setOpenDrawer(open);
   };
 
+  // Datos de usuario de ejemplo
+  const usuario = {
+    id: "68367724102a6bf29a3d1eee",
+    nombre: "Leo Cesario",
+    email: "lcesario@mail.com.ar",
+    tipo: "HUESPED"
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
 
   return (
     <header className="header">
       <Link className="linkHome" to="/"><img src={logo} alt="Logo birbnb" className="logo" /></Link>
+
+      <div style={{ flexGrow: 1 }}></div>
+
+      <IconButton color="inherit" onClick={handleOpen}>
+        <AccountCircleIcon />
+      </IconButton>
+
+      <ModalUsuario
+        open={open}
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        usuario={usuario}
+      />
 
       <IconButton onClick={toggleDrawer(true)} color="inherit">
         <Badge badgeContent={notificaciones.length} color="error">
@@ -53,28 +89,12 @@ const Header = (props) => {
         </Badge>
       </IconButton>
 
-      <Drawer anchor="right" open={openDrawer} onClose={toggleDrawer(false)} slotProps={{
-        paper: {
-          sx: {
-            mt: '4rem',
-            height: 'calc(100vh - 4rem)',
-          }
-        }
-      }}>
-        <div style={{ width: 350, padding: '16px' }}>
-          <h3>Notificaciones</h3>
-          <Divider />
-          <List className='listaNotificaciones'>
-            {notificaciones.map((notif) => (
-              <CardNotificacion
-                key={notif.id}
-                notificacion={notif}
-                marcarComoLeida={eliminarNotificacion}
-              />
-            ))}
-          </List>
-        </div>
-      </Drawer>
+      <DrawerNotificaciones
+        openDrawer={openDrawer}
+        closeDrawer={toggleDrawer(false)}
+        listaNotificaciones={notificaciones}
+        eliminarNotificacion={eliminarNotificacion}
+      />
 
     </header>
   );
