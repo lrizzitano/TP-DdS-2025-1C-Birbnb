@@ -18,7 +18,7 @@ const Alojamientos = () => {
 
 
   // los temporales serian los que estan seleccionados pero no aplicados (se aplican al tocar el boton buscar)
-  const [filtrosTemporales, setFiltrosTemporales] = useState({precioMin: 10, precioMax: 200});
+  const [filtrosTemporales, setFiltrosTemporales] = useState({precioMin: 10, precioMax: 300});
   const [filtrosAplicados, setFiltrosAplicados] = useState({});
 
   // Fetch cuando cambian los filtros aplicados
