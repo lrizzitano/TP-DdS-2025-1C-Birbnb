@@ -1,7 +1,7 @@
 .pageHuesped {
   display: flex;
   gap: 2rem;
-  padding: 2rem 20rem;
+  padding: 2rem 10rem;
   height: 100%;
   box-sizing: border-box;
 }

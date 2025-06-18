@@ -6,8 +6,29 @@ export class AlojamientoRepository {
   }
 
   async findAll(filtros = {}, page = 1, limit = 10) {
+    const copiaFiltros = {...filtros}; // hacemos copia para poder borrarle campos tranquilos
+    const {fechaInicioFiltro, fechaFinFiltro} = copiaFiltros; // agarramos estos pq el filtro es distinto
+    delete copiaFiltros.fechaInicioFiltro;  // y los eliminamos para que no molesten en el $match
+    delete copiaFiltros.fechaFinFiltro;
+
     const skip = (page - 1) * limit;
-    return await this.model.find(filtros).skip(skip).limit(limit).populate("anfitrion");
+
+    const alojamientosFiltrados = await this.model.aggregate([
+        {$match: copiaFiltros},
+        {$lookup: { from: 'reservas', localField: '_id', foreignField: 'alojamiento', as: 'reservas'}},
+        {$match: {
+            // filtro según reservas para disponibilidad
+            reservas: { $not: { $elemMatch: { 
+              "rangoFechas.fechaInicio": { $lt: fechaFinFiltro },
+              "rangoFechas.fechaFin": { $gt: fechaInicioFiltro }
+            } } }
+          }
+        },
+        {$skip: skip},
+        {$limit: limit},
+      ]);
+
+      return await this.model.populate(alojamientosFiltrados, {path: 'anfitrion'});
   }
 
 
@@ -16,7 +37,25 @@ export class AlojamientoRepository {
   }
 
   async countAll(filtros = {}) {
-    return await this.model.countDocuments(filtros);
+    const copiaFiltros = {...filtros}; // hacemos copia para poder borrarle campos tranquilos
+    const {fechaInicioFiltro, fechaFinFiltro} = copiaFiltros; // agarramos estos pq el filtro es distinto
+    delete copiaFiltros.fechaInicioFiltro;  // y los eliminamos para que no molesten en el $match
+    delete copiaFiltros.fechaFinFiltro;
+
+    const filtrados = await this.model.aggregate([
+      {$match: copiaFiltros},
+      {$lookup: { from: 'reservas', localField: '_id', foreignField: 'alojamiento', as: 'reservas'}},
+      {$match: {
+          // filtro según reservas para disponibilidad
+          reservas: { $not: { $elemMatch: { 
+            "rangoFechas.fechaInicio": { $lt: fechaFinFiltro },
+            "rangoFechas.fechaFin": { $gt: fechaInicioFiltro }
+          } } }
+        }
+      }
+    ])
+
+    return filtrados.length;
   }
 
   async save(alojamiento) {

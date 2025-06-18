@@ -30,6 +30,11 @@ export class AlojamientoService {
       };
     }
 
+    if (filtros.fechaInicio && filtros.fechaFin) {
+      filtrosDB["fechaInicioFiltro"] = filtros.fechaInicio;
+      filtrosDB["fechaFinFiltro"] = filtros.fechaFin;
+    }
+
     if (filtros.cantHuespedes) {
       filtrosDB.cantHuespedesMax = { $gte: filtros.cantHuespedes };
     }
@@ -39,7 +44,6 @@ export class AlojamientoService {
     }
 
     let alojamientos = await this.alojamientoRepository.findAll(filtrosDB, page, limit);
-
     const data = alojamientos.map(a => this.toDTO(a));
     const total = await this.alojamientoRepository.countAll(filtrosDB);
     const totalPages = Math.ceil(total / limit);
@@ -87,7 +91,7 @@ export class AlojamientoService {
     }
 
     return {
-      id: alojamiento.id,
+      id: alojamiento._id,
       anfitrion: {
         id: alojamiento.anfitrion.id,
         nombre: alojamiento.anfitrion.nombre,

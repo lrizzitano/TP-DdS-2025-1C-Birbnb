@@ -23,13 +23,15 @@ export const fetchAlojamientosBackend = async (filtros = {}) => {
       filtros[key].forEach((caract) => {
         url.searchParams.append("caracteristicas", caract);
       });
+    } else if (key === "fechaInicio" || key === "fechaFin") {
+      url.searchParams.append(key, filtros[key].toISOString().split('T')[0]);
     } else {
       url.searchParams.append(key, filtros[key]);
     }
   });
 
   // En caso de emergencia rompa el vidrio y descomente la linea
-  //console.log("Request completo a backend:", url.toString());
+  console.log("Request completo a backend:", url.toString());
 
   try {
     const response = await axios.get(url.toString());
