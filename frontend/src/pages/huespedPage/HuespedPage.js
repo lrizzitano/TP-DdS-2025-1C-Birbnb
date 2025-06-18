@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid, Box, Divider } from '@mui/material';
+import {  Typography } from '@mui/material';
 import CardUsuario from '../../components/cardUsuario/CardUsuario';
 import CardReserva from '../../components/cardReserva/CardReserva';
 import './HuespedPage.css';

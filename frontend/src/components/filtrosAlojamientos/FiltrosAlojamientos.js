@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FiltroTextual from "../filtroTextual/FiltroTextual";
 import FiltroCaracteristicas from "../filtroCaracteristicas/FiltroCaracteristicas"
 import FiltroPrecio from "../filtroPrecio/FiltroPrecio";
+import FiltroFecha from "../filtroFecha/FiltroFecha";
 
 const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
 
@@ -29,7 +30,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
         if (value.length === 0) {
             delete filtrosTemporales.caracteristicas;
             // Reseteo los filtros temporales para que se re-renderice el selector de características
-            setFiltrosTemporales({...filtrosTemporales})
+            setFiltrosTemporales({ ...filtrosTemporales })
         } else {
             setFiltrosTemporales({
                 ...filtrosTemporales,
@@ -43,6 +44,8 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
             <FiltroTextual campo='pais' setter={setFiltroTemporal} />
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
+            <FiltroFecha campo='fechaInicio' setter={setFiltroTemporal}/>
+            <FiltroFecha campo='fechaFin' setter={setFiltroTemporal}/>
             <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
                 Buscar
