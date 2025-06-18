@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FiltroTextual from "../filtroTextual/FiltroTextual";
 import FiltroCaracteristicas from "../filtroCaracteristicas/FiltroCaracteristicas"
 import FiltroPrecio from "../filtroPrecio/FiltroPrecio";
+import FiltroNumerico from "../filtroNumerico/FiltroNumerico";
 
 const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
 
@@ -42,7 +43,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
         <>
             <FiltroTextual campo='pais' setter={setFiltroTemporal} />
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
-            <FiltroTextual campo='cantHuespedes' setter={setFiltroTemporal} />
+            <FiltroNumerico campo='cantHuespedes' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
             <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
