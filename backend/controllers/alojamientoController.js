@@ -15,6 +15,8 @@ export class AlojamientoController {
         pais,
         lat,
         long,
+        fechaInicio,
+        fechaFin,
         precioMin,
         precioMax,
         cantHuespedes,
@@ -57,6 +59,12 @@ export class AlojamientoController {
         filtros.precioMin = Number(precioMin);
         filtros.precioMax = Number(precioMax);
       }
+
+      if (fechaInicio && fechaFin) {
+        filtros.fechaInicio = new Date(fechaInicio);
+        filtros.fechaFin = new Date(fechaFin);
+      }
+
       if (cantHuespedes) {
         filtros.cantHuespedes = Number(cantHuespedes);
       }
