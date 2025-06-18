@@ -16,22 +16,22 @@ const Header = (props) => {
   // Notifcaciones de ejemplo
   const [notificaciones, setNotificaciones] = useState([{
     "id": "683764e6cb7c32307e0a2fb3",
-    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n      desde Sat Mar 31 2029 21:00:00 GMT-0300 (Argentina Standard Time)  \n      hasta Wed Apr 04 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      hecha por Ornella Mosca.",
-    "fechaAlta": "2025-05-28T19:32:54.241Z",
+    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n desde 31-03-2029  \n hasta 04-04-2029\n hecha por Ornella Mosca.",
+    "fechaAlta": "2025-05-28",
     "estado": "PENDIENTE",
     "fechaLeida": null
   },
   {
     "id": "683764e6cb7c32307e0a2fd0",
-    "mensaje": "La reserva para el alojamiento Casa en la Playa\n      desde Sat Mar 31 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      hasta Wed Apr 04 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      fue cancelada por Ornella Mosca\n      por el siguiente motivo: Sin motivo",
-    "fechaAlta": "2025-05-28T19:32:54.350Z",
+    "mensaje": "La reserva para el alojamiento Casa en la Playa\n desde 31-03-2029\n hasta 04-04-2029\n fue cancelada por Ornella Mosca\n por el siguiente motivo: Sin motivo",
+    "fechaAlta": "2025-05-28",
     "estado": "PENDIENTE",
     "fechaLeida": null
   },
   {
     "id": "68377dcc74bc812bae41d98e",
-    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n      desde Sat Mar 31 2029 21:00:00 GMT-0300 (Argentina Standard Time)  \n      hasta Wed Apr 04 2029 21:00:00 GMT-0300 (Argentina Standard Time)\n      hecha por Ornella Mosca.",
-    "fechaAlta": "2025-05-28T21:19:08.431Z",
+    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n desde 31-03-2029  \n hasta 04-04-2029\n hecha por Ornella Mosca.",
+    "fechaAlta": "2025-05-28",
     "estado": "PENDIENTE",
     "fechaLeida": null
   }

@@ -15,7 +15,7 @@ const FiltroPrecio = ({precioMin, precioMax, setter}) => {
             valueLabelDisplay="auto"
             step={10}
             min={10}
-            max={200}
+            max={300}
         />
     </Box>
     )
