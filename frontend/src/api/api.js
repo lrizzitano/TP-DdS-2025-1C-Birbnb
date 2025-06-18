@@ -42,3 +42,15 @@ export const fetchAlojamientosBackend = async (filtros = {}) => {
     throw error;
   }
 };
+
+export const fetchAlojamiento = async (id) => {
+  const url = new URL(`${API_BASE_URL}/alojamientos`);
+  try {
+    const response = await axios.get(`${url.toString()}/${id}`);
+    console.log("Request completo a backend:", url.toString(), response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching alojamientos:", error);
+    throw error;
+  }
+};
