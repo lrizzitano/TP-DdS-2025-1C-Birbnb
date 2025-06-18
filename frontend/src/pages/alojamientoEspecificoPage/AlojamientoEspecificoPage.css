@@ -1,3 +1,36 @@
 .contenedorAlojamiento {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+}
+
+.tituloAlojamiento {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.textoAlojamiento {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.dataAlojamiento {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 768px) {
+    .dataAlojamiento {
+        flex-direction: column;
+    }
+
+    .dataAlojamiento {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
 }

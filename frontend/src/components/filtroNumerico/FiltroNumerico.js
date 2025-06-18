@@ -1,10 +1,10 @@
 import TextField from '@mui/material/TextField';
 
-const FiltroTextual = ({ campo, setter }) => {
+const FiltroTextual = ({ etiqueta, campo, setter }) => {
 
     return (
         <TextField
-            label={campo.charAt(0).toUpperCase() + campo.slice(1)}
+            label={etiqueta}
             onChange={(e) => {
                 const value = parseInt(e.target.value, 10);
                 if (value >= 0 || e.target.value === '')
