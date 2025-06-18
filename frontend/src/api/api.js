@@ -30,8 +30,10 @@ export const fetchAlojamientosBackend = async (filtros = {}) => {
     }
   });
 
+  url.searchParams.append("limit", "9");
+
   // En caso de emergencia rompa el vidrio y descomente la linea
-  console.log("Request completo a backend:", url.toString());
+  //console.log("Request completo a backend:", url.toString());
 
   try {
     const response = await axios.get(url.toString());

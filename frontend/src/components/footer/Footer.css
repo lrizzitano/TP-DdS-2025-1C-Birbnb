@@ -1,8 +1,0 @@
-.Footer {
-    background-color: var(--color-fondo);
-    padding: 0.5rem 0;
-    box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.2);
-    color: var(--color-principal);
-    text-align: center;
-    margin-top: auto;
-}
