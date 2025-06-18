@@ -42,6 +42,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
         <>
             <FiltroTextual campo='pais' setter={setFiltroTemporal} />
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
+            <FiltroTextual campo='cantHuespedes' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
             <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
