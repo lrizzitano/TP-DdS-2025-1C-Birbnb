@@ -1,8 +1,10 @@
 import { BrowserRouter } from 'react-router';
 import { Routes, Route } from 'react-router-dom';
+import 'leaflet/dist/leaflet.css';
 
 import './App.css';
 
+import ReservarAlojamientoPage from './pages/reservarAlojamientoPage/ReservarAlojamientoPage';
 import AlojamientoEspecificoPage from './pages/alojamientoEspecificoPage/AlojamientoEspecificoPage';
 import AlojamientosPage from './pages/alojamientosPage/AlojamientosPage';
 import LoginPage from './pages/loginPage/LoginPage';
@@ -23,6 +25,7 @@ function App() {
            {/* habria q ver como gestionamos estas routes de huespedes y anfitriones */}
           <Route path="/huespedes/:id" element={<HuespedPage/>} /> 
           <Route path="/anfitriones/:id" element={<AnfitrionPage/>} />
+          <Route path="/alojamientos/:id/reservar" element={<ReservarAlojamientoPage />} />
         </Route>
         <Route path="/login" element={<LoginPage/>} />
       </Routes>
