@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { fetchAlojamiento } from "../../api/api";
 import { useState, useEffect } from "react";
 import './AlojamientoEspecificoPage.css'
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WifiIcon from '@mui/icons-material/Wifi';
 import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
-import LocalParkingIcon from '@mui/icons-material/LocalParking'; // nuevo
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Box, Typography } from '@mui/material';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import { Box, Typography, Button, Paper } from '@mui/material';
 
 //medio poco elegante, pero no se me ocurrio otra forma de agregar los iconos
 const caracteristicaIcons = {
@@ -53,34 +54,45 @@ const AlojamientoEspecificoPage = () => {
 
             <img src={alojamiento.fotos[0].path} width={"50%"} alt={alojamiento.nombre}></img>
 
-            <div className="textoAlojamiento">
-              <Typography variant="h5" component="h2" gutterBottom>
-                Acerca de este lugar:
-              </Typography>
-              <Typography variant="h6" gutterBottom>
-                {alojamiento.descripcion}
-              </Typography>
-              <Typography variant="h6" component="h2" gutterBottom>
-                Precio por noche: ${alojamiento.precioPorNoche}
-              </Typography>
-              <Typography variant="h6" component="h2" gutterBottom>
-                Capacidad: {alojamiento.cantHuespedesMax} personas
-              </Typography>
-              <Typography variant="h6" component="h2" gutterBottom>
-                Características:
-              </Typography>
-              
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-                {alojamiento.caracteristicas.map((c, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    {caracteristicaIcons[c] ?? '❓'}
-                    <Typography>{c.replaceAll("_", " ")}</Typography>
-                  </div>
-                ))}
-              </div>
+          <Paper elevation={3} sx={{ p: 3, width: '100%' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
 
-            </div>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    Acerca de este lugar:
+                  </Typography>
+                  <Typography variant="h6" gutterBottom>
+                    {alojamiento.descripcion}
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    Precio por noche: ${alojamiento.precioPorNoche}
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    Capacidad: {alojamiento.cantHuespedesMax} personas
+                  </Typography>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    Características:
+                  </Typography>
 
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                    {alojamiento.caracteristicas.map((c, i) => (
+                      <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        {caracteristicaIcons[c] ?? '❓'}
+                        <Typography variant="body2">{c.replaceAll("_", " ")}</Typography>
+                      </Box>
+                    ))}
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    sx={{ mt: 3, width: 'fit-content' }}
+                  >
+                    Reservar
+                  </Button>
+
+              </Box>
+            </Paper>
           </div>
 
           
@@ -117,7 +129,7 @@ const AlojamientoEspecificoPage = () => {
             {alojamiento.nombre}
           </Popup>
         </Marker>
-        
+
       </MapContainer>
     </Box>
   </>
