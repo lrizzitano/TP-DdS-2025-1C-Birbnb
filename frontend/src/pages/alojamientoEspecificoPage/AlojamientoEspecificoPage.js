@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { fetchAlojamiento } from "../../api/api";
 import { useState, useEffect } from "react";
 import './AlojamientoEspecificoPage.css'
+import { Link } from 'react-router-dom';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -87,6 +88,8 @@ const AlojamientoEspecificoPage = () => {
                     color="primary"
                     size="large"
                     sx={{ mt: 3, width: 'fit-content' }}
+                    component={Link}
+                    to={`/alojamientos/${alojamiento.id}/reservar`}
                   >
                     Reservar
                   </Button>
