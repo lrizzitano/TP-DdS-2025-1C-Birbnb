@@ -1,8 +1,9 @@
 import { ReservaModel } from '../modelo/schemas/reservaSchema.js';
 
 export class ReservaRepository { 
-    constructor() {
+    constructor(AlojamientoRepository) {
         this.model = ReservaModel;
+        this.AlojamientoRepository = AlojamientoRepository;
     }
 
     async findAll() {
@@ -35,8 +36,20 @@ export class ReservaRepository {
     }
 
     async findByUsuario(usuarioId) {
-      return await this.model.find({huespedReservador : usuarioId});
+      const alojamientosUsuario = await this.AlojamientoRepository.findByAnfitrion(usuarioId);
+
+      console.log("Alojamientos del usuario:", alojamientosUsuario);
+
+      const alojamientoIds = alojamientosUsuario.map(a => a._id);
+
+      return await this.model.find({
+        $or: [
+          { huespedReservador: usuarioId },
+          { alojamiento: { $in: alojamientoIds } }
+        ]
+      });
     }
+
 
     async create(instanciaDeReservaDominio) {
       const nuevaReserva = new this.model(instanciaDeReservaDominio);
