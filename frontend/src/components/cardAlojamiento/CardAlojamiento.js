@@ -13,6 +13,7 @@ const CardAlojamiento = ({ alojamiento }) => {
         <Card sx={{ width: 350, height: 360, display: 'flex', flexDirection: 'column' }}>
             <CardActionArea component={Link}
                 to={`/alojamientos/${alojamiento.id}`}
+                target="_blank"
                 sx={{ height: '100%', flexGrow: 1 }}>
                 <CardMedia
                     component="img"

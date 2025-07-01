@@ -74,6 +74,7 @@ const AlojamientoEspecificoPage = () => {
                     Características:
                   </Typography>
 
+                  {alojamiento.caracteristicas && 
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                     {alojamiento.caracteristicas.map((c, i) => (
                       <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -81,9 +82,9 @@ const AlojamientoEspecificoPage = () => {
                         <Typography variant="body2">{c.replaceAll("_", " ")}</Typography>
                       </Box>
                     ))}
-                  </Box>
+                  </Box>}
 
-                  <Button
+                  <Button 
                     variant="contained"
                     color="primary"
                     size="large"
