@@ -1,5 +1,4 @@
 import { AlojamientoModel } from '../modelo/schemas/alojamientoSchema.js';
-
 export class AlojamientoRepository {
   constructor() {
     this.model = AlojamientoModel;
@@ -34,6 +33,10 @@ export class AlojamientoRepository {
 
   async findById(id) {
     return await this.model.findById(id).populate("anfitrion");
+  }
+
+  async findByAnfitrion(anfitrionId) {
+    return await this.model.find({anfitrion: anfitrionId});;
   }
 
   async countAll(filtros = {}) {
