@@ -89,7 +89,6 @@ export class AlojamientoService {
     if (!alojamiento) {
       throw new NotFoundError("Alojamiento no encontrado");
     }
-
     return {
       id: alojamiento._id,
       anfitrion: {
@@ -117,7 +116,7 @@ export class AlojamientoService {
       },
       cantHuespedesMax: alojamiento.cantHuespedesMax,
       caracteristicas: alojamiento.caracteristicas ? alojamiento.caracteristicas.map(caracteristica =>
-        nombreEnum(Caracteristica, caracteristica)) : [],
+        nombreEnum(Caracteristica, caracteristica)).filter(c => c != null) : [],
       fotos: alojamiento.fotos.map(foto => ({
         descripcion: foto.descripcion,
         path: foto.path
