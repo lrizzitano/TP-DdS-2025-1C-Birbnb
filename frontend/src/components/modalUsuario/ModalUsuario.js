@@ -31,7 +31,7 @@ const ModalUsuario = ({ open, anchorEl, handleClose, usuario }) => {
                 size="small"
                 sx={{ mt: 1 }}
                 component={Link}
-                to={`/huespedes/${usuario.id}`}
+                to={`/reservas/${usuario.id}`}
                 onClick={handleClose}
             >
                 Ver reservas activas

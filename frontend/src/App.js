@@ -8,8 +8,7 @@ import ReservarAlojamientoPage from './pages/reservarAlojamientoPage/ReservarAlo
 import AlojamientoEspecificoPage from './pages/alojamientoEspecificoPage/AlojamientoEspecificoPage';
 import AlojamientosPage from './pages/alojamientosPage/AlojamientosPage';
 import LoginPage from './pages/loginPage/LoginPage';
-import HuespedPage from './pages/huespedPage/HuespedPage';
-import AnfitrionPage from './pages/anfitrionPage/AnfitrionPage';
+import ReservasPage from './pages/reservasPage/ReservasPage';
 import Layout from './pages/layout/Layout';
 
 function App() {
@@ -23,8 +22,7 @@ function App() {
           <Route index element={<AlojamientosPage />} />
           <Route path="/alojamientos/:id" element={<AlojamientoEspecificoPage />} />
            {/* habria q ver como gestionamos estas routes de huespedes y anfitriones */}
-          <Route path="/huespedes/:id" element={<HuespedPage/>} /> 
-          <Route path="/anfitriones/:id" element={<AnfitrionPage/>} />
+          <Route path="/reservas/:id" element={<ReservasPage/>} />
           <Route path="/alojamientos/:id/reservar" element={<ReservarAlojamientoPage />} />
         </Route>
         <Route path="/login" element={<LoginPage/>} />

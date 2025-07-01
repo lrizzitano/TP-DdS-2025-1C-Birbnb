@@ -38,8 +38,6 @@ export class ReservaRepository {
     async findByUsuario(usuarioId) {
       const alojamientosUsuario = await this.AlojamientoRepository.findByAnfitrion(usuarioId);
 
-      console.log("Alojamientos del usuario:", alojamientosUsuario);
-
       const alojamientoIds = alojamientosUsuario.map(a => a._id);
 
       return await this.model.find({
@@ -47,7 +45,7 @@ export class ReservaRepository {
           { huespedReservador: usuarioId },
           { alojamiento: { $in: alojamientoIds } }
         ]
-      });
+      }).populate('alojamiento');
     }
 
 

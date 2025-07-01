@@ -56,3 +56,17 @@ export const fetchAlojamiento = async (id) => {
     throw error;
   }
 };
+
+export const fetchReservasDeUsuarioBackend = async (id) => {
+  const url = new URL(`${API_BASE_URL}/reservas`);
+  url.searchParams.append("id", id);
+
+  try {
+    const response = await axios.get(url.toString());
+    console.log("Request completo a backend:", url.toString(), response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching reservas:", error);
+    throw error;
+  }
+}

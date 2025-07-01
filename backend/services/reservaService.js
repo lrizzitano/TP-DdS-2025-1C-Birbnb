@@ -6,11 +6,12 @@ import { nombreEnum } from "../modelo/enums/nombreEnum.js";
 import { NotFoundError, ValidationError } from "../errors/AppError.js";
 
 export class ReservaService {
-  constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository) {
+  constructor(reservaRepository, alojamientoRepository, usuarioRepository, notificacionRepository, alojamientoService) {
     this.reservaRepository = reservaRepository;
     this.alojamientoRepository = alojamientoRepository;
     this.usuarioRepository = usuarioRepository;
     this.notificacionRepository = notificacionRepository;
+    this.alojamientoService = alojamientoService;
   }
 
   async crearReserva(datos) {
@@ -120,17 +121,11 @@ export class ReservaService {
   }
 
   toDto(reserva) {
-    let huespedString, alojamientoString;
+    let huespedString;
     if (reserva.huespedReservador instanceof mongoose.Types.ObjectId) {
       huespedString = reserva.huespedReservador.toString()
     } else {
       huespedString = reserva.huespedReservador.id
-    }
-
-    if (reserva.alojamiento instanceof mongoose.Types.ObjectId) {
-      alojamientoString = reserva.alojamiento.toString()
-    } else {
-      alojamientoString = reserva.alojamiento.id
     }
 
     return {
@@ -138,7 +133,7 @@ export class ReservaService {
       fechaAlta: reserva.fechaAlta.toString(),
       huespedReservadorId: huespedString,
       cantidadHuespedes: reserva.cantidadHuespedes,
-      alojamientoId: alojamientoString,
+      alojamiento: this.alojamientoService.toDTO(reserva.alojamiento),
       rangoFechas: {
         fechaInicio: reserva.rangoFechas.fechaInicio.toString(),
         fechaFin: reserva.rangoFechas.fechaFin.toString()

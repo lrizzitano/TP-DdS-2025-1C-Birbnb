@@ -47,7 +47,7 @@ const Header = (props) => {
 
   // Datos de usuario de ejemplo
   const usuario = {
-    id: "68367724102a6bf29a3d1eee",
+    id: "68367739102a6bf29a3d1ef0",
     nombre: "Leo Cesario",
     email: "lcesario@mail.com.ar",
     tipo: "HUESPED"
