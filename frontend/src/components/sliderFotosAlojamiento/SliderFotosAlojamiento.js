@@ -11,16 +11,19 @@ import { Navigation } from 'swiper/modules';
 export default function SliderFotosAlojamiento({fotos}) {
   return (
     <>
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        {
-            fotos.map(f => 
-                <SwiperSlide>
-                    <img src={f.path} width={"100%"} alt={f.descripcion}></img>
-                </SwiperSlide>
-            )
-        }
-        
-      </Swiper>
+      { fotos.length > 1 ?
+        <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+          {
+              fotos.map(f => 
+                  <SwiperSlide>
+                      <img src={f.path} width={"100%"} alt={f.descripcion}></img>
+                  </SwiperSlide>
+              )
+          }
+          
+        </Swiper> :
+        (<img src={fotos[0].path} width={"50%"} alt={fotos[0].descripcion}></img>)
+      }
       </>
   );
 }
