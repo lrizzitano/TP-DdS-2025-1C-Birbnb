@@ -11,6 +11,7 @@ import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { Box, Typography, Button, Paper } from '@mui/material';
+import SliderFotosAlojamiento from "../../components/sliderFotosAlojamiento/SliderFotosAlojamiento";
 
 //medio poco elegante, pero no se me ocurrio otra forma de agregar los iconos
 const caracteristicaIcons = {
@@ -53,7 +54,7 @@ const AlojamientoEspecificoPage = () => {
 
           <div className="dataAlojamiento">
 
-            <img src={alojamiento.fotos[0].path} width={"50%"} alt={alojamiento.nombre}></img>
+          <SliderFotosAlojamiento fotos={alojamiento.fotos} />
 
           <Paper elevation={3} sx={{ p: 3, width: '100%' }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
