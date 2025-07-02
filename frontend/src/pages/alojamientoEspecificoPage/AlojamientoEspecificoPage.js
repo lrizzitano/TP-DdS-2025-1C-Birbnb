@@ -212,59 +212,52 @@ const AlojamientoEspecificoPage = () => {
             </Paper>
           </div>
 
-          
-{alojamiento.direccion?.latitud && alojamiento.direccion?.longitud && (
-  <>
-    <Typography variant="h6" component="h2" gutterBottom sx={{ mt: 3 }}>
-      Ubicación
-    </Typography>
+        
+          {alojamiento.direccion?.latitud && alojamiento.direccion?.longitud && (
+            <>
+            <Typography variant="h6" component="h2" gutterBottom sx={{ mt: 3 }}>
+              Ubicación
+            </Typography>
 
-    <Typography variant="body1" gutterBottom>
-      <LocationOnIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
-      {alojamiento.direccion.calle} {alojamiento.direccion.altura}, {alojamiento.direccion.ciudad.nombre}, {alojamiento.direccion.ciudad.pais.nombre}
-    </Typography>
+            <Typography variant="body1" gutterBottom>
+              <LocationOnIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
+              {alojamiento.direccion.calle} {alojamiento.direccion.altura}, {alojamiento.direccion.ciudad.nombre}, {alojamiento.direccion.ciudad.pais.nombre}
+            </Typography>
 
-    <Box
-      sx={{
-        height: { xs: 480, sm: 660 },
-        width: '100%',
-        borderRadius: 2,
-        overflow: 'hidden',
-        mt: 2
-      }}
-    >
-      <MapContainer
-        center={[alojamiento.direccion.latitud, alojamiento.direccion.longitud]}
-        zoom={14}
-        style={{ height: '100%', width: '100%' }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker 
-          position={[alojamiento.direccion.latitud, alojamiento.direccion.longitud]}
-          icon={redDotIcon}>
-          <Popup>
-            {alojamiento.nombre}
-          </Popup>
-        </Marker>
+            <Box
+              sx={{
+                height: { xs: 480, sm: 660 },
+                width: '100%',
+                borderRadius: 2,
+                overflow: 'hidden',
+                mt: 2
+              }}
+            >
+              <MapContainer
+                center={[alojamiento.direccion.latitud, alojamiento.direccion.longitud]}
+                zoom={14}
+                style={{ height: '100%', width: '100%' }}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker 
+                  position={[alojamiento.direccion.latitud, alojamiento.direccion.longitud]}
+                  icon={redDotIcon}>
+                  <Popup>
+                    {alojamiento.nombre}
+                  </Popup>
+                </Marker>
 
-      </MapContainer>
-    </Box>
+              </MapContainer>
+            </Box>
+          </>
+        )}
+
+      </div>
+    )}
   </>
-)}
-
-
-
-
-
-
-
-
-        </div>
-      )}
-    </>
-  )
+)
 };
 
 export default AlojamientoEspecificoPage; 

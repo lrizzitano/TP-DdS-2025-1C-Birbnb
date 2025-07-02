@@ -18,7 +18,7 @@ const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, mar
                 </Typography>
                 <Divider />
                 <List className='listaNotificaciones'>
-                    {listaNotificaciones.map((notif) => (
+                    {listaNotificaciones.filter(notif => notif.estado != 'LEIDA').map((notif) => (
                         <CardNotificacion
                             key={notif.id}
                             notificacion={notif}

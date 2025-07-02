@@ -11,7 +11,6 @@ const CardNotificacion = ({ notificacion, marcarComoLeida }) => {
       <CardContent>
         <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>
           <span>{notificacion.fechaAlta}</span>
-          <span style={{ marginLeft: '0.5rem' }}>{notificacion.estado}</span>
         </Typography>
         <Typography variant="body2">
           {notificacion.mensaje}
