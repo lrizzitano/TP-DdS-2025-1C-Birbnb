@@ -8,6 +8,11 @@ import './Footer.css';
 const Footer = () => {
   return (
     <Box component="footer" className="footer">
+
+      <Typography variant="body2" className="footerText">
+        © {new Date().getFullYear()} Birbnb - Casi todos los derechos reservados.
+      </Typography>
+
       <Box className="footerIcons">
         <IconButton
           component={Link}
@@ -37,10 +42,6 @@ const Footer = () => {
           <PhoneIcon className="footerIcon" />
         </IconButton>
       </Box>
-
-      <Typography variant="body2" className="footerText">
-        © {new Date().getFullYear()} Birbnb - Todos los derechos reservados.
-      </Typography>
     </Box>
   );
 };
