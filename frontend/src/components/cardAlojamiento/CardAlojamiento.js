@@ -10,20 +10,20 @@ import CardActionArea from '@mui/material/CardActionArea';
 
 const CardAlojamiento = ({ alojamiento }) => {
     return (
-        <Card sx={{ width: 350, height: 360, display: 'flex', flexDirection: 'column' }}>
+        <Card sx={{ width: 400, height: 315, display: 'flex', flexDirection: 'column' }}>
             <CardActionArea component={Link}
                 to={`/alojamientos/${alojamiento.id}`}
                 target="_blank"
                 sx={{ height: '100%', flexGrow: 1 }}>
                 <CardMedia
                     component="img"
-                    height="270"
+                    height="225"
                     image={alojamiento.fotos[0].path}
                     alt={alojamiento.fotos[0].descripcion}
                     sx={{ objectFit: 'cover' }}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h6" component="div">
                         {alojamiento.nombre}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>

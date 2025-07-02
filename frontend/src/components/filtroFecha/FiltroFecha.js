@@ -22,7 +22,7 @@ const FiltroFecha = ({ etiqueta, campo, setter, minDate }) => {
       <DatePicker
         selected={startDate}
         dateFormat="MM-dd-yyyy"
-        minDate={minDate} // ✅ Esto bloquea fechas anteriores
+        minDate={minDate ?? new Date().toLocaleDateString("en-US")} // Esto bloquea fechas anteriores
         onChange={(date) => {
           setter(campo, date);
           setStartDate(date);

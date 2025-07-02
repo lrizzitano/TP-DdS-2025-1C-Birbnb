@@ -1,37 +1,33 @@
-import {useState}from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function DropdownHuespedes({campo, setter}) {    
-  const [huespedes, setHuespedes] = useState([]);
+export default function DropdownHuespedes({ campo, setter, max = 10 }) {
+  const [huespedes, setHuespedes] = useState(1);
 
   const handleChange = (event) => {
-    setHuespedes(event.target.value);
-    setter(campo, event.target.value);
+    const value = event.target.value;
+    setHuespedes(value);
+    setter(campo, value);
   };
 
   return (
     <Box sx={{ minWidth: 150 }}>
       <FormControl fullWidth>
-        <InputLabel>Huespedes</InputLabel>
+        <InputLabel>Huéspedes</InputLabel>
         <Select
           value={huespedes}
-          label="Huespedes"
+          label="Huéspedes"
           onChange={handleChange}
         >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={9}>9</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
+          {Array.from({ length: max }, (_, i) => (
+            <MenuItem key={i + 1} value={i + 1}>
+              {i + 1}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
