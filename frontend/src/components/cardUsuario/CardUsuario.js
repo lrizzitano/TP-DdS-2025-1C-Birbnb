@@ -10,7 +10,6 @@ const CardUsuario = ({ usuario }) => {
                 </Typography>
                 <Divider sx={{ mb: 2 }} />
                 <Typography variant="body2"><strong>Email:</strong> {usuario.email}</Typography>
-                <Typography variant="body2"><strong>Tipo:</strong> {usuario.tipo}</Typography>
             </CardContent>
         </Card>
     )

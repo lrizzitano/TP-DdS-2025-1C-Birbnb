@@ -92,7 +92,7 @@ const CardInfoViaje = () => {
     <Card sx={{ flex: 2 }}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          Agregá la información del viaje
+          2. Agregá la información del viaje
         </Typography>
 
         <DropdownHuespedes

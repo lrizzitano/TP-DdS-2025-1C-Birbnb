@@ -25,7 +25,6 @@ const ModalUsuario = ({ open, anchorEl, handleClose, usuario }) => {
         >
             <Typography variant="subtitle1">{usuario.nombre}</Typography>
             <Typography variant="body2" color="text.secondary">{usuario.email}</Typography>
-            <Typography variant="body2" color="text.secondary">{usuario.tipo}</Typography>
             <Button
                 variant="outlined"
                 size="small"
