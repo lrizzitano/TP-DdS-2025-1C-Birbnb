@@ -70,3 +70,29 @@ export const fetchReservasDeUsuarioBackend = async (id) => {
     throw error;
   }
 }
+
+export const fetchNotificacionesDeUsuarioBackend = async (id) => {
+  const url = new URL(`${API_BASE_URL}/notificaciones`);
+  url.searchParams.append("destinatario", id);
+
+  try {
+    const response = await axios.get(url.toString());
+    console.log("Request completo a backend:", url.toString(), response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching notificaciones:", error);
+    throw error;
+  }
+};
+
+export const MarcarComoLeidaBackend = async (id) => {
+  const url = `${API_BASE_URL}/notificaciones/${id}`;
+  try {
+    const response = await axios.patch(url);
+    console.log("Request completo a backend:", url, response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+    throw error;
+  }
+};

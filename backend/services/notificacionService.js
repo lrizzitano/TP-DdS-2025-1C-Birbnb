@@ -40,7 +40,7 @@ export class NotificacionService {
     return {
       id: notificacion.id,
       mensaje: notificacion.mensaje,
-      fechaAlta: notificacion.fechaAlta,
+      fechaAlta: notificacion.fechaAlta.toLocaleDateString("en-GB"),
       estado: nombreEnum(EstadoNotificacion, notificacion.estado),
       fechaLeida: notificacion.fechaLeida
     };

@@ -6,11 +6,12 @@ import Typography from '@mui/material/Typography';
 
 
 const CardNotificacion = ({ notificacion, marcarComoLeida }) => {
-    return (
-        <Card sx={{ minWidth: 275 }}>
+  return (
+    <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>
-            {notificacion.fechaAlta}
+          <span>{notificacion.fechaAlta}</span>
+          <span style={{ marginLeft: '0.5rem' }}>{notificacion.estado}</span>
         </Typography>
         <Typography variant="body2">
           {notificacion.mensaje}
@@ -18,11 +19,11 @@ const CardNotificacion = ({ notificacion, marcarComoLeida }) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => marcarComoLeida(notificacion.id)}>
-            Marcar como leída
+          Marcar como leída
         </Button>
       </CardActions>
     </Card>
-    );
+  );
 }
 
 export default CardNotificacion;

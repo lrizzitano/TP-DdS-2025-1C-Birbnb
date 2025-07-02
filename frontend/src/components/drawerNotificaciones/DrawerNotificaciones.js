@@ -1,7 +1,7 @@
 import CardNotificacion from '../cardNotificacion/CardNotificacion';
 import { Drawer, List, Divider, Typography } from '@mui/material';
 
-const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, eliminarNotificacion}) => {
+const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, marcarComoLeida}) => {
 
     return (
         <Drawer anchor="right" open={openDrawer} onClose={closeDrawer} slotProps={{
@@ -22,7 +22,7 @@ const DrawerNotificaciones = ({openDrawer, closeDrawer, listaNotificaciones, eli
                         <CardNotificacion
                             key={notif.id}
                             notificacion={notif}
-                            marcarComoLeida={eliminarNotificacion}
+                            marcarComoLeida={marcarComoLeida}
                         />
                     ))}
                 </List>

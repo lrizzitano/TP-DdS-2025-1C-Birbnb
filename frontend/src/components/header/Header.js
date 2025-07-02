@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import './Header.css';
 import { Link } from "react-router-dom";
 import { IconButton, Badge } from '@mui/material';
@@ -7,43 +7,15 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo from '../../images/logo.png'
 import DrawerNotificaciones from '../drawerNotificaciones/DrawerNotificaciones';
 import ModalUsuario from '../modalUsuario/ModalUsuario';
+import { fetchNotificacionesDeUsuarioBackend, MarcarComoLeidaBackend } from "../../api/api";
+
 
 
 const Header = (props) => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  // Notifcaciones de ejemplo
-  const [notificaciones, setNotificaciones] = useState([{
-    "id": "683764e6cb7c32307e0a2fb3",
-    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n desde 31-03-2029  \n hasta 04-04-2029\n hecha por Ornella Mosca.",
-    "fechaAlta": "2025-05-28",
-    "estado": "PENDIENTE",
-    "fechaLeida": null
-  },
-  {
-    "id": "683764e6cb7c32307e0a2fd0",
-    "mensaje": "La reserva para el alojamiento Casa en la Playa\n desde 31-03-2029\n hasta 04-04-2029\n fue cancelada por Ornella Mosca\n por el siguiente motivo: Sin motivo",
-    "fechaAlta": "2025-05-28",
-    "estado": "PENDIENTE",
-    "fechaLeida": null
-  },
-  {
-    "id": "68377dcc74bc812bae41d98e",
-    "mensaje": "Nueva reserva para el alojamiento Casa en la Playa\n desde 31-03-2029  \n hasta 04-04-2029\n hecha por Ornella Mosca.",
-    "fechaAlta": "2025-05-28",
-    "estado": "PENDIENTE",
-    "fechaLeida": null
-  }
-  ]);
-
-  const eliminarNotificacion = (id) => {
-    setNotificaciones(notificaciones.filter(n => n.id !== id));
-  }
-
-  const toggleDrawer = (open) => () => {
-    setOpenDrawer(open);
-  };
+  const [notificaciones, setNotificaciones] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Datos de usuario de ejemplo
   const usuario = {
@@ -51,6 +23,37 @@ const Header = (props) => {
     nombre: "Leo Cesario",
     email: "lcesario@mail.com.ar",
     tipo: "HUESPED"
+  };
+
+  const cargarNotificaciones = () => {
+    setLoading(true);
+    fetchNotificacionesDeUsuarioBackend(usuario.id)
+      .then(res => {
+        setNotificaciones(res);
+      })
+      .catch((e) => {
+        console.error("Error al cargar notificaciones", e);
+      })
+      .finally(() => setLoading(false));
+  };
+
+
+  useEffect(() => {
+    cargarNotificaciones();
+  }, []);
+
+  const marcarComoLeida = (id) => {
+    MarcarComoLeidaBackend(id)
+      .then(() => {
+        cargarNotificaciones(); // recarga lista actualizada
+      })
+      .catch((e) => {
+        console.error("Error al marcar como leída", e);
+      });
+  }
+
+  const toggleDrawer = (open) => () => {
+    setOpenDrawer(open);
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -93,7 +96,7 @@ const Header = (props) => {
         openDrawer={openDrawer}
         closeDrawer={toggleDrawer(false)}
         listaNotificaciones={notificaciones}
-        eliminarNotificacion={eliminarNotificacion}
+        marcarComoLeida={marcarComoLeida}
       />
 
     </header>

@@ -7,7 +7,7 @@ export class NotificacionRepository {
     }
 
     async findByDestinatario(filters = {}) {
-        return await this.model.find({ ...filters });
+        return await this.model.find({ ...filters }).sort({ fechaAlta: -1 });
     }
 
     async findById(id) {
