@@ -78,10 +78,10 @@ const CardInfoViaje = () => {
       };
 
       const resultado = await crearReservaBackend(reserva);
-      alert("Reserva realizada con éxito ✔️");
+      if (resultado != -1) {alert("Reserva realizada con éxito ✔️");
       console.log("Reserva creada:", resultado);
       navigate(`/reservas/${reserva.usuarioId}`);
-
+      }
     } catch (error) {
       alert("Error al crear la reserva ❌");
       console.error("POST falló:", error);

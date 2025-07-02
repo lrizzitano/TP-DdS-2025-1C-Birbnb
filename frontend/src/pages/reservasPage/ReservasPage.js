@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CardUsuario from '../../components/cardUsuario/CardUsuario';
 import ListaReservas from '../../components/listaReservas/ListaReservas';
-import { fetchReservasDeUsuarioBackend } from "../../api/api";
+import { aceptarReservaBackend, fetchReservasDeUsuarioBackend } from "../../api/api";
 
 import './ReservasPage.css';
 import BotonVolver from "../../components/botonVolver/BotonVolver";
@@ -16,8 +16,7 @@ const HuespedPage = () => {
     nombre: "Leo Cesario",
     email: "lcesario@mail.com.ar",
   };
-
-  useEffect(() => {
+  const traerReservas = () => {
     setLoading(true);
     fetchReservasDeUsuarioBackend(usuario.id)
       .then(res => {
@@ -26,8 +25,14 @@ const HuespedPage = () => {
       .catch((e) => {
       })
       .finally(() => setLoading(false));
-  }, []);
+  }
 
+  useEffect(() => traerReservas(), []);
+
+  async function funcionOnClick(idReserva) {
+    const res = await aceptarReservaBackend(idReserva);
+    traerReservas()
+  }
 
   return (
     <div className="pageHuesped">
@@ -46,7 +51,7 @@ const HuespedPage = () => {
           />
           <ListaReservas
             titulo="Reservas de Mis Alojamientos"
-            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id)}            botonAceptar = {true}
+            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id).reverse()} botonAceptar = {true} funcionOnClick={funcionOnClick} 
           />
         </div>
 

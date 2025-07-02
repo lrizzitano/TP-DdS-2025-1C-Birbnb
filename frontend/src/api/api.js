@@ -107,5 +107,34 @@ export const crearReservaBackend = async (datosReserva) => {
   } catch (error) {
   alert("Error al crear la reserva ❌\n" + (error.response?.data?.message || error.message));
   console.error("POST falló:", error.response?.data || error);
+  return -1
   }
 };
+
+export const aceptarReservaBackend = async (idReserva) => {
+  const url = `${API_BASE_URL}/reservas/${idReserva}`;
+  try {
+    const response = await axios.patch(url, {
+    "estado" : "ACEPTADA"
+});
+    console.log("Reserva aceptada:", response.data);
+    return response.data;
+  } catch (error) {
+    alert("Error al aceptar la reserva ❌\n" + (error.response?.data?.message || error.message));
+    console.error("PATCH falló:", error.response?.data || error);
+  }
+}
+
+export const cancelarReservaBackend = async (idReserva) => {
+  const url = `${API_BASE_URL}/reservas/${idReserva}`;
+  try {
+    const response = await axios.patch(url, {
+    "estado" : "CANCELADA"
+});
+    console.log("Reserva aceptada:", response.data);
+    return response.data;
+  } catch (error) {
+    alert("Error al aceptar la reserva ❌\n" + (error.response?.data?.message || error.message));
+    console.error("PATCH falló:", error.response?.data || error);
+  }
+}
