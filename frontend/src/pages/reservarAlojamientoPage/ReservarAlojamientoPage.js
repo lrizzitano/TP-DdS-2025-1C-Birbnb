@@ -12,8 +12,8 @@ const ReservarAlojamientoPage = () => {
 
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 3 }}>
         <div className="columnaInputs">
-          <CardInfoViaje />
           <CardPagoReserva /> 
+          <CardInfoViaje />
         </div>
         <CardResumenReserva />
       </Box>

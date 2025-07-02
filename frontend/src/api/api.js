@@ -30,7 +30,7 @@ export const fetchAlojamientosBackend = async (filtros = {}) => {
     }
   });
 
-  url.searchParams.append("limit", "9");
+  url.searchParams.append("limit", "8");
 
   // En caso de emergencia rompa el vidrio y descomente la linea
   //console.log("Request completo a backend:", url.toString());
@@ -94,5 +94,18 @@ export const MarcarComoLeidaBackend = async (id) => {
   } catch (error) {
     console.error("Error marking notification as read:", error);
     throw error;
+  }
+};
+
+
+export const crearReservaBackend = async (datosReserva) => {
+  const url = `${API_BASE_URL}/reservas`;
+  try {
+    const response = await axios.post(url, datosReserva);
+    console.log("Reserva creada:", response.data);
+    return response.data;
+  } catch (error) {
+  alert("Error al crear la reserva ❌\n" + (error.response?.data?.message || error.message));
+  console.error("POST falló:", error.response?.data || error);
   }
 };

@@ -29,7 +29,7 @@ const CardPagoReserva = () => {
     <Card sx={{ flex: 2 }}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          2. Agregá un método de pago
+          Agregá un método de pago
         </Typography>
 
         <TextField

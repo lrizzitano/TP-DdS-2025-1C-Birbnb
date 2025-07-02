@@ -4,6 +4,7 @@ import { Box, Card, CardContent, Typography, Button, CircularProgress } from "@m
 import DropdownHuespedes from "../dropdownHuespedes/DropdownHuespedes";
 import { FiltroRangoFechas } from "../filtroRangoFechas/FiltroRangoFechas";
 import { fetchAlojamiento } from "../../api/api";
+import { crearReservaBackend } from "../../api/api";
 
 // Funciones auxiliares para valores por defecto
 const hoy = () => new Date().toISOString().split("T")[0];
@@ -63,26 +64,34 @@ const CardInfoViaje = () => {
   );
   const precioTotal = noches * alojamiento.precioPorNoche;
 
-  const handleConfirmarReserva = () => {
-    const reserva = {
-      alojamiento: alojamiento.id,
-      huesped: "usuario123", // USER DE PRUEBITA JEJE
-      rangoFechas: {
-        fechaInicio: datosReserva.fechaInicio,
-        fechaFin: datosReserva.fechaFin,
-      },
-      cantidadHuespedes: datosReserva.cantHuespedes,
-      precioTotal,
-    };
+  const handleConfirmarReserva = async () => {
+    try {
+      const reserva = {
+        alojamientoId: alojamiento.id,
+        usuarioId: "68367724102a6bf29a3d1eee", // leo hardcodeado
+        rangoFechas: {
+          fechaInicio: new Date(datosReserva.fechaInicio),
+          fechaFin: new Date(datosReserva.fechaFin)
+        },
+        cantidadHuespedes: datosReserva.cantHuespedes
+      };
 
-    console.log("Reserva a enviar:", reserva);
+      const resultado = await crearReservaBackend(reserva);
+      alert("Reserva realizada con éxito ✔️");
+      console.log("Reserva creada:", resultado);
+      // TODO: redirigir o mostrar resumen
+
+    } catch (error) {
+      alert("Error al crear la reserva ❌");
+      console.error("POST falló:", error);
+    }
   };
 
   return (
     <Card sx={{ flex: 2 }}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          1. Agregá la información del viaje
+          Agregá la información del viaje
         </Typography>
 
         <DropdownHuespedes
