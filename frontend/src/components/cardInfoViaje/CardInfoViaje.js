@@ -8,11 +8,11 @@ import { crearReservaBackend } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
 // Funciones auxiliares para valores por defecto
-const hoy = () => new Date().toISOString().split("T")[0];
+const hoy = () => new Date().toLocaleDateString("en-US");
 const manana = () => {
   const d = new Date();
   d.setDate(d.getDate() + 1);
-  return d.toISOString().split("T")[0];
+  return d.toLocaleDateString("en-US");
 };
 
 const CardInfoViaje = () => {
@@ -60,10 +60,9 @@ const CardInfoViaje = () => {
     );
   }
 
-  const noches = Math.max(
-    (new Date(datosReserva.fechaFin) - new Date(datosReserva.fechaInicio)) / (1000 * 60 * 60 * 24),
-    1
-  );
+  const noches = Math.max(Math.floor(Math.abs(
+    (new Date(datosReserva.fechaFin) - new Date(datosReserva.fechaInicio)) / (1000 * 60 * 60 * 24)
+  )), 1);
   const precioTotal = noches * alojamiento.precioPorNoche;
 
   const handleConfirmarReserva = async () => {
