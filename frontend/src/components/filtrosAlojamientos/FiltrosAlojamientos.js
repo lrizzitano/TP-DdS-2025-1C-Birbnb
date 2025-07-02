@@ -7,8 +7,13 @@ import FiltroNumerico from "../filtroNumerico/FiltroNumerico";
 import FiltroFecha from "../filtroFecha/FiltroFecha";
 import DropdownHuespedes from "../dropdownHuespuedes/DropdownHuespedes";
 
-const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
+import { useState } from "react";
 
+
+const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
+    
+    const [fechaInicio, setFechaInicio] = useState(null);
+    
     const setFiltroTemporal = (key, value) => {
         if (value === '') {
             delete filtrosTemporales[key];
@@ -18,6 +23,10 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
                 [key]: value
             });
         }
+
+        if (key === 'fechaInicio') {
+        setFechaInicio(value);
+    }
     }
 
     const setRangoPrecio = ([precioMin, precioMax]) => {
@@ -47,7 +56,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
             <DropdownHuespedes campo='cantHuespedes' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
             <FiltroFecha etiqueta='Fecha Inicio' campo='fechaInicio' setter={setFiltroTemporal}/>
-            <FiltroFecha etiqueta='Fecha Fin' campo='fechaFin' setter={setFiltroTemporal}/>
+            <FiltroFecha etiqueta='Fecha Fin' campo='fechaFin' setter={setFiltroTemporal} minDate={fechaInicio}/>
             <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
                 Buscar

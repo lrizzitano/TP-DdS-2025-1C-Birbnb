@@ -87,7 +87,7 @@ const Header = (props) => {
       />
 
       <IconButton onClick={toggleDrawer(true)} color="inherit">
-        <Badge badgeContent={notificaciones.length} color="error">
+        <Badge badgeContent={notificaciones.filter((n) => n.estado === "PENDIENTE").length} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
