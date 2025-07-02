@@ -4,6 +4,7 @@ import ListaReservas from '../../components/listaReservas/ListaReservas';
 import { fetchReservasDeUsuarioBackend } from "../../api/api";
 
 import './ReservasPage.css';
+import BotonVolver from "../../components/botonVolver/BotonVolver";
 
 const HuespedPage = () => {
 
@@ -39,6 +40,7 @@ const HuespedPage = () => {
 
   return (
     <div className="pageHuesped">
+      <BotonVolver />
       <div className="columnaUsuario">
         <CardUsuario usuario={usuario} />
       </div>
