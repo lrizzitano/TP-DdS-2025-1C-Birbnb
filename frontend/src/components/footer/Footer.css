@@ -1,0 +1,28 @@
+.footer {
+  background-color: var(--color-fondo);
+  padding: 0.2rem 3rem;
+  color: var(--color-principal);
+  text-align: center;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.footerIcons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footerText {
+  font-size: 0.65rem;
+  color: var(--color-principal);
+  line-height: 1rem;
+}
+
+.footerIcon {
+  color: var(--color-principal);
+  font-size: 1rem;
+}

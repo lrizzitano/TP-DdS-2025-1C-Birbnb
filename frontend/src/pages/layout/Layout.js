@@ -1,12 +1,14 @@
 import { Outlet } from "react-router";
 import Header from "../../components/header/Header";
 import './Layout.css';
+import Footer from "../../components/footer/Footer";
 
 const Layout = () => {
     return(
         <div className = "contenedorLayout">
           <Header text = "Frontend de Birbnb" />
           <Outlet />
+          <Footer text = "Footer de Birbnb" />
         </div>
     )
 }
