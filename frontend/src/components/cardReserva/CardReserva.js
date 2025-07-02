@@ -7,7 +7,7 @@ const CardReserva = ({ reserva }) => {
     const fechaAlta = new Date(reserva.fechaAlta).toLocaleDateString();
 
     return (
-        <Card variant="outlined" sx={{ mb: 2 }}>
+        <Card variant="outlined" sx={{ mb: 2, flexShrink: 0 }}>
             <CardContent className="contenedorReserva">
 
                 <div className="infoReserva">

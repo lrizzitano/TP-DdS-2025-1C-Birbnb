@@ -45,7 +45,10 @@ export class ReservaRepository {
           { huespedReservador: usuarioId },
           { alojamiento: { $in: alojamientoIds } }
         ]
-      }).populate('alojamiento');
+      }).populate({
+        path: 'alojamiento',
+        populate: { path: 'anfitrion' }
+      });
     }
 
 

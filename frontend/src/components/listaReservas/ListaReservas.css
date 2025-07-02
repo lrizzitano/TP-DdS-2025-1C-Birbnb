@@ -1,0 +1,37 @@
+.listaReservas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Espaciado entre el título y el contenido */
+  margin-bottom: 1.5rem; /* Separación con otros bloques en la page */
+}
+
+.listaReservas .MuiCard-root {
+  padding: 1rem;
+}
+
+.listaReservas .MuiTypography-root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reservasContainer {
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* Previene que los hijos se estiren/compriman */
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+
+.reservasContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reservasContainer::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
