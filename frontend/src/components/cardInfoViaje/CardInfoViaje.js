@@ -5,6 +5,7 @@ import DropdownHuespedes from "../dropdownHuespedes/DropdownHuespedes";
 import { FiltroRangoFechas } from "../filtroRangoFechas/FiltroRangoFechas";
 import { fetchAlojamiento } from "../../api/api";
 import { crearReservaBackend } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 // Funciones auxiliares para valores por defecto
 const hoy = () => new Date().toISOString().split("T")[0];
@@ -16,6 +17,7 @@ const manana = () => {
 
 const CardInfoViaje = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [alojamiento, setAlojamiento] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -79,7 +81,7 @@ const CardInfoViaje = () => {
       const resultado = await crearReservaBackend(reserva);
       alert("Reserva realizada con éxito ✔️");
       console.log("Reserva creada:", resultado);
-      // TODO: redirigir o mostrar resumen
+      navigate(`/reservas/${reserva.usuarioId}`);
 
     } catch (error) {
       alert("Error al crear la reserva ❌");
