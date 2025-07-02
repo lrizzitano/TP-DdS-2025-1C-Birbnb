@@ -3,11 +3,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import FiltroTextual from "../filtroTextual/FiltroTextual";
 import FiltroCaracteristicas from "../filtroCaracteristicas/FiltroCaracteristicas"
 import FiltroPrecio from "../filtroPrecio/FiltroPrecio";
-import FiltroNumerico from "../filtroNumerico/FiltroNumerico";
 import FiltroFecha from "../filtroFecha/FiltroFecha";
-import DropdownHuespedes from "../dropdownHuespuedes/DropdownHuespedes";
+import DropdownHuespedes from "../dropdownHuespedes/DropdownHuespedes";
 
 import { useState } from "react";
+import { FiltroRangoFechas } from "../filtroRangoFechas/FiltroRangoFechas";
 
 
 const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
@@ -55,8 +55,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
             <DropdownHuespedes campo='cantHuespedes' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
-            <FiltroFecha etiqueta='Fecha Inicio' campo='fechaInicio' setter={setFiltroTemporal} minDate={new Date().toLocaleDateString("en-US")}/>
-            <FiltroFecha etiqueta='Fecha Fin' campo='fechaFin' setter={setFiltroTemporal} minDate={fechaInicio}/>
+            <FiltroRangoFechas setter={setFiltroTemporal} fechaInicio={new Date().toLocaleDateString("en-US")} />
             <FiltroPrecio precioMin={filtrosTemporales.precioMin} precioMax={filtrosTemporales.precioMax} setter={setRangoPrecio} />
             <Button variant="contained" color="primary" onClick={onBuscar} startIcon={<SearchIcon />}>
                 Buscar
