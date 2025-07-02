@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Typography } from '@mui/material';
 import CardUsuario from '../../components/cardUsuario/CardUsuario';
-import CardReserva from '../../components/cardReserva/CardReserva';
+import ListaReservas from '../../components/listaReservas/ListaReservas';
 import { fetchReservasDeUsuarioBackend } from "../../api/api";
 
 import './ReservasPage.css';
+import BotonVolver from "../../components/botonVolver/BotonVolver";
 
 const HuespedPage = () => {
 
@@ -22,11 +22,9 @@ const HuespedPage = () => {
     setLoading(true);
     fetchReservasDeUsuarioBackend(usuario.id)
       .then(res => {
-        console.log("Respuesta del backend:", res);
         setReservas(res);
       })
       .catch((e) => {
-        console.error("Error al traer reservas:", e);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -34,21 +32,26 @@ const HuespedPage = () => {
 
   return (
     <div className="pageHuesped">
+      <BotonVolver />
       <div className="columnaUsuario">
         <CardUsuario usuario={usuario} />
       </div>
 
       {loading ? (
-        <p>Cargando alojamientos...</p>
+        <p>Cargando reservas...</p>
       ) : (
         <div className="columnaReservas">
-          <Typography variant="h5" gutterBottom>
-            Reservas Activas:
-          </Typography>
-          {reservas.map((reserva) => (
-            <CardReserva key={reserva.id} reserva={reserva} />
-          ))}
+          <ListaReservas
+            titulo="Mis Reservas"
+            reservas={reservas.filter(reserva => reserva.huespedReservadorId === usuario.id)}
+          />
+          <ListaReservas
+            titulo="Reservas de Mis Alojamientos"
+            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id)}
+          />
+
         </div>
+
       )}
 
     </div>

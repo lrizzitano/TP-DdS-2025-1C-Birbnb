@@ -5,7 +5,10 @@ import FiltroCaracteristicas from "../filtroCaracteristicas/FiltroCaracteristica
 import FiltroPrecio from "../filtroPrecio/FiltroPrecio";
 import FiltroNumerico from "../filtroNumerico/FiltroNumerico";
 import FiltroFecha from "../filtroFecha/FiltroFecha";
+import DropdownHuespedes from "../dropdownHuespuedes/DropdownHuespedes";
+
 import { useState } from "react";
+
 
 const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar }) => {
     
@@ -50,7 +53,7 @@ const FiltrosAlojamientos = ({ filtrosTemporales, setFiltrosTemporales, onBuscar
     return (
         <>
             <FiltroTextual campo='ciudad' setter={setFiltroTemporal} />
-            <FiltroNumerico etiqueta="Viajeros" campo='cantHuespedes' setter={setFiltroTemporal} />
+            <DropdownHuespedes campo='cantHuespedes' setter={setFiltroTemporal} />
             <FiltroCaracteristicas caracteristicas={filtrosTemporales.caracteristicas} setter={setCaracteristicas} />
             <FiltroFecha etiqueta='Fecha Inicio' campo='fechaInicio' setter={setFiltroTemporal}/>
             <FiltroFecha etiqueta='Fecha Fin' campo='fechaFin' setter={setFiltroTemporal} minDate={fechaInicio}/>
