@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import './ListaReservas.css';
 
-const ListaReservas = ({ titulo, reservas }) => {
+const ListaReservas = ({ titulo, reservas, botonAceptar }) => {
     const [abierto, setAbierto] = useState(false);
 
     if (!reservas || reservas.length === 0) return null;
@@ -27,7 +27,7 @@ const ListaReservas = ({ titulo, reservas }) => {
             </Card>
             <div className='reservasContainer'>
             {abierto && reservas.map(reserva => (
-                <CardReserva key={reserva.id} reserva={reserva} />
+                <CardReserva key={reserva.id} reserva={reserva} botonAceptar={botonAceptar}/>
             ))}
             </div>
         </div>

@@ -12,10 +12,9 @@ const HuespedPage = () => {
   const [loading, setLoading] = useState(false);
 
   const usuario = {
-    id: "68367724102a6bf29a3d1eee",
+    id: "68367739102a6bf29a3d1ef0",
     nombre: "Leo Cesario",
     email: "lcesario@mail.com.ar",
-    tipo: "HUESPED"
   };
 
   useEffect(() => {
@@ -47,9 +46,9 @@ const HuespedPage = () => {
           />
           <ListaReservas
             titulo="Reservas de Mis Alojamientos"
-            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id)}
+            reservas={reservas.filter(reserva => reserva.alojamiento.anfitrion === usuario.id)}
+            botonAceptar = {true}
           />
-
         </div>
 
       )}

@@ -1,7 +1,7 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Button } from '@mui/material';
 import './CardReserva.css'; 
 
-const CardReserva = ({ reserva }) => {
+const CardReserva = ({ reserva, botonAceptar }) => {
     const fechaInicio = new Date(reserva.rangoFechas.fechaInicio).toLocaleDateString();
     const fechaFin = new Date(reserva.rangoFechas.fechaFin).toLocaleDateString();
     const fechaAlta = new Date(reserva.fechaAlta).toLocaleDateString();
@@ -14,7 +14,34 @@ const CardReserva = ({ reserva }) => {
                     <Typography variant="h6" gutterBottom>
                         Reserva #{reserva.id.slice(0, 6).toUpperCase()}
                     </Typography>
-                    <Typography variant="body2">Estado: <strong>{reserva.estado}</strong></Typography>
+                    {botonAceptar ? 
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    sx={{
+                      borderRadius: '8px',
+                      padding: '12px 24px',
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      '&:hover': {
+                        backgroundColor: 'primary.dark',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                        transform: 'translateY(-1px)'
+                      },
+                      '&:active': {
+                        transform: 'translateY(0)'
+                      },
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    Aceptar
+                  </Button>
+                    : 
+                    
+                    (<Typography variant="body2">Estado: <strong>{reserva.estado}</strong></Typography>)}
                     <Typography variant="body2">Fecha de alta: {fechaAlta}</Typography>
                     <Typography variant="body2">Rango de fechas: {fechaInicio} - {fechaFin}</Typography>
                     <Typography variant="body2">Cantidad de huéspedes: {reserva.cantidadHuespedes}</Typography>
