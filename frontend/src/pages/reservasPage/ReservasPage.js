@@ -46,8 +46,7 @@ const HuespedPage = () => {
           />
           <ListaReservas
             titulo="Reservas de Mis Alojamientos"
-            reservas={reservas.filter(reserva => reserva.alojamiento.anfitrion === usuario.id)}
-            botonAceptar = {true}
+            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id)}            botonAceptar = {true}
           />
         </div>
 
