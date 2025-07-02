@@ -13,7 +13,7 @@ const manana = () => {
   return d.toISOString().split("T")[0];
 };
 
-const CardPagoReserva = () => {
+const CardInfoViaje = () => {
   const { id } = useParams();
   const [alojamiento, setAlojamiento] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -113,4 +113,4 @@ const CardPagoReserva = () => {
   );
 };
 
-export default CardPagoReserva;
+export default CardInfoViaje;

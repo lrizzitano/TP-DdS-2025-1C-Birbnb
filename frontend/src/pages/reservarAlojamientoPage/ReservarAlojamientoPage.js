@@ -1,7 +1,7 @@
 
 import { Box } from "@mui/material";
 import CardResumenReserva from "../../components/cardResumenReserva/CardResumenReserva";
-//import CardPagoReserva from "../../components/cardPagoReserva/CardPagoReserva"; esta card era para poner la tarjeta, se borro 
+import CardPagoReserva from "../../components/cardPagoReserva/CardPagoReserva";
 import CardInfoViaje from "../../components/cardInfoViaje/CardInfoViaje";
 import BotonVolver from "../../components/botonVolver/BotonVolver";
 
@@ -13,7 +13,7 @@ const ReservarAlojamientoPage = () => {
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 3 }}>
         <div className="columnaInputs">
           <CardInfoViaje />
-          {/* <CardPagoReserva /> Esta card se borro, pero se dejo el comentario para que no de error */}
+          <CardPagoReserva /> 
         </div>
         <CardResumenReserva />
       </Box>
