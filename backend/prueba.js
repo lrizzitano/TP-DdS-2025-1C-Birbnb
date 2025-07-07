@@ -1,13 +1,13 @@
-/*import { Usuario } from "./backend/modelo/Usuario.js";
-import { Alojamiento } from "./backend/modelo/alojamiento/Alojamiento.js";
-import { Ciudad } from "./backend/modelo/alojamiento/Ciudad.js";
-import { Pais } from "./backend/modelo/alojamiento/Pais.js";
-import { Caracteristica } from "./backend/modelo/enums/Caracteristica.js";
-import { Moneda } from "./backend/modelo/enums/Moneda.js";
-import { Foto } from "./backend/modelo/alojamiento/Foto.js";
-import { Direccion } from "./backend/modelo/alojamiento/Direccion.js";
-import { Reserva } from "./backend/modelo/reserva/Reserva.js";
-import { RangoFechas } from "./backend/modelo/reserva/RangoFechas.js";
+/*import { Usuario } from "./src/modelo/Usuario.js";
+import { Alojamiento } from "./src/modelo/alojamiento/Alojamiento.js";
+import { Ciudad } from "./src/modelo/alojamiento/Ciudad.js";
+import { Pais } from "./src/modelo/alojamiento/Pais.js";
+import { Caracteristica } from "./src/modelo/enums/Caracteristica.js";
+import { Moneda } from "./src/modelo/enums/Moneda.js";
+import { Foto } from "./src/modelo/alojamiento/Foto.js";
+import { Direccion } from "./src/modelo/alojamiento/Direccion.js";
+import { Reserva } from "./src/modelo/reserva/Reserva.js";
+import { RangoFechas } from "./src/modelo/reserva/RangoFechas.js";
 
 // Crear un usuario anfitrión
 const anfitrion = new Usuario("Juan", "juan@mail.com", "anfitrión");

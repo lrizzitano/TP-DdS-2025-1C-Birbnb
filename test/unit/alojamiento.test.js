@@ -1,10 +1,10 @@
-import { Alojamiento } from '../../backend/modelo/alojamiento/Alojamiento.js';
-import { Direccion } from '../../backend/modelo/alojamiento/Direccion.js';
-import { Ciudad } from '../../backend/modelo/alojamiento/Ciudad.js';
-import { Pais } from '../../backend/modelo/alojamiento/Pais.js';
-import { Foto } from '../../backend/modelo/alojamiento/Foto.js';
-import { Moneda } from '../../backend/modelo/enums/Moneda.js';
-import { Caracteristica } from '../../backend/modelo/enums/Caracteristica.js';
+import { Alojamiento } from '../../src/modelo/alojamiento/Alojamiento.js';
+import { Direccion } from '../../src/modelo/alojamiento/Direccion.js';
+import { Ciudad } from '../../src/modelo/alojamiento/Ciudad.js';
+import { Pais } from '../../src/modelo/alojamiento/Pais.js';
+import { Foto } from '../../src/modelo/alojamiento/Foto.js';
+import { Moneda } from '../../src/modelo/enums/Moneda.js';
+import { Caracteristica } from '../../src/modelo/enums/Caracteristica.js';
 
 describe("Alojamiento", () => {
   const mockAtributos = {

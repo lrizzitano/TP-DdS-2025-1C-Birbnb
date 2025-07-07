@@ -1,10 +1,10 @@
 import express from "express";
 import cors from 'cors';
-import { registerAlojamientoRoutes } from "./backend/routes/alojamientoRoutes.js";
-import { registerNotificacionRoutes } from "./backend/routes/notificacionRoutes.js";
-import { registerReservaRoutes } from "./backend/routes/reservaRoutes.js";
-import { registerUsuarioRoutes } from "./backend/routes/usuarioRoutes.js";
-import { errorHandler } from "./backend/middleware/errorHandler.js";
+import { registerAlojamientoRoutes } from "./src/routes/alojamientoRoutes.js";
+import { registerNotificacionRoutes } from "./src/routes/notificacionRoutes.js";
+import { registerReservaRoutes } from "./src/routes/reservaRoutes.js";
+import { registerUsuarioRoutes } from "./src/routes/usuarioRoutes.js";
+import { errorHandler } from "./src/middleware/errorHandler.js";
 
 export class Server {
   #controllers = {};

@@ -1,5 +1,5 @@
-import { Notificacion } from '../../backend/modelo/Notificacion.js'
-import { EstadoNotificacion } from '../../backend/modelo/enums/EstadoNotificacion';
+import { Notificacion } from '../../src/modelo/Notificacion.js'
+import { EstadoNotificacion } from '../../src/modelo/enums/EstadoNotificacion';
 
 describe("Notificacion", () => {
     const mockReserva = {

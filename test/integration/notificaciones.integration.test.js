@@ -1,10 +1,10 @@
 import { buildTestServer } from "./util/server"
 import { describe, expect, jest, test } from "@jest/globals"
 import request from 'supertest'
-import { NotificacionService } from "../../backend/services/notificacionService.js"
-import { NotificacionController } from "../../backend/controllers/notificacionController.js"
-import { EstadoNotificacion } from "../../backend/modelo/enums/EstadoNotificacion"
-import { nombreEnum } from "../../backend/modelo/enums/nombreEnum.js";
+import { NotificacionService } from "../../src/services/notificacionService.js"
+import { NotificacionController } from "../../src/controllers/notificacionController.js"
+import { EstadoNotificacion } from "../../src/modelo/enums/EstadoNotificacion"
+import { nombreEnum } from "../../src/modelo/enums/nombreEnum.js";
 
 const server = buildTestServer()
 

@@ -1,6 +1,6 @@
-import { Reserva } from '../../backend/modelo/reserva/Reserva.js';
-import { RangoFechas } from '../../backend/modelo/reserva/RangoFechas.js';
-import { EstadoReserva } from '../../backend/modelo/enums/EstadoReserva.js';
+import { Reserva } from '../../src/modelo/reserva/Reserva.js';
+import { RangoFechas } from '../../src/modelo/reserva/RangoFechas.js';
+import { EstadoReserva } from '../../src/modelo/enums/EstadoReserva.js';
 
 let reservaTest;
 
