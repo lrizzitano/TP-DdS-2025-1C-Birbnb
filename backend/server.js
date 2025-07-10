@@ -10,7 +10,7 @@ export class Server {
   #controllers = {};
   #app;
 
-  constructor(app, port = 3000) {
+  constructor(app, port = 5000) {
     this.#app = app;
     this.port = port;
     this.#app.use(express.json());

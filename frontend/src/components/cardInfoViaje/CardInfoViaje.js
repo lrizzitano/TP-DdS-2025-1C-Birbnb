@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Card, CardContent, Typography, Button, CircularProgress } from "@mui/material";
+import {Box, Card, CardContent, Typography, Button, CircularProgress,Dialog, DialogTitle, DialogContent, DialogActions} from "@mui/material";
 import DropdownHuespedes from "../dropdownHuespedes/DropdownHuespedes";
 import { FiltroRangoFechas } from "../filtroRangoFechas/FiltroRangoFechas";
 import { fetchAlojamiento } from "../../api/api";
@@ -26,6 +26,10 @@ const CardInfoViaje = () => {
     fechaFin: manana(),
     cantHuespedes: 1,
   });
+
+  const [modalExito, setModalExito] = useState(false);
+  const [modalError, setModalError] = useState(false);
+  const [idReservaCreada, setIdReservaCreada] = useState(null);
 
   const actualizarDato = (campo, valor) => {
     setDatosReserva((prev) => ({
@@ -78,12 +82,18 @@ const CardInfoViaje = () => {
       };
 
       const resultado = await crearReservaBackend(reserva);
-      if (resultado != -1) {alert("Reserva realizada con éxito ✔️");
-      console.log("Reserva creada:", resultado);
-      navigate(`/reservas/${reserva.usuarioId}`);
+
+      if (resultado !== -1) {
+        setIdReservaCreada(resultado._id);
+        setModalExito(true);
+        setTimeout(() => {
+          setModalExito(false);
+          navigate(`/reservas/${resultado._id}`);
+        }, 3000);
       }
+
     } catch (error) {
-      alert("Error al crear la reserva ❌");
+      setModalError(true);
       console.error("POST falló:", error);
     }
   };
@@ -118,6 +128,37 @@ const CardInfoViaje = () => {
         >
           Confirmar Reserva
         </Button>
+        
+
+        {/* Modal de Éxito */}
+        <Dialog open={modalExito} onClose={() => setModalExito(false)}>
+          <DialogTitle>✅ ¡Reserva confirmada!</DialogTitle>
+          <DialogContent>
+            Tu reserva fue realizada con éxito. Serás redirigido automáticamente a tus reservas...
+          </DialogContent>
+          <DialogActions>
+              <Button onClick={() => {
+                setModalExito(false);
+                navigate(`/reservas/${idReservaCreada}`);
+              }}>
+              Ir ahora
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Modal de Error */}
+        <Dialog open={modalError} onClose={() => setModalError(false)}>
+          <DialogTitle>❌ Error</DialogTitle>
+          <DialogContent>
+            Ocurrió un error al realizar la reserva. Por favor, intentá nuevamente más tarde.
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setModalError(false)}>Cerrar</Button>
+          </DialogActions>
+        </Dialog>
+
+
+
       </CardContent>
     </Card>
   );
