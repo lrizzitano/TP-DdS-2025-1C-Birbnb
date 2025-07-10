@@ -13,7 +13,7 @@ const CardReserva = ({ reserva, botonAceptar, funcionOnClick }) => {
 
                 <div className="infoReserva">
                     <Typography variant="h6" gutterBottom>
-                        Reserva #{reserva.id.slice(0, 6).toUpperCase()}
+                        Reserva #{reserva.id.toUpperCase()}
                     </Typography>
                     {botonAceptar &&
                     <Button
@@ -45,7 +45,7 @@ const CardReserva = ({ reserva, botonAceptar, funcionOnClick }) => {
                     
                     
                     <Typography variant="body2">Estado: <strong>{reserva.estado}</strong></Typography>
-                    <Typography variant="body2">Fecha deeeee alta: {fechaAlta}</Typography>
+                    <Typography variant="body2">Fecha de alta: {fechaAlta}</Typography>
                     <Typography variant="body2">Rango de fechas: {fechaInicio} - {fechaFin}</Typography>
                     <Typography variant="body2">Cantidad de huéspedes: {reserva.cantidadHuespedes}</Typography>
                     <Typography variant="body2">Precio por noche: ${reserva.precioPorNoche}</Typography>
