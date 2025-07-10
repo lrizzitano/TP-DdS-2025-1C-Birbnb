@@ -27,8 +27,6 @@ const HuespedPage = () => {
     fetchReservasDeUsuarioBackend(usuario.id)
       .then(res => {
         setReservas(res);
-        console.log(reservas)
-
       })
       .catch((e) => {
       })
@@ -67,7 +65,7 @@ const HuespedPage = () => {
         <div className="columnaReservas">
           <ListaReservas
             titulo="Mis Reservas"
-            reservas={reservas.filter(reserva => reserva.huespedReservadorId === usuario.id)}
+            reservas={reservas.filter(reserva => reserva.huespedReservadorId === usuario.id).reverse()}
           />
           <ListaReservas
             titulo="Reservas de Mis Alojamientos"
