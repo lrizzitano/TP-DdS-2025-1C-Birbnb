@@ -4,7 +4,7 @@ import CardAlojamiento from "../../components/cardAlojamiento/CardAlojamiento";
 import { fetchAlojamientosBackend } from "../../api/api";
 import FiltrosAlojamientos from "../../components/filtrosAlojamientos/FiltrosAlojamientos";
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { IconButton } from '@mui/material';
+import { IconButton, CircularProgress } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Pagination from '@mui/material/Pagination';
 
@@ -58,7 +58,7 @@ const Alojamientos = () => {
       </div>}
 
       {loading ? (
-        <p>Cargando alojamientos...</p>
+        <CircularProgress />
       ) : (
         <div className="contenedorCardsAlojamiento">
           {alojamientos.map((a) => (

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CardUsuario from '../../components/cardUsuario/CardUsuario';
 import ListaReservas from '../../components/listaReservas/ListaReservas';
 import { aceptarReservaBackend, fetchReservasDeUsuarioBackend } from "../../api/api";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 import './ReservasPage.css';
 import BotonVolver from "../../components/botonVolver/BotonVolver";
@@ -60,7 +60,7 @@ const HuespedPage = () => {
       </div>
 
       {loading ? (
-        <p>Cargando reservas...</p>
+        <CircularProgress />
       ) : (
         <div className="columnaReservas">
           <ListaReservas

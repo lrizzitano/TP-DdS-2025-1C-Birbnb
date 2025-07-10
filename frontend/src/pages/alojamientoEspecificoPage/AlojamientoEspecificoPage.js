@@ -11,7 +11,7 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
-import { Box, Typography, Button, Paper } from '@mui/material';
+import { Box, Typography, Button, Paper, CircularProgress } from '@mui/material';
 import SliderFotosAlojamiento from "../../components/sliderFotosAlojamiento/SliderFotosAlojamiento";
 
 //medio poco elegante, pero no se me ocurrio otra forma de agregar los iconos
@@ -51,13 +51,10 @@ const AlojamientoEspecificoPage = () => {
       .catch(() => setLoading(false))
   }, [id]);
 
-  // seria la verificacion de no encontrarlo
-  if (!alojamiento) return <div>Producto no encontrado</div>;
-
   return (
     <>
       {loading ? (
-        <p>Cargando alojamientos...</p>
+        <CircularProgress />
       ) : (
         <div className="contenedorAlojamiento">
 
