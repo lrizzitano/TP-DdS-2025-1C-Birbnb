@@ -9,11 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 // Funciones auxiliares para valores por defecto
 const hoy = () => new Date().toLocaleDateString("en-US");
-const manana = () => {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return d.toLocaleDateString("en-US");
-};
 
 const CardInfoViaje = () => {
   const { id } = useParams();
@@ -23,7 +18,7 @@ const CardInfoViaje = () => {
 
   const [datosReserva, setDatosReserva] = useState({
     fechaInicio: hoy(),
-    fechaFin: manana(),
+    fechaFin: hoy(),
     cantHuespedes: 1,
   });
 
