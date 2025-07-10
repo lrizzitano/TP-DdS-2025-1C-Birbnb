@@ -79,10 +79,6 @@ const CardInfoViaje = () => {
 
       if (resultado !== -1) {
         setModalExito(true);
-        setTimeout(() => {
-          setModalExito(false);
-          navigate(`/reservas/6835f4add17340a15cb50737`);
-        }, 3000);
       } else {
         setModalError(true);
       }
@@ -127,14 +123,14 @@ const CardInfoViaje = () => {
         <Dialog open={modalExito} onClose={() => setModalExito(false)}>
           <DialogTitle>✅ ¡Reserva confirmada!</DialogTitle>
           <DialogContent>
-            Tu reserva fue realizada con éxito. Serás redirigido automáticamente a tus reservas...
+            Tu reserva fue realizada con éxito
           </DialogContent>
           <DialogActions>
               <Button onClick={() => {
                 setModalExito(false);
                 navigate(`/reservas/6835f4add17340a15cb50737`);
               }}>
-              Ir ahora
+              Ir a mis reservas
               </Button>
           </DialogActions>
         </Dialog>
