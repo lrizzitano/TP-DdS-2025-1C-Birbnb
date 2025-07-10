@@ -29,7 +29,6 @@ const CardInfoViaje = () => {
 
   const [modalExito, setModalExito] = useState(false);
   const [modalError, setModalError] = useState(false);
-  const [idReservaCreada, setIdReservaCreada] = useState(null);
 
   const actualizarDato = (campo, valor) => {
     setDatosReserva((prev) => ({
@@ -84,16 +83,15 @@ const CardInfoViaje = () => {
       const resultado = await crearReservaBackend(reserva);
 
       if (resultado !== -1) {
-        setIdReservaCreada(resultado._id);
         setModalExito(true);
         setTimeout(() => {
           setModalExito(false);
-          navigate(`/reservas/${resultado._id}`);
+          navigate(`/reservas/6835f4add17340a15cb50737`);
         }, 3000);
+      } else {
+        setModalError(true);
       }
-
     } catch (error) {
-      setModalError(true);
       console.error("POST falló:", error);
     }
   };
@@ -139,7 +137,7 @@ const CardInfoViaje = () => {
           <DialogActions>
               <Button onClick={() => {
                 setModalExito(false);
-                navigate(`/reservas/${idReservaCreada}`);
+                navigate(`/reservas/6835f4add17340a15cb50737`);
               }}>
               Ir ahora
               </Button>
@@ -150,7 +148,7 @@ const CardInfoViaje = () => {
         <Dialog open={modalError} onClose={() => setModalError(false)}>
           <DialogTitle>❌ Error</DialogTitle>
           <DialogContent>
-            Ocurrió un error al realizar la reserva. Por favor, intentá nuevamente más tarde.
+            La reserva no se encuentra disponible en las fechas seleccionadas.
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setModalError(false)}>Cerrar</Button>
