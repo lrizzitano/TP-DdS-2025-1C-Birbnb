@@ -15,8 +15,6 @@ export class Notificacion {
       hasta ${reserva.rangoFechas.fechaFin.toLocaleDateString("en-GB")}
       hecha por ${reserva.huespedReservador.nombre}.`
 
-      console.log("Mensaje de notificación:", mensaje);
-
       return new Notificacion(mensaje, reserva.alojamiento.anfitrion);
   }
 
