@@ -27,6 +27,8 @@ const HuespedPage = () => {
     fetchReservasDeUsuarioBackend(usuario.id)
       .then(res => {
         setReservas(res);
+        console.log(reservas)
+
       })
       .catch((e) => {
       })
@@ -69,7 +71,7 @@ const HuespedPage = () => {
           />
           <ListaReservas
             titulo="Reservas de Mis Alojamientos"
-            reservas={reservas.filter(reserva => reserva.huespedReservadorId !== usuario.id).reverse()} botonAceptar = {true} funcionOnClick={funcionOnClick} 
+            reservas={reservas.filter(reserva => reserva.alojamiento.anfitrion.id === usuario.id).reverse()} botonAceptar = {true} funcionOnClick={funcionOnClick} 
           />
         </div>
 
