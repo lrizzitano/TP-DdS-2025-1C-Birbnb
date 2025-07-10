@@ -73,7 +73,7 @@ const CardInfoViaje = () => {
     try {
       const reserva = {
         alojamientoId: alojamiento.id,
-        usuarioId: "68367724102a6bf29a3d1eee", // leo hardcodeado
+        usuarioId: "6835f4add17340a15cb50737", // ulises hardcodeado 
         rangoFechas: {
           fechaInicio: new Date(datosReserva.fechaInicio),
           fechaFin: new Date(datosReserva.fechaFin)
