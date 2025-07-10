@@ -12,7 +12,7 @@ const mockNotificacionRepository = {
     findByDestinatario: jest.fn().mockResolvedValue([
         {
             mensaje : "NotificacionTest",
-            fechaAlta : "fechaTest",
+            fechaAlta : new Date(),
             estado : EstadoNotificacion.PENDIENTE,
             fechaLeida : null,
             destinatario : {
@@ -21,7 +21,7 @@ const mockNotificacionRepository = {
         },
         {
             mensaje : "Notificacion2est",
-            fechaAlta : "fechaTest",
+            fechaAlta : new Date(),
             estado : EstadoNotificacion.PENDIENTE,
             fechaLeida : null,
             destinatario : {
@@ -33,7 +33,7 @@ const mockNotificacionRepository = {
         if (id == '6650f1a5cfc8b9a4a1a00001') {
             return Promise.resolve({
                     mensaje : "NotificacionTest",
-                    fechaAlta : "fechaTest",
+                    fechaAlta : new Date(),
                     estado : EstadoNotificacion.PENDIENTE,
                     fechaLeida : null,
                     destinatario : {
@@ -47,7 +47,7 @@ const mockNotificacionRepository = {
     }),
     update: jest.fn().mockResolvedValue({
         mensaje : "NotificacionTest",
-        fechaAlta : "fechaTest",
+        fechaAlta : new Date(),
         estado : EstadoNotificacion.LEIDA,
         fechaLeida : null,
         destinatario : {

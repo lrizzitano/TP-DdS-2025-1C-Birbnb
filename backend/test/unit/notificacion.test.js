@@ -15,8 +15,8 @@ describe("Notificacion", () => {
             }
         },
         rangoFechas : {
-            fechaInicio: "fechaInicioTest",
-            fechaFin: "fechaFinTest"
+            fechaInicio: new Date(),
+            fechaFin: new Date()
         },
         precioPorNoche: 100,
         historialDeCambios: []
@@ -24,8 +24,8 @@ describe("Notificacion", () => {
 
     function contieneAlojamientoYFechas(notificacion) {
         expect(notificacion.mensaje).toContain("alojamientoTest");
-        expect(notificacion.mensaje).toContain("fechaInicioTest");
-        expect(notificacion.mensaje).toContain("fechaFinTest");
+        expect(notificacion.mensaje).toContain(new Date().toLocaleDateString('en-GB'));
+        expect(notificacion.mensaje).toContain(new Date().toLocaleDateString('en-GB'));
     }
 
     function seCreaConEstadoNoLeida(notificacion) {
