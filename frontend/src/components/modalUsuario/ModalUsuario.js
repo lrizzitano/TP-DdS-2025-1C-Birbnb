@@ -33,7 +33,7 @@ const ModalUsuario = ({ open, anchorEl, handleClose, usuario }) => {
                 to={`/reservas/${usuario.id}`}
                 onClick={handleClose}
             >
-                Ver reservas activas
+                Informacion personal
             </Button>
         </Popover>
 

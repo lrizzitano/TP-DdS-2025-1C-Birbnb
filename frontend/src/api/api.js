@@ -145,7 +145,6 @@ export const crearAlojamientoBackend = async (alojamiento) => {
     console.log("Alojamiento creado:", response.data);
     return response.data;
   } catch (error) {
-    alert("Error al crear el alojamiento ❌\n" + (error.response?.data?.message || error.message));
     console.error("POST falló:", error.response?.data || error);
     return -1;
   }

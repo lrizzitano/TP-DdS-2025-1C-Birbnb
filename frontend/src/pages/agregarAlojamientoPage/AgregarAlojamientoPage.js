@@ -6,6 +6,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { crearAlojamientoBackend } from "../../api/api";
+import DropdownHuespedes from "../../components/dropdownHuespedes/DropdownHuespedes";
 
 const AgregarAlojamientoPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const [form, setForm] = useState({
   nombre: "",
   descripcion: "",
   precioPorNoche: "",
-  moneda: 1,
+  moneda: 0,
   cantHuespedesMax: "",
   horarioCheckIn: "14:00",
   horarioCheckOut: "10:00",
@@ -90,6 +91,9 @@ const [form, setForm] = useState({
     setForm(prev => ({ ...prev, fotos: nuevasFotos }));
   };
 
+  const handleHuespedesChange = (campo, value) => {
+    setForm(prev => ({ ...prev, [campo]: value }))};
+
   const handleSubmit = async () => {
     if (!validar()) return;
 
@@ -115,6 +119,7 @@ const [form, setForm] = useState({
       fotos: form.fotos.filter(f => f.path.trim() !== ""),
       anfitrion: "6835f4add17340a15cb50737"
     };
+    
 
     try {
       const resultado = await crearAlojamientoBackend(nuevoAlojamiento);
@@ -144,16 +149,8 @@ const [form, setForm] = useState({
             value={form.precioPorNoche} onChange={handleChange}
             error={!!errores.precioPorNoche} helperText={errores.precioPorNoche} />
 
-          <TextField select label="Moneda" name="moneda" fullWidth margin="normal"
-            value={form.moneda} onChange={handleChange}>
-            <MenuItem value={1}>USD</MenuItem>
-            <MenuItem value={2}>ARS</MenuItem>
-            <MenuItem value={3}>EUR</MenuItem>
-          </TextField>
 
-          <TextField label="Máx. huéspedes" name="cantHuespedesMax" fullWidth margin="normal"
-            value={form.cantHuespedesMax} onChange={handleChange}
-            error={!!errores.cantHuespedesMax} helperText={errores.cantHuespedesMax} />
+          <DropdownHuespedes campo="cantHuespedesMax" setter={handleHuespedesChange}  />
 
           <TextField label="Check-in" name="horarioCheckIn" type="time" fullWidth margin="normal"
             value={form.horarioCheckIn} onChange={handleChange} />
