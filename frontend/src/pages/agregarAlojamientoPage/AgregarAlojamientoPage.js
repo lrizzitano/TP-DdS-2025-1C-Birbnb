@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {
   Box, Card, CardContent, Typography, TextField, Button,
-  MenuItem, Checkbox, FormControlLabel
+  MenuItem, Checkbox, FormControlLabel, DialogTitle,
+  DialogActions, Dialog
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { crearAlojamientoBackend } from "../../api/api";
@@ -34,6 +35,9 @@ const [form, setForm] = useState({
   ]
 });
 
+  const [modalExito, setModalExito] = useState(false);
+
+
   const [errores, setErrores] = useState({});
 
   const validar = () => {
@@ -51,7 +55,9 @@ const [form, setForm] = useState({
     if (!dir.lat.trim() || isNaN(dir.lat)) nuevosErrores.lat = "Latitud inválida";
     if (!dir.long.trim() || isNaN(dir.long)) nuevosErrores.long = "Longitud inválida";
 
-    if(!form.fotos.some(f => f.path.trim() !== "")) nuevosErrores.fotos = "Debe agregar al menos una foto";
+    if(form.fotos.some(f => f.path.trim() == "" )) nuevosErrores.fotosPath = "URL de foto requerida";
+    if(form.fotos.some(f => !f.descripcion.trim())) nuevosErrores.fotosDescripcion = "Descripción de foto requerida";
+
 
     setErrores(nuevosErrores);
     return Object.keys(nuevosErrores).length === 0;
@@ -113,8 +119,7 @@ const [form, setForm] = useState({
     try {
       const resultado = await crearAlojamientoBackend(nuevoAlojamiento);
       if (resultado !== -1) {
-        alert("✅ Alojamiento creado exitosamente");
-        navigate("/"); // 
+        setModalExito(true);
       }
     } catch (error) {
       console.error("Error al crear el alojamiento:", error);
@@ -193,12 +198,13 @@ const [form, setForm] = useState({
                 label="Descripción"
                 value={foto.descripcion}
                 onChange={(e) => handleFotoChange(idx, "descripcion", e.target.value)}
+                error={!!errores.fotosDescripcion} helperText={errores.fotosDescripcion}
                 fullWidth />
               <TextField
                 label="URL"
                 value={foto.path}
                 onChange={(e) => handleFotoChange(idx, "path", e.target.value)}
-                error={!!errores.fotos} helperText={errores.fotos}
+                error={!!errores.fotosPath} helperText={errores.fotosPath}
                 fullWidth />
             </Box>
           ))}
@@ -216,6 +222,19 @@ const [form, setForm] = useState({
           <Button variant="contained" sx={{ mt: 3 }} fullWidth onClick={handleSubmit}>
             Confirmar alta de alojamiento
           </Button>
+
+          <Dialog open={modalExito} onClose={() => setModalExito(false)}>
+          <DialogTitle>✅ Alojamiento creado exitosamente</DialogTitle>
+          <DialogActions>
+              <Button onClick={() => {
+                setModalExito(false);
+                navigate("/");
+              }}>
+              Volver al inicio
+              </Button>
+          </DialogActions>
+        </Dialog>
+
         </CardContent>
       </Card>
     </Box>
