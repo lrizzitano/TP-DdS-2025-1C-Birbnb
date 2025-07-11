@@ -48,6 +48,10 @@ const [form, setForm] = useState({
     if (!dir.altura.trim()) nuevosErrores.altura = "Campo requerido";
     if (!dir.ciudad.trim()) nuevosErrores.ciudad = "Campo requerido";
     if (!dir.pais.trim()) nuevosErrores.pais = "Campo requerido";
+    if (!dir.lat.trim() || isNaN(dir.lat)) nuevosErrores.lat = "Latitud inválida";
+    if (!dir.long.trim() || isNaN(dir.long)) nuevosErrores.long = "Longitud inválida";
+
+    if(!form.fotos.some(f => f.path.trim() !== "")) nuevosErrores.fotos = "Debe agregar al menos una foto";
 
     setErrores(nuevosErrores);
     return Object.keys(nuevosErrores).length === 0;
@@ -166,9 +170,12 @@ const [form, setForm] = useState({
             value={form.direccion.pais} onChange={handleDireccionChange}
             error={!!errores.pais} helperText={errores.pais} />
           <TextField label="Latitud" name="lat" type="number" fullWidth margin="dense"
-            value={form.direccion.lat} onChange={handleDireccionChange} />
+            value={form.direccion.lat} onChange={handleDireccionChange} 
+            error={!!errores.lat} helperText={errores.lat} />
           <TextField label="Longitud" name="long" type="number" fullWidth margin="dense"
-            value={form.direccion.long} onChange={handleDireccionChange} />
+            value={form.direccion.long} onChange={handleDireccionChange}
+            error={!!errores.long} helperText={errores.long} />
+
 
           <Typography variant="h6" sx={{ mt: 2 }}>Características</Typography>
           {[{ id: 0, nombre: "WiFi" }, { id: 1, nombre: "Piscina" }, { id: 3, nombre: "Mascotas" }].map(c => (
@@ -191,6 +198,7 @@ const [form, setForm] = useState({
                 label="URL"
                 value={foto.path}
                 onChange={(e) => handleFotoChange(idx, "path", e.target.value)}
+                error={!!errores.fotos} helperText={errores.fotos}
                 fullWidth />
             </Box>
           ))}
