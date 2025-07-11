@@ -46,7 +46,7 @@ const CardResumenReserva = () => {
     <Card sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <CardMedia
         component="img"
-        height="160"
+        height="310"
         image={alojamiento.fotos[0]?.path}
         alt={alojamiento.fotos[0]?.descripcion}
         sx={{ objectFit: "cover" }}
