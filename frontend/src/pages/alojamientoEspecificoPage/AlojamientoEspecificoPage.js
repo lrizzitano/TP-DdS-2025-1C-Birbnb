@@ -54,7 +54,10 @@ const AlojamientoEspecificoPage = () => {
   return (
     <>
       {loading ? (
-        <CircularProgress />
+        <div className="circuloCarga">
+          <CircularProgress />
+        </div>
+      
       ) : (
         <div className="contenedorAlojamiento">
 
