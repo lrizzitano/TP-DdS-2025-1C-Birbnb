@@ -178,7 +178,7 @@ const [form, setForm] = useState({
 
 
           <Typography variant="h6" sx={{ mt: 2 }}>Características</Typography>
-          {[{ id: 0, nombre: "WiFi" }, { id: 1, nombre: "Piscina" }, { id: 3, nombre: "Mascotas" }].map(c => (
+          {[{ id: 0, nombre: "WiFi" }, { id: 1, nombre: "Piscina" }, { id: 2, nombre: "Mascotas" },{ id: 3, nombre: "Estacionamiento" }].map(c => (
             <FormControlLabel
               key={c.id}
               control={<Checkbox checked={form.caracteristicas.includes(c.id)} onChange={() => handleCaracteristicaToggle(c.id)} />}
